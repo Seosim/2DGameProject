@@ -14,8 +14,8 @@ class Sprite:
     frame = 0
     action = 1
 
-    def __init__(self):
-        pass
+    #def __init__(self):
+     #   pass
 
     def imageLoad(self,name):
         self.image = load_image(name)
