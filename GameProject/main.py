@@ -22,9 +22,9 @@ while HandleEvent.running:
 
     background.Show()
     LoadMap(stage)
-    aim.Show()
-    
+
     playerUpdate()
+    aim.Show()
     update_canvas()
     Handle_events()
     delay(0.01)

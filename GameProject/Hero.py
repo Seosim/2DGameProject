@@ -1,5 +1,11 @@
 from sprite import Sprite
 from map import collision
+import map
+
+
+width = 1200
+height = 700
+
 class Player(Sprite):
     power = 1
     speed = 5
@@ -19,7 +25,12 @@ class Player(Sprite):
         pass
 
     def Show(self):
-        self.image.clip_draw(self.i_w*int(self.frame),self.i_h*self.action,self.w,self.h,600,self.posY)
+        if  width/2 > self.posX: # 맵 가장 왼쪽으로 가게된다면 플레이어가 맵에서 좌로 움직임
+            self.image.clip_draw(self.i_w * int(self.frame), self.i_h * self.action, self.w, self.h,self.posX,self.posY)
+        elif self.posX >= map.size * len(map.stage[6]) - width/2: # 맵 가장 오른쪽으로 가게된다면 플레이어가 맵에서 우로 움직임
+            self.image.clip_draw(self.i_w * int(self.frame), self.i_h * self.action, self.w, self.h,width - (len(map.stage[6])*map.size-self.posX) ,self.posY)
+        else :
+            self.image.clip_draw(self.i_w * int(self.frame), self.i_h * self.action, self.w, self.h, width / 2, self.posY)
         self.frame = (self.frame + 0.1) % 4
 
     def move(self):
