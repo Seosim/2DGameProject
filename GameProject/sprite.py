@@ -12,7 +12,6 @@ class Sprite:
     i_w = 0
     i_h = 0
     frame = 0
-    frameCnt = 0
     action = 1
 
     #def __init__(self):
