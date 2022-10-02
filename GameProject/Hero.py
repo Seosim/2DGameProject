@@ -31,14 +31,16 @@ class Player(Sprite):
             self.image.clip_draw(self.i_w * int(self.frame), self.i_h * self.action, self.w, self.h,width - (len(map.stage[6])*map.size-self.posX) ,self.posY)
         else :
             self.image.clip_draw(self.i_w * int(self.frame), self.i_h * self.action, self.w, self.h, width / 2, self.posY)
-        self.frame = (self.frame + 0.1) % 4
+        self.frame = (self.frame + 0.1) % self.frameCnt
 
     def move(self):
         if self.PushR and not collision(self.speed,0):
             self.posX += self.speed
+            self.frameCnt = 4
             self.action = 1
         elif self.PushL and not collision(-1*self.speed,0):
             self.posX -= self.speed
+            self.frameCnt = 4
             self.action = 0
 
     def jump(self):
@@ -69,12 +71,13 @@ class Player(Sprite):
 
 player = Player()
 
-player.posX = 1200/2
+player.posX = 300
 player.posY = 300
 player.i_w = 16*4
 player.i_h = 25*4
 player.w = player.i_w
 player.h = player.i_h
+player.frameCnt = 4
 
 def playerUpdate():
     player.Show()
