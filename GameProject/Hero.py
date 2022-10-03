@@ -6,7 +6,7 @@ width = 1200
 height = 700
 
 class Player(Sprite):
-    speed = 5
+    speed = 15
     jumpPower = 150
     hp = 100
 
@@ -15,30 +15,37 @@ class Player(Sprite):
 
     PushR = False
     PushL = False
-    PushSpace = False
 
+    PushSpace = False
     stand = True
 
+
+
     def __init__(self):
-        pass
+        self.posX = 300
+        self.posY = 300
+        self.i_w = 16 * 4
+        self.i_h = 25 * 4
+        self.w = self.i_w
+        self.h = self.i_h
+        self.screenX = self.posX
+
+    def getScreenX(self):
+        if width / 2 > self.posX: self.screenX = self.posX
+        elif self.posX >= map.size * len(map.stage[6]) - width/2:
+            self.screenX = width - (len(map.stage[6])*map.size-self.posX)
+        else : self.screenX =  width / 2
 
     def Show(self):
-        if  width/2 > self.posX: # 맵 가장 왼쪽으로 가게된다면 플레이어가 맵에서 좌로 움직임
-            self.image.clip_draw(self.i_w * int(self.frame), self.i_h * self.action, self.w, self.h,self.posX,self.posY)
-        elif self.posX >= map.size * len(map.stage[6]) - width/2: # 맵 가장 오른쪽으로 가게된다면 플레이어가 맵에서 우로 움직임
-            self.image.clip_draw(self.i_w * int(self.frame), self.i_h * self.action, self.w, self.h,width - (len(map.stage[6])*map.size-self.posX) ,self.posY)
-        else :
-            self.image.clip_draw(self.i_w * int(self.frame), self.i_h * self.action, self.w, self.h, width / 2, self.posY)
+        self.image.clip_draw(self.i_w * int(self.frame), self.i_h * self.action, self.w, self.h, self.screenX,self.posY)
         self.frame = (self.frame + 0.1) % 4
 
     def move(self):
         if self.PushR and not collision(self.speed,0):
             self.posX += self.speed
-            self.frameCnt = 4
             self.action = 1
         elif self.PushL and not collision(-1*self.speed,0):
             self.posX -= self.speed
-            self.frameCnt = 4
             self.action = 0
 
     def jump(self):
@@ -69,15 +76,9 @@ class Player(Sprite):
 
 player = Player()
 
-player.posX = 300
-player.posY = 300
-player.i_w = 16*4
-player.i_h = 25*4
-player.w = player.i_w
-player.h = player.i_h
-
 def playerUpdate():
     player.Show()
+    player.getScreenX()
     player.move()
     player.jump()
     player.Gravity()

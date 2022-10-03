@@ -18,7 +18,7 @@ darkgrass.imageLoad('./res/dark_grass50.png')
 darkdirt.imageLoad('./res/dark_dirt.png')
 aim.imageLoad('./res/cursor.png')
 obj_1.imageLoad('./res/largeobject.png')
-pistol.imageLoad('./res/pistol.png')
+gun.imageLoad('./res/pistol.png')
 
 while HandleEvent.running:
     hide_cursor()
@@ -29,7 +29,7 @@ while HandleEvent.running:
     LoadObj(obj_loc)
 
     playerUpdate()
-    pistol.Update()
+    gun.Update()
     aim.Show()
     update_canvas()
     Handle_events()

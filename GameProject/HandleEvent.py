@@ -1,6 +1,7 @@
 from pico2d import *
 import Hero
 import cursor
+import weapon
 
 running = True
 
@@ -30,6 +31,8 @@ def Handle_events():
              #   Hero.player.PushSpace = False  #점프중 떼면 바로착지
         elif e.type == SDL_MOUSEMOTION: #마우스 움직임
             cursor.aim.UpdateCursor(e.x,e.y)
+            weapon.gun.DefDir(e.x)
+            weapon.gun.radian(e.x,e.y)
 
     if Hero.player.PushR == False and Hero.player.PushL == False:
         Hero.player.imageLoad('./res/idle.png')
