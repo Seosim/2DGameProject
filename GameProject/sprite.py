@@ -22,7 +22,7 @@ class Sprite:
 
     def Show(self):
         self.image.clip_draw(self.i_w*int(self.frame),self.i_h*self.action,self.w,self.h,self.posX,self.posY)
-        #self.frame = (self.frame + 0.1) % 4
+        self.frame = (self.frame + 0.1) % 4
 
     def Gravity(self):
             if self.posY > 160: self.posY -= 10

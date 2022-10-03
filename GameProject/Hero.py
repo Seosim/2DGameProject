@@ -2,14 +2,12 @@ from sprite import Sprite
 from map import collision
 import map
 
-
 width = 1200
 height = 700
 
 class Player(Sprite):
-    power = 1
     speed = 5
-    jumpPower = 165
+    jumpPower = 150
     hp = 100
 
     jumpY = -1

@@ -17,10 +17,10 @@ def LoadMap(stage):
     for _y in stage:
         for _x in _y:
             if _x == 1:
-                if -50<(x * size)+size/2 - cameraX <1400:
+                if -100<(x * size)+size/2 - cameraX <1400:
                     darkgrass.image.clip_draw(0, 0, size, size, (x * size)+size/2 - cameraX, (y * size)+size/2)
             elif _x == 2:
-                if -50<(x * size)+size/2 - cameraX <1400:
+                if -100<(x * size)+size/2 - cameraX <1400:
                     darkdirt.image.clip_draw(0, 0, size, size, (x * size)+size/2 - cameraX, (y * size)+size/2)
             x += 1
         y -= 1
@@ -34,7 +34,7 @@ def collision(valX,valY):
         for _x in _y:
             if _x:
                if abs(Hero.player.posX - (x*size+(size/2)) + valX) < size/2 + Hero.player.w/2 - 5:
-                   if Hero.player.posY+20+valY > (y*size+(size/2)) and abs(Hero.player.posY - (y*size+(size/2)) + valY) < size/2 + Hero.player.h/2 - 5 :
+                   if Hero.player.posY+(size/2)+valY > (y*size+(size/2)) and abs(Hero.player.posY - (y*size+(size/2)) + valY) < size/2 + Hero.player.h/2 - 5 :
                        if abs((Hero.player.posY - Hero.player.h/2) -((y+1)*size)) <= 5:
                            Hero.player.gravitySpeed = 1
                        x = 0
