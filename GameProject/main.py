@@ -31,6 +31,7 @@ while HandleEvent.running:
     playerUpdate()
     gun.Update()
     aim.Show()
+
     update_canvas()
     Handle_events()
     delay(0.01)
