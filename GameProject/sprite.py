@@ -21,9 +21,9 @@ class Sprite:
     def imageLoad(self,name):
         self.image = load_image(name)
 
-    def Show(self):
-        self.image.clip_draw(self.i_w*int(self.frame),self.i_h*self.action,self.w,self.h,self.posX,self.posY)
-        self.frame = (self.frame + 0.1) % 4
+    def Show(self,x):
+        self.image.clip_draw(self.i_w*int(self.frame),self.i_h*self.action,self.w,self.h,self.posX-x,self.posY)
+        #self.frame = (self.frame + 0.1) % 4
 
     def OutOfMap(self):
         if self.posX < 40: self.posX = 40
