@@ -20,7 +20,7 @@ darkdirt.imageLoad('./res/dark_dirt.png')
 aim.imageLoad('./res/cursor.png')
 obj_1.imageLoad('./res/largeobject.png')
 gun.imageLoad('./res/pistolR.png')
-clone.imageLoad('./res/idle.png')
+hoodman.imageLoad('./res/hoodman.png')
 
 while HandleEvent.running:
     hide_cursor()
@@ -29,8 +29,8 @@ while HandleEvent.running:
     background.image.draw(width/2,height/2,width,height)
     LoadMap(stage)
     LoadObj(obj_loc)
+    hoodman.Update()
     LoadMonster()
-    clone.Gravity()
     playerUpdate()
     gun.Update()
     aim.Show()

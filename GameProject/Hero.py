@@ -5,7 +5,7 @@ width = 1200
 height = 700
 
 class Player(Sprite):
-    speed = 7
+    speed = 5
     jumpPower = 150
     hp = 100
 
@@ -90,7 +90,7 @@ class Player(Sprite):
 
     def collision(self,valX, valY):
         sx = self.posX//size
-        
+
         for _y in range(0,len(stage)):
             for _x in range(-2,2,1):
                 x = sx + _x
