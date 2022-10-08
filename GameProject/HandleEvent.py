@@ -34,7 +34,9 @@ def Handle_events():
             weapon.gun.DefDir(e.x)
             weapon.gun.radian(e.x,e.y)
         elif e.type == SDL_MOUSEBUTTONDOWN: #마우스 클릭
-            weapon.gun.Shot(e.x)
+            weapon.gun.clickButton = True
+        elif e.type == SDL_MOUSEBUTTONUP:
+            weapon.gun.clickButton = False
 
     if Hero.player.PushR == False and Hero.player.PushL == False:
         Hero.player.imageLoad('./res/idle.png')

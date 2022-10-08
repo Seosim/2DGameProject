@@ -52,6 +52,7 @@ class Sprite:
         for _y in range(0,len(stage)):
             for _x in range(-2,2,1):
                 x = int(sx) + _x
+                if x >= len(stage[_y]): continue
                 if stage[_y][x]:
                     y = len(stage) - 1 - _y
                     if abs(self.posX - (x * size + (size / 2)) + valX) < size / 2 + (self.w / 2) - 5:  # 가로줄 충돌

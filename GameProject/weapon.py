@@ -10,7 +10,7 @@ class Weapon(Sprite):
     cameraX = player.posX - (1200 / 2)
     damage = 10
     attack_speed = 30
-    dis = 15
+    dir = 1
     rad = 0
 
     def __init__(self):
@@ -21,6 +21,9 @@ class Weapon(Sprite):
         self.i_w = 48
         self.i_h = 48
         self.delay = 0
+        self.clickButton = False
+        self.distance = 500
+
 
     def radian(self,x,y):
         if self.action == 1:
@@ -31,11 +34,11 @@ class Weapon(Sprite):
     def Show(self):
         self.image.rotate_draw(self.rad / 360 * 2 * math.pi, self.posX-player.cameraX, self.posY, self.w, self.h)
 
-    def Shot(self,x):
+    def Shot(self):
         if self.delay == 0:
             b = Bullet()
             b.imageLoad('./res/Bullet.png')
-            if x < player.screenX: b.dir = 0
+            if self.dir < 0: b.dir = 0
             bullet_list.append(b)
             self.delay = 1
 
@@ -49,11 +52,12 @@ class Weapon(Sprite):
 
 
     def Update(self):
-        self.dis = (-1 + (self.action * 2))
+        self.dir = (-1 + (self.action * 2))
         self.cameraX = player.posX - (1200 / 2)
-        self.posX = player.posX + self.dis*15
+        self.posX = player.posX + self.dir*15
         self.posY = player.posY - 15
         if self.delay: self.delay = (self.delay +1) % self.attack_speed
+        if self.clickButton: self.Shot()
         self.Show()
 
 bullet_list = []
@@ -64,8 +68,9 @@ class Bullet(Sprite):
         self.speed = 15
         self.rad = gun.rad
         self.dir = 1
-        self.posX = gun.posX+ gun.dis
+        self.posX = gun.posX
         self.posY = gun.posY
+        self.spawnX = self.posX
         self.w = 10
         self.h = 10
         self.damage = gun.damage
@@ -98,6 +103,9 @@ def LoadBullet():
         bullet.Show()
         bullet.move()
 
+        if abs(bullet.posX - bullet.spawnX) > gun.distance:
+            bullet_list.remove(bullet)
+            continue
         if bullet.posY > 700:
             bullet_list.remove(bullet)
             continue
