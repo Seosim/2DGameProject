@@ -5,7 +5,7 @@ width = 1200
 height = 700
 
 class Player(Sprite):
-    speed = 5
+    speed = 4
     jumpPower = 150
     hp = 100
 
@@ -18,8 +18,6 @@ class Player(Sprite):
     PushSpace = False
     stand = True
 
-
-
     def __init__(self):
         self.posX = 300
         self.posY = 300
@@ -28,6 +26,8 @@ class Player(Sprite):
         self.w = self.i_w
         self.h = self.i_h
         self.screenX = self.posX
+        self.inv = 0 # 무적
+        self.hitframe = 0
 
     def getScreenX(self):
         if width / 2 > self.posX: self.screenX = self.posX
@@ -36,7 +36,7 @@ class Player(Sprite):
         else : self.screenX =  width / 2
 
     def Show(self):
-        self.image.clip_draw(self.i_w * int(self.frame), self.i_h * self.action, self.w, self.h, self.screenX,self.posY)
+        self.image.clip_draw(self.i_w * (self.hitframe+int(self.frame)), self.i_h * self.action, self.w, self.h, self.screenX,self.posY)
         self.frame = (self.frame + 0.1) % 4
 
     def move(self):
@@ -64,29 +64,11 @@ class Player(Sprite):
             if not self.collision(0, -self.gravitySpeed):
                 self.posY -= self.gravitySpeed
                 if self.gravitySpeed < 10:
-                    self.gravitySpeed += 0.5
+                    self.gravitySpeed += 2
 
                 #self.posY -= 10
 
             else: self.PushSpace = False
-
-    # def collision(self,valX, valY):
-    #     x = 0
-    #     y = len(stage)-1
-    #     for _y in stage:
-    #         for _x in _y:
-    #             if _x: #_x = 타일종류
-    #                 if abs(self.posX - (x * size + (size / 2)) + valX) < size / 2 + (self.w / 2) - 5:# 가로줄 충돌
-    #                     if self.posY + (size / 2) + valY > (y * size + (size / 2)) and abs(self.posY - (y * size + (size / 2)) + valY) < size / 2 + self.h / 2 - 5:#세로줄 충돌
-    #                         if abs((self.posY - self.h / 2) - ((y + 1) * size)) <= 5:#땅에 착지
-    #                             self.gravitySpeed = 1
-    #                         self.stand = True
-    #                         return True
-    #             x += 1
-    #         y -= 1
-    #         x = 0
-    #     self.stand = False
-    #     return False
 
     def collision(self,valX, valY):
         sx = self.posX//size
@@ -106,14 +88,36 @@ class Player(Sprite):
         self.stand = False
         return False
 
+    def ColtoMonster(self,mlist):
+        for monster in mlist:
+            if abs(self.posX - monster.posX) < (monster.w/2) + (self.w / 2):  # 가로줄 충돌
+                if abs(self.posY - monster.posY) < (monster.h / 2) + (self.h / 2)-15:  # 세로줄 충돌
+                    if self.inv == 0:
+                        self.hp -= monster.power
+                        print(self.hp)
+                        self.inv = 2
+                        return True
+        return False
+
+    def invincibility(self):
+        if self.inv :
+            self.inv -= 0.015
+            if self.hitframe == 0 : self.hitframe = 5
+            else : self.hitframe = 0
+
+        if self.inv <= 0 :
+            self.hitframe = 0
+            self.inv = 0
+
 
 
 
 player = Player()
 
 def playerUpdate():
-    player.Show()
     player.getScreenX()
+    player.invincibility()
     player.move()
     player.jump()
     player.Gravity()
+    player.Show()

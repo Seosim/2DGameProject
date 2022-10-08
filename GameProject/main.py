@@ -31,7 +31,11 @@ while HandleEvent.running:
     LoadObj(obj_loc)
     hoodman.Update()
     LoadMonster()
+
+
     playerUpdate()
+    player.ColtoMonster(m_list)
+
     gun.Update()
     aim.Show()
 

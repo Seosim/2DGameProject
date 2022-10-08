@@ -7,11 +7,19 @@ import math
 m_list = []
 
 class Monster(Sprite):
-    hp = 50
-    maxhp = hp
-    speed = 1.5
-    mod = 1
-    gravity = True
+
+    def __init__(self):
+        self.hp = 50
+        self.maxhp = self.hp
+        self.speed = 1.5
+        self.power = 3
+        self.mod = 1
+        self.gravity = True
+        self.i_w = 16*4
+        self.i_h = 25*4
+        self.w = self.i_w
+        self.h = self.i_h
+
 
     def Gravity(self):
         if self.gravity:
@@ -54,9 +62,5 @@ def LoadMonster():
 hoodman = Monster()
 hoodman.posX = 1500
 hoodman.posY = 1000
-hoodman.w = 16*4
-hoodman.h = 25*4
-hoodman.i_w = 16*4
-hoodman.i_h = 25*4
 hoodman.action = 0
 m_list.append(hoodman)
