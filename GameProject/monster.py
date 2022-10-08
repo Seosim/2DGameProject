@@ -50,14 +50,10 @@ class Monster(Sprite):
 
 
 def LoadMonster():
-    cameraX = player.posX - (1200 / 2)
-    #카메라가 맵밖을 촬영하지 않게 설정
-    if cameraX <= 0: cameraX = 0
-    elif size * len(stage[6]) - player.posX <= 600: cameraX = size * len(stage[6]) - 1200
-
-
     for monster in m_list:
-        monster.Show(cameraX)
+        monster.Show(player.cameraX)
+        if monster.hp <= 0: m_list.remove(monster)
+
 
 hoodman = Monster()
 hoodman.posX = 1500

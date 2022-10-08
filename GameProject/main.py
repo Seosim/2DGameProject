@@ -20,7 +20,9 @@ darkdirt.imageLoad('./res/dark_dirt.png')
 aim.imageLoad('./res/cursor.png')
 obj_1.imageLoad('./res/largeobject.png')
 gun.imageLoad('./res/pistolR.png')
+bullet.imageLoad('./res/Bullet.png')
 hoodman.imageLoad('./res/hoodman.png')
+
 
 while HandleEvent.running:
     hide_cursor()
@@ -31,13 +33,14 @@ while HandleEvent.running:
     LoadObj(obj_loc)
     hoodman.Update()
     LoadMonster()
-
+    LoadBullet()
 
     playerUpdate()
     player.ColtoMonster(m_list)
 
     gun.Update()
     aim.Show()
+
 
     update_canvas()
     Handle_events()

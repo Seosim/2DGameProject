@@ -28,6 +28,7 @@ class Player(Sprite):
         self.screenX = self.posX
         self.inv = 0 # 무적
         self.hitframe = 0
+        self.cameraX = width/2
 
     def getScreenX(self):
         if width / 2 > self.posX: self.screenX = self.posX
@@ -46,6 +47,12 @@ class Player(Sprite):
         elif self.PushL and not self.collision(-1*self.speed,0):
             self.posX -= self.speed
             self.action = 0
+
+        self.cameraX = player.posX - (1200 / 2)
+        if self.cameraX <= 0:
+            self.cameraX = 0
+        elif size * len(stage[6]) - player.posX <= 600:
+            self.cameraX = size * len(stage[6]) - 1200
 
     def jump(self):
         if self.PushSpace:
@@ -94,10 +101,9 @@ class Player(Sprite):
                 if abs(self.posY - monster.posY) < (monster.h / 2) + (self.h / 2)-15:  # 세로줄 충돌
                     if self.inv == 0:
                         self.hp -= monster.power
-                        print(self.hp)
+                        print('player hp : ',self.hp)
                         self.inv = 2
-                        return True
-        return False
+                        return
 
     def invincibility(self):
         if self.inv :
