@@ -23,6 +23,11 @@ class Weapon(Sprite):
         self.delay = 0
         self.clickButton = False
         self.distance = 500
+        self.ammo = 6
+        self.maxAmmo = self.ammo
+        self.reloadDelay = 0
+        self.reloadTime = 50
+        self.R = False
 
 
     def radian(self,x,y):
@@ -36,11 +41,23 @@ class Weapon(Sprite):
 
     def Shot(self):
         if self.delay == 0:
+            if self.ammo == 0:
+                return
             b = Bullet()
             b.imageLoad('./res/Bullet.png')
             if self.dir < 0: b.dir = 0
             bullet_list.append(b)
             self.delay = 1
+            self.ammo -= 1
+
+    def Reload(self):
+        if self.R : self.reloadDelay += 1
+        else: return
+
+        if self.reloadTime == self.reloadDelay:
+            self.ammo = self.maxAmmo
+            self.reloadDelay = 0
+            self.R = False
 
     def DefDir(self,x):
         if player.screenX < x:
@@ -52,6 +69,7 @@ class Weapon(Sprite):
 
 
     def Update(self):
+        self.Reload()
         self.dir = (-1 + (self.action * 2))
         self.cameraX = player.posX - (1200 / 2)
         self.posX = player.posX + self.dir*15

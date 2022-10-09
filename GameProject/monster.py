@@ -56,7 +56,7 @@ def LoadMonster():
 
 
 hoodman = Monster()
-hoodman.posX = 9000
+hoodman.posX = 500
 hoodman.posY = 1000
 hoodman.action = 0
 m_list.append(hoodman)

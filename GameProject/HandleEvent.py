@@ -22,6 +22,8 @@ def Handle_events():
                 Hero.player.imageLoad('./res/running.png')
             elif e.key == SDLK_SPACE and  Hero.player.stand:
                 Hero.player.PushSpace = True
+            elif e.key == SDLK_r:
+                if weapon.gun.ammo != weapon.gun.maxAmmo and not weapon.gun.R : weapon.gun.R = True
         elif e.type == SDL_KEYUP:   # 키업
             if e.key == SDLK_d:
                 Hero.player.PushR = False
