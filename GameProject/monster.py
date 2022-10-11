@@ -95,10 +95,10 @@ class Archer(Monster):
     dir = 0
     def Hunting(self):
         if abs(self.posX - player.posX) < 500 or self.maxhp != self.hp :
-            if self.posX - player.posX > 5 and self.shootDelay == 0:
+            if self.posX - player.posX > 5 and 3.1>self.frame > 3.0:
                 self.action = 2
                 self.Shooting()
-            elif self.posX - player.posX <= -5 and self.shootDelay == 0:
+            elif self.posX - player.posX <= -5 and 3.1>self.frame > 3.0:
                 self.action = 3
                 self.Shooting()
             self.shootDelay = (self.shootDelay + 1) % 100
@@ -118,6 +118,11 @@ class Archer(Monster):
         arrow.imageLoad('./res/bullet.png')
         a_list.append(arrow)
 
+    def Show(self,x):
+        self.image.clip_draw(self.i_w*int(self.frame),self.i_h*self.action,self.w,self.h,self.posX - x,self.posY)
+        self.frame = (self.frame+0.1) % 4
+
+
 class Arrow(Sprite):
     def __init__(self,px,py,dmg,rad,dir):
         self.speed = 7
@@ -132,7 +137,7 @@ class Arrow(Sprite):
 
 
     def Show(self):
-        self.image.clip_draw(0,0,self.w,self.h,self.posX - player.cameraX,self.posY)
+        self.image.clip_draw(self.i_w*int(self.frame),self.i_h*self.action,self.w,self.h,self.posX - player.cameraX,self.posY)
 
     def move(self):
         if self.dir == 1:
@@ -169,7 +174,10 @@ def LoadArrow():
             continue
         if abs(a.posX - player.posX) < player.w/2:
             if abs(a.posY - player.posY) < player.h/2:
-                player.ColtoMonster(a_list)
+                if player.inv == 0:
+                    player.hp -= a.power
+                    player.inv = 2
+                    print('hit')
                 a_list.remove(a)
                 continue
 
