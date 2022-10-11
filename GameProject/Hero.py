@@ -71,7 +71,7 @@ class Player(Sprite):
             if not self.collision(0, -self.gravitySpeed):
                 self.posY -= self.gravitySpeed
                 if self.gravitySpeed < 10:
-                    self.gravitySpeed += 2
+                    self.gravitySpeed += 0.5
 
                 #self.posY -= 10
 

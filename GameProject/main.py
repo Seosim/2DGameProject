@@ -21,7 +21,7 @@ aim.imageLoad('./res/cursor.png')
 obj_1.imageLoad('./res/largeobject.png')
 gun.imageLoad('./res/pistolR.png')
 bullet.imageLoad('./res/Bullet.png')
-hoodman.imageLoad('./res/hoodman.png')
+MonsterImage()
 
 
 while HandleEvent.running:
@@ -31,7 +31,6 @@ while HandleEvent.running:
     background.image.draw(width/2,height/2,width,height)
     LoadMap(stage)
     LoadObj(obj_loc)
-    hoodman.Update()
     LoadMonster()
     LoadBullet()
 

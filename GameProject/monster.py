@@ -1,9 +1,7 @@
 from sprite import Sprite
 from Hero import player
-from MapData import *
 import random
-import math
-
+import MapData
 m_list = []
 
 class Monster(Sprite):
@@ -19,6 +17,8 @@ class Monster(Sprite):
         self.i_h = 25*4
         self.w = self.i_w
         self.h = self.i_h
+        self.posX = random.randint(10,90)*100
+        self.posY = 1000
 
 
     def Gravity(self):
@@ -38,25 +38,40 @@ class Monster(Sprite):
             elif self.posX - player.posX < 0:
                 self.action = 3
                 dir = 1
+
             if not self.collision(dir* self.speed,0):
                 self.posX += dir* self.speed
+            else : self.posY += 11
         else : self.action = 0
+        if self.hp < self.maxhp/2 : self.speed = 3
+
+    def Jump(self):
+        if not self.collision(5,0): return
+
 
     def Update(self):
         self.Gravity()
         self.Hunting()
+        self.Jump()
 
 
-
+def MonsterImage():
+    for monster in m_list:
+        monster.imageLoad('./res/hoodman.png')
 
 def LoadMonster():
     for monster in m_list:
+        monster.Update()
         monster.Show(player.cameraX)
         if monster.hp <= 0: m_list.remove(monster)
 
 
 hoodman = Monster()
 hoodman.posX = 500
-hoodman.posY = 1000
+hoodman.posY = 700
 hoodman.action = 0
+
+hood = [Monster() for i in range(10)]
+
 m_list.append(hoodman)
+m_list+=hood
