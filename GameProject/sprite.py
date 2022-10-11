@@ -30,22 +30,6 @@ class Sprite:
         if self.posX < 40: self.posX = 40
         if self.posX > width - 40: self.posX = width - 40
 
-    # def collision(self,valX, valY):
-    #     x = 0
-    #     y = len(stage)-1
-    #     for _y in stage:
-    #         for _x in _y:
-    #             if _x: #_x = 타일종류
-    #                 if abs(self.posX - (x * size + (size / 2)) + valX) < size / 2 + (self.w / 2) - 5:# 가로줄 충돌
-    #                     if self.posY + (size / 2) + valY > (y * size + (size / 2)) and abs(self.posY - (y * size + (size / 2)) + valY) < size / 2 + self.h / 2 - 5:#세로줄 충돌
-    #                         if abs((self.posY - self.h / 2) - ((y + 1) * size)) <= 5:#땅에 착지
-    #                             self.gravitySpeed = 1
-    #                         return True
-    #             x += 1
-    #         y -= 1
-    #         x = 0
-    #     return False
-
     def collision(self,valX, valY):
         sx = self.posX//size
 

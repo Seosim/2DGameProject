@@ -1,7 +1,6 @@
 from sprite import Sprite
 from Hero import player
 import random
-import MapData
 m_list = []
 
 class Monster(Sprite):
@@ -19,6 +18,8 @@ class Monster(Sprite):
         self.h = self.i_h
         self.posX = random.randint(10,90)*100
         self.posY = 1000
+        self.jumpY = -1
+        self.jump = True
 
 
     def Gravity(self):
@@ -27,6 +28,7 @@ class Monster(Sprite):
                 self.posY -= self.gravitySpeed
                 if self.gravitySpeed < 10:
                     self.gravitySpeed += 0.5
+            else : self.jump = True
 
     def Hunting(self):
         dir = 0
@@ -41,18 +43,32 @@ class Monster(Sprite):
 
             if not self.collision(dir* self.speed,0):
                 self.posX += dir* self.speed
-            else : self.posY += 11
+            else : # 점프 조건
+                self.Jump()
+                #if not self.collision(0,11): pass
         else : self.action = 0
         if self.hp < self.maxhp/2 : self.speed = 3
 
     def Jump(self):
-        if not self.collision(5,0): return
+        if not self.jump:
+            return
+
+        if self.jumpY < 0:
+            self.jumpY = self.posY
+
+
+        if self.jumpY + 100  > self.posY and not self.collision(0,11) and self.jump:
+            self.posY += 11
+        else:
+            self.jump = False
+            self.jumpY = -1
+
+
 
 
     def Update(self):
         self.Gravity()
         self.Hunting()
-        self.Jump()
 
 
 def MonsterImage():
