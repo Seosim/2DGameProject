@@ -25,7 +25,7 @@ class Monster(Sprite):
 
     def Gravity(self):
         if self.gravity:
-            if not self.collision(0, -self.gravitySpeed):
+            if not self.collision(0, -self.gravitySpeed) and not self.MonsterCol(0,-self.gravitySpeed):
                 self.posY -= self.gravitySpeed
                 if self.gravitySpeed < 10:
                     self.gravitySpeed += 0.5
@@ -42,8 +42,9 @@ class Monster(Sprite):
                 self.action = 3
                 dir = 1
 
-            if not self.collision(dir* self.speed,0) and not self.MonsterCol(dir* self.speed,0):
-                self.posX += dir* self.speed
+            if not self.collision(dir* self.speed,0):
+                if not self.MonsterCol(dir* self.speed,0):
+                    self.posX += dir* self.speed
             else : # 점프 조건
                 self.Jump()
         else : self.action = 0
@@ -56,7 +57,7 @@ class Monster(Sprite):
         if self.jumpY < 0:
             self.jumpY = self.posY
 
-        if self.jumpY + 100  > self.posY and not self.collision(0,11) and self.jump:
+        if self.jumpY + 100  > self.posY and not self.collision(0,11) and self.jump and not self.MonsterCol(0,11):
             self.posY += 11
         else:
             self.jump = False
