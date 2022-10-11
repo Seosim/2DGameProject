@@ -136,7 +136,7 @@ def LoadBullet():
 
 gun = Weapon()
 
-bullet = Bullet()
+
 
 
 

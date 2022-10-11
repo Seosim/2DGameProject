@@ -67,13 +67,10 @@ class Player(Sprite):
 
     def Gravity(self):
         if not self.PushSpace:
-           # if self.posY > 160 and not collision(0,-10): self.posY -= 10
             if not self.collision(0, -self.gravitySpeed):
                 self.posY -= self.gravitySpeed
                 if self.gravitySpeed < 10:
                     self.gravitySpeed += 0.5
-
-                #self.posY -= 10
 
             else: self.PushSpace = False
 
@@ -82,7 +79,7 @@ class Player(Sprite):
 
         for _y in range(0,len(stage)):
             for _x in range(-2,2,1):
-                x = sx + _x
+                x = int(sx + _x)
                 if stage[_y][x]:
                     y = len(stage) - 1 - _y
                     if abs(self.posX - (x * size + (size / 2)) + valX) < size / 2 + (self.w / 2) - 5:  # 가로줄 충돌

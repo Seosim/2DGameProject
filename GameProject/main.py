@@ -20,7 +20,6 @@ darkdirt.imageLoad('./res/dark_dirt.png')
 aim.imageLoad('./res/cursor.png')
 obj_1.imageLoad('./res/largeobject.png')
 gun.imageLoad('./res/pistolR.png')
-bullet.imageLoad('./res/Bullet.png')
 MonsterImage()
 
 
@@ -32,6 +31,7 @@ while HandleEvent.running:
     LoadMap(stage)
     LoadObj(obj_loc)
     LoadMonster()
+    LoadArrow()
     LoadBullet()
 
     playerUpdate()
