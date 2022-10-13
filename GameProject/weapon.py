@@ -82,7 +82,7 @@ bullet_list = []
 class Bullet(Sprite):
 
     def __init__(self):
-        self.speed = 15
+        self.speed = 30
         self.rad = gun.rad
         self.dir = 1
         self.posX = gun.posX
@@ -94,7 +94,6 @@ class Bullet(Sprite):
 
 
     def Show(self):
-        #self.image.clip_draw(0,0,self.w,self.h,self.posX - player.cameraX,self.posY)
         self.image.rotate_draw(self.rad / 360*2*math.pi,self.posX-player.cameraX,self.posY,self.w,self.h)
 
     def move(self):

@@ -95,10 +95,10 @@ class Archer(Monster):
     dir = 0
     def Hunting(self):
         if abs(self.posX - player.posX) < 500 or self.maxhp != self.hp :
-            if self.posX - player.posX > 5 and 3.1>self.frame > 3.0:
+            if self.posX - player.posX > 5 and 3.05>self.frame > 3.0:
                 self.action = 2
                 self.Shooting()
-            elif self.posX - player.posX <= -5 and 3.1>self.frame > 3.0:
+            elif self.posX - player.posX <= -5 and 3.05>self.frame > 3.0:
                 self.action = 3
                 self.Shooting()
             self.shootDelay = (self.shootDelay + 1) % 100
@@ -120,7 +120,7 @@ class Archer(Monster):
 
     def Show(self,x):
         self.image.clip_draw(self.i_w*int(self.frame),self.i_h*self.action,self.w,self.h,self.posX - x,self.posY)
-        self.frame = (self.frame+0.1) % 4
+        self.frame = (self.frame+0.05) % 4
 
 
 class Arrow(Sprite):
@@ -186,10 +186,10 @@ def UpdateArrow():
 m_list = []
 a_list = []
 
-hood = [Melee() for i in range(10)]
+hood = [Melee() for i in range(20)]
 m_list+=hood
 del hood
 
-archer = [Archer() for i in range(5)]
+archer = [Archer() for i in range(10)]
 m_list+=archer
 del archer
