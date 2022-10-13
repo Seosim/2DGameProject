@@ -76,7 +76,6 @@ class Weapon(Sprite):
         self.posY = player.posY - 15
         if self.delay: self.delay = (self.delay +1) % self.attack_speed
         if self.clickButton: self.Shot()
-        self.Show()
 
 bullet_list = []
 
@@ -114,9 +113,11 @@ class Bullet(Sprite):
                     return True
         return False
 
+def ShowBullet():
+    for bullet in bullet_list:
+        bullet.Show()
 
-
-def LoadBullet():
+def UpdateBullet():
     for bullet in bullet_list:
         bullet.Show()
         bullet.move()

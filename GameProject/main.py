@@ -1,4 +1,3 @@
-import HandleEvent
 from HandleEvent import *
 from Background import *
 from Hero import *
@@ -11,40 +10,66 @@ from monster import *
 width = 1200
 height = 700
 
-open_canvas(width,height)
+def enter():
+    player.imageLoad('./res/idle.png')
+    background.imageLoad('./res/background.png')
+    darkgrass.imageLoad('./res/dark_grass50.png')
+    darkdirt.imageLoad('./res/dark_dirt.png')
+    aim.imageLoad('./res/cursor.png')
+    obj_1.imageLoad('./res/largeobject.png')
+    gun.imageLoad('./res/pistolR.png')
+    MonsterImage()
 
-background.imageLoad('./res/background.png')
-player.imageLoad('./res/idle.png')
-darkgrass.imageLoad('./res/dark_grass50.png')
-darkdirt.imageLoad('./res/dark_dirt.png')
-aim.imageLoad('./res/cursor.png')
-obj_1.imageLoad('./res/largeobject.png')
-gun.imageLoad('./res/pistolR.png')
-MonsterImage()
-
-
-while HandleEvent.running:
+def drawWorld():
     hide_cursor()
-    clear_canvas()
-
-    background.image.draw(width/2,height/2,width,height)
+    background.image.draw(width / 2, height / 2, width, height)
     LoadMap(stage)
     LoadObj(obj_loc)
-    LoadMonster()
-    LoadArrow()
-    LoadBullet()
-
-    playerUpdate()
-    player.ColtoMonster(m_list)
-
-    gun.Update()
+    ShowMonster()
+    ShowArrow()
+    ShowBullet()
+    player.Show()
+    gun.Show()
     aim.Show()
 
-
+def draw():
+    clear_canvas()
+    drawWorld()
     update_canvas()
-    Handle_events()
+
+def update():
+    UpdateMonster()
+    UpdateArrow()
+    UpdateBullet()
+    player.ColtoMonster(m_list)
+    playerUpdate()
+    gun.Update()
     delay(0.01)
 
-close_canvas()
+def handle_events():
+    Handle_events()
+
+def exit():
+    global player,background,darkdirt,darkgrass,aim,obj_1,gun,m_list,a_list,bullet_list
+    del player
+    del background
+    del darkdirt
+    del darkgrass
+    del aim
+    del obj_1
+    del gun
+    del m_list
+    del a_list
+    del bullet_list
+
+
+
+# while HandleEvent.running:
+#     show()
+#     update()
+#     Handle_events()
+#     delay(0.01)
+#
+# close_canvas()
 
 

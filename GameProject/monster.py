@@ -81,9 +81,6 @@ class Melee(Monster):
             self.jump = False
             self.jumpY = -1
 
-
-
-
 class Archer(Monster):
     i_w = 25 * 4
     i_h = 25 * 4
@@ -125,7 +122,7 @@ class Archer(Monster):
 
 class Arrow(Sprite):
     def __init__(self,px,py,dmg,rad,dir):
-        self.speed = 7
+        self.speed = 5
         self.dir = dir
         self.rad = rad
         self.posX = px
@@ -155,16 +152,24 @@ def MonsterImage():
         else :
             monster.imageLoad('./res/archer.png')
 
-def LoadMonster():
+def UpdateMonster():
     for monster in m_list:
         monster.Update()
-        monster.Show(player.cameraX)
         if monster.hp <= 0: m_list.remove(monster)
 
-def LoadArrow():
+def ShowMonster():
+    for monster in m_list:
+        #monster.Update()
+        monster.Show(player.cameraX)
+        #if monster.hp <= 0: m_list.remove(monster)
+
+def ShowArrow():
+    for a in a_list:
+        a.Show()
+
+def UpdateArrow():
     for a in a_list:
         a.move()
-        a.Show()
 
         if a.posY > 700 :
             a_list.remove(a)
@@ -177,7 +182,6 @@ def LoadArrow():
                 if player.inv == 0:
                     player.hp -= a.power
                     player.inv = 2
-                    print('hit')
                 a_list.remove(a)
                 continue
 
@@ -186,6 +190,8 @@ a_list = []
 
 hood = [Melee() for i in range(10)]
 m_list+=hood
+del hood
 
 archer = [Archer() for i in range(5)]
 m_list+=archer
+del archer

@@ -58,12 +58,14 @@ class Player(Sprite):
         if self.PushSpace:
             if self.jumpY == -1:
                 self.jumpY = self.posY
+                self.speed = 5
 
             if self.posY < self.jumpY + self.jumpPower and not self.collision(0,10):
                 self.posY += 10
             else:
                 self.PushSpace = False
                 self.jumpY = -1
+                self.speed = 5
 
     def Gravity(self):
         if not self.PushSpace:
@@ -103,6 +105,8 @@ class Player(Sprite):
                         return
 
     def invincibility(self):
+        if self.inv == 0 : return
+
         if self.inv :
             self.inv -= 0.015
             if self.hitframe == 0 : self.hitframe = 5
@@ -123,4 +127,3 @@ def playerUpdate():
     player.move()
     player.jump()
     player.Gravity()
-    player.Show()

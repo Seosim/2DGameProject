@@ -2,17 +2,13 @@ from pico2d import *
 import Hero
 import cursor
 import weapon
-
-running = True
-
+import game_framework
 
 def Handle_events():
-    global running
-
     events = get_events()
     for e in events:
         if e.type == SDL_QUIT:  #종료버튼
-            running = False
+            game_framework.quit()
         elif e.type == SDL_KEYDOWN: #키다운
             if e.key == SDLK_d:
                 Hero.player.PushR = True
@@ -22,7 +18,7 @@ def Handle_events():
                 Hero.player.imageLoad('./res/running.png')
             elif e.key == SDLK_SPACE and  Hero.player.stand:
                 Hero.player.PushSpace = True
-            elif e.key == SDLK_r:
+            elif e.key == SDLK_r: #장전
                 if weapon.gun.ammo != weapon.gun.maxAmmo and not weapon.gun.R : weapon.gun.R = True
         elif e.type == SDL_KEYUP:   # 키업
             if e.key == SDLK_d:
@@ -36,9 +32,11 @@ def Handle_events():
             weapon.gun.DefDir(e.x)
             weapon.gun.radian(e.x,e.y)
         elif e.type == SDL_MOUSEBUTTONDOWN: #마우스 클릭
-            weapon.gun.clickButton = True
+            if e.button == SDL_BUTTON_LEFT:
+                weapon.gun.clickButton = True
         elif e.type == SDL_MOUSEBUTTONUP:
-            weapon.gun.clickButton = False
+            if e.button == SDL_BUTTON_LEFT:
+                weapon.gun.clickButton = False
 
     if Hero.player.PushR == False and Hero.player.PushL == False:
         Hero.player.imageLoad('./res/idle.png')
