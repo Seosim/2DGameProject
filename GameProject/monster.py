@@ -27,6 +27,7 @@ class Monster(Sprite):
                 self.gravitySpeed += 0.5
         else:
             self.jump = True
+            self.jumpY = -1
 
     def MonsterCol(self,x,y):
         cnt = 0
@@ -70,16 +71,19 @@ class Melee(Monster):
 
     def Jump(self,s):
         if not self.jump:
-            return
+             return
 
         if self.jumpY < 0:
             self.jumpY = self.posY
 
-        if self.jumpY + 100  > self.posY and not self.collision(0,s) and self.jump and not self.MonsterCol(0,s):
+        if self.jumpY + 100  > self.posY and not self.collision(0,s) and not self.MonsterCol(0,s):
+            print(self.jumpY+100)
             self.posY += s
         else:
             self.jump = False
             self.jumpY = -1
+
+
 
 class Archer(Monster):
     i_w = 25 * 4
