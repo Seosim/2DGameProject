@@ -77,7 +77,6 @@ class Melee(Monster):
             self.jumpY = self.posY
 
         if self.jumpY + 100  > self.posY and not self.collision(0,s) and not self.MonsterCol(0,s):
-            print(self.jumpY+100)
             self.posY += s
         else:
             self.jump = False
@@ -110,13 +109,13 @@ class Archer(Monster):
     def Shooting(self):
         if self.action == 2:
             self.dir = -1
-            self.rad = math.atan2(player.posY - self.posY, player.posX - self.posX) * 180 / math.pi + 180
+            self.rad = math.atan2(player.posY - self.posY, player.posX - self.posX) * 180 / math.pi #+ 180
         elif self.action ==3:
             self.dir = 1
             self.rad = math.atan2(player.posY - self.posY, player.posX - self.posX) * 180 / math.pi
         arrow = Arrow(self.posX,self.posY,self.power,self.rad,self.dir)
 
-        arrow.imageLoad('./res/bullet.png')
+        arrow.imageLoad('./res/arrow.png')
         a_list.append(arrow)
 
     def Show(self,x):
@@ -132,21 +131,16 @@ class Arrow(Sprite):
         self.posX = px
         self.posY = py
         self.spawnX = self.posX
-        self.w = 10
-        self.h = 10
+        self.w = 15*3
+        self.h = 5*3
         self.power = dmg
 
 
     def Show(self):
-        self.image.clip_draw(self.i_w*int(self.frame),self.i_h*self.action,self.w,self.h,self.posX - player.cameraX,self.posY)
-
+        self.image.rotate_draw(self.rad / 360 * 2 * math.pi,self.posX - player.cameraX,self.posY,self.w,self.h)
     def move(self):
-        if self.dir == 1:
-            self.posX += self.speed * math.cos(self.rad / 360 * 2 * math.pi)
-            self.posY += self.speed * math.sin(self.rad / 360 * 2 * math.pi)
-        else:
-            self.posX -= self.speed * math.cos(self.rad / 360 * 2 * math.pi)
-            self.posY -= self.speed * math.sin(self.rad / 360 * 2 * math.pi)
+        self.posX += self.speed * math.cos(self.rad / 360 * 2 * math.pi)
+        self.posY += self.speed * math.sin(self.rad / 360 * 2 * math.pi)
 
 
 def MonsterImage():

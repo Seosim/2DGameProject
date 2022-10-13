@@ -88,13 +88,14 @@ class Bullet(Sprite):
         self.posX = gun.posX
         self.posY = gun.posY
         self.spawnX = self.posX
-        self.w = 10
-        self.h = 10
+        self.w = 15
+        self.h = 5
         self.damage = gun.damage
 
 
     def Show(self):
-        self.image.clip_draw(0,0,self.w,self.h,self.posX - player.cameraX,self.posY)
+        #self.image.clip_draw(0,0,self.w,self.h,self.posX - player.cameraX,self.posY)
+        self.image.rotate_draw(self.rad / 360*2*math.pi,self.posX-player.cameraX,self.posY,self.w,self.h)
 
     def move(self):
         if self.dir == 1:

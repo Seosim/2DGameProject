@@ -100,7 +100,6 @@ class Player(Sprite):
                 if abs(self.posY - monster.posY) < (monster.h / 2) + (self.h / 2)-15:  # 세로줄 충돌
                     if self.inv == 0:
                         self.hp -= monster.power
-                        print('player hp : ',self.hp)
                         self.inv = 2
                         return
 
@@ -115,9 +114,6 @@ class Player(Sprite):
         if self.inv <= 0 :
             self.hitframe = 0
             self.inv = 0
-
-
-
 
 player = Player()
 
