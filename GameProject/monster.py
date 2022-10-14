@@ -52,8 +52,9 @@ class Melee(Monster):
     h = i_h
     def Hunting(self):
         dir = 0
-        distance = abs(self.posX - player.posX)
-        if distance < 500 or self.maxhp != self.hp:
+        distanceX = abs(self.posX - player.posX)
+        distanceY = abs(self.posY - player.posY)
+        if (distanceX < 500 or self.maxhp != self.hp ) and distanceY<200:
             if self.posX - player.posX > 5:
                 self.action = 2
                 dir = -1
