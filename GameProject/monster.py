@@ -17,17 +17,21 @@ class Monster(Sprite):
         self.posX = random.randint(10,90)*100
         self.posY = 1000
         self.jumpY = -1
-        self.jump = True
+        self.jump = False
+        self.falling = True
 
 
     def Gravity(self):
-        if not self.collision(0, -self.gravitySpeed) and not self.MonsterCol(0, -self.gravitySpeed):
+        if not self.collision(0, -self.gravitySpeed) and not self.MonsterCol(0, -self.gravitySpeed) and self.falling:
             self.posY -= self.gravitySpeed
+            self.falling = True
             if self.gravitySpeed < 10:
                 self.gravitySpeed += 0.5
         else:
             self.jump = True
+            self.falling = True
             self.jumpY = -1
+
 
     def MonsterCol(self,x,y):
         cnt = 0
@@ -54,7 +58,7 @@ class Melee(Monster):
         dir = 0
         distanceX = abs(self.posX - player.posX)
         distanceY = abs(self.posY - player.posY)
-        if (distanceX < 500 or self.maxhp != self.hp ) and distanceY<200:
+        if (math.sqrt(distanceX**2+distanceY**2) < 500 and distanceY < 150) or self.maxhp != self.hp  :
             if self.posX - player.posX > 5:
                 self.action = 2
                 dir = -1
@@ -77,10 +81,11 @@ class Melee(Monster):
         if self.jumpY < 0:
             self.jumpY = self.posY
 
-        if self.jumpY + 100  > self.posY and not self.collision(0,s) and not self.MonsterCol(0,s):
+        if self.collision(0,-100) and self.jumpY + 100  > self.posY and not self.collision(0,s) and not self.MonsterCol(0,s):
             self.posY += s
         else:
             self.jump = False
+            self.falling = True
             self.jumpY = -1
 
 
@@ -90,22 +95,19 @@ class Archer(Monster):
     i_h = 25 * 4
     w = i_w
     h = i_h
-    shootDelay = 0
     value = 2
     rad = 0
     dir = 0
     def Hunting(self):
         if abs(self.posX - player.posX) < 500 or self.maxhp != self.hp :
-            if self.posX - player.posX > 5 and 3.05>self.frame > 3.0:
+            if self.posX - player.posX > 5 and 3.05>=self.frame > 3.0:
                 self.action = 2
                 self.Shooting()
-            elif self.posX - player.posX <= -5 and 3.05>self.frame > 3.0:
+            elif self.posX - player.posX <= -5 and 3.05>=self.frame > 3.0:
                 self.action = 3
                 self.Shooting()
-            self.shootDelay = (self.shootDelay + 1) % 100
         else :
             self.action = 0
-            self.shootDelay = 0
 
     def Shooting(self):
         if self.action == 2:

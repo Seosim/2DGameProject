@@ -58,14 +58,25 @@ class Player(Sprite):
         if self.PushSpace:
             if self.jumpY == -1:
                 self.jumpY = self.posY
-                self.speed = 5
 
             if self.posY < self.jumpY + self.jumpPower and not self.collision(0,10):
                 self.posY += 10
+                self.speed = 6
             else:
                 self.PushSpace = False
                 self.jumpY = -1
-                self.speed = 5
+                self.speed = 4
+
+    def Flash(self):
+        for i in range(5):
+            if self.PushR and not self.collision(35, 0):
+                self.posX += 35
+                self.action = 1
+            elif self.PushL and not self.collision(-35, 0):
+                self.posX -= 35
+                self.action = 0
+
+
 
     def Gravity(self):
         if not self.PushSpace:

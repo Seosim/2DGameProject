@@ -14,7 +14,7 @@ class Sprite:
     i_h = 0
     frame = 0
     action = 1
-    gravitySpeed = 1
+    gravitySpeed = 10
     stand = True
     #def __init__(self):
      #   pass
