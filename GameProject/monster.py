@@ -10,11 +10,11 @@ class Monster(Sprite):
     def __init__(self):
         self.hp = 50
         self.maxhp = self.hp
-        self.speed = 1.5
+        self.speed = 1
         self.maxSpeed = 3
         self.power = 3
         self.gravity = True
-        self.posX = random.randint(10,90)*100
+        self.posX = random.randint(10,65)*150
         self.posY = 1000
         self.jumpY = -1
         self.jump = False
@@ -99,7 +99,7 @@ class Archer(Monster):
     rad = 0
     dir = 0
     def Hunting(self):
-        if abs(self.posX - player.posX) < 500 or self.maxhp != self.hp :
+        if abs(self.posX - player.posX) < 800 or self.maxhp != self.hp :
             if self.posX - player.posX > 5 and 3.05>=self.frame > 3.0:
                 self.action = 2
                 self.Shooting()
