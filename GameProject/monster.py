@@ -58,7 +58,7 @@ class Melee(Monster):
         dir = 0
         distanceX = abs(self.posX - player.posX)
         distanceY = abs(self.posY - player.posY)
-        if (math.sqrt(distanceX**2+distanceY**2) < 500 and distanceY < 150) or self.maxhp != self.hp  :
+        if (math.sqrt(distanceX**2+distanceY**2) < 500 and distanceY < 250) or self.maxhp != self.hp  :
             if self.posX - player.posX > 5:
                 self.action = 2
                 dir = -1

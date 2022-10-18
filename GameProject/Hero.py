@@ -6,7 +6,8 @@ height = 700
 
 class Player(Sprite):
     speed = 4
-    jumpPower = 150
+    jumpMax = 150
+    jumpPower = 15
     hp = 100
 
     jumpY = -1
@@ -59,13 +60,14 @@ class Player(Sprite):
             if self.jumpY == -1:
                 self.jumpY = self.posY
 
-            if self.posY < self.jumpY + self.jumpPower and not self.collision(0,10):
-                self.posY += 10
-                self.speed = 6
+            if self.posY < self.jumpY + self.jumpMax and not self.collision(0, self.jumpPower):
+                self.posY += self.jumpPower
+                if self.jumpPower > 5: self.jumpPower -= 1
             else:
                 self.PushSpace = False
                 self.jumpY = -1
                 self.speed = 4
+                self.jumpPower = 15
 
     def Flash(self):
         for i in range(5):
