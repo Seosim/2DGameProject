@@ -36,6 +36,7 @@ class Monster(Sprite):
     def MonsterCol(self,x,y):
         cnt = 0
         for m in m_list:
+            if m.value != 1: continue
             if abs(self.posX - m.posX + x) <= (self.w/2) + (m.w /2):
                 if abs(self.posY - m.posY + y) <= (self.h/2) + (m.h /2):
                     cnt += 1
