@@ -62,6 +62,7 @@ class Player(Sprite):
 
             if self.posY < self.jumpY + self.jumpMax and not self.collision(0, self.jumpPower):
                 self.posY += self.jumpPower
+                self.speed = 6
                 if self.jumpPower > 5: self.jumpPower -= 1
             else:
                 self.PushSpace = False
@@ -109,7 +110,7 @@ class Player(Sprite):
 
     def ColtoMonster(self,mlist):
         for monster in mlist:
-            if abs(self.posX - monster.posX) < (monster.w/2) + (self.w / 2):  # 가로줄 충돌
+            if abs(self.posX - monster.posX)+35 < (monster.w/2) + (self.w / 2):  # 가로줄 충돌
                 if abs(self.posY - monster.posY) < (monster.h / 2) + (self.h / 2)-15:  # 세로줄 충돌
                     if self.inv == 0:
                         self.hp -= monster.power
