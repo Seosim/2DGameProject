@@ -30,3 +30,4 @@ y = len(stage)-1
 
 darkgrass = Sprite()
 darkdirt = Sprite()
+

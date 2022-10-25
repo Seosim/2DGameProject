@@ -20,7 +20,7 @@ def update():
     global timer
     delay(0.01)
     if timer > 0: timer += 1
-    if timer > 300:
+    if timer > 150:
         timer = 0
         game_framework.change_state(play_state)
 
