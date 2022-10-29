@@ -1,6 +1,7 @@
 from pico2d import *
 import game_framework
 import play_state
+from button import Button
 
 background = None
 start_button = None
@@ -8,30 +9,6 @@ quit_button = None
 
 width = 1200
 height = 700
-
-class Button():
-    image = None
-    def __init__(self):
-        Button.image = load_image('./res/title_button.png')
-        self.xSize = 270
-        self.ySize = 102
-        self.posX = 0
-        self.posY = 0
-        self.frame = 0
-
-    def setButton(self,x,y,f):
-        self.posX = x
-        self.posY = y
-        self.frame = f
-
-    def draw(self):
-        self.image.clip_draw(0,self.ySize*self.frame,self.xSize,self.ySize,self.posX,self.posY)
-
-    def InClick(self,x,y):
-        if self.posX - self.xSize/2 < x < self.posX+self.xSize/2:
-            if self.posY - self.ySize/2 < y < self.posY+self.ySize/2:
-                return True
-        return False
 
 def enter():
     global background , start_button , quit_button
@@ -44,6 +21,7 @@ def enter():
 
 def draw():
     clear_canvas()
+    show_cursor()
     background.draw(width / 2, height / 2, width, height)
     start_button.draw()
     quit_button.draw()
@@ -56,10 +34,19 @@ def handle_events():
             if e.button == SDL_BUTTON_LEFT:
                 if start_button.InClick(e.x,699-e.y):
                     game_framework.change_state(play_state)
+                    break
                 if quit_button.InClick(e.x,699-e.y):
                     game_framework.quit()
 
 def update(): pass
 
-def exit(): pass
+def pause():pass
+
+def resume():pass
+
+def exit():
+    global background , start_button , quit_button
+    del background
+    del start_button
+    del quit_button
 

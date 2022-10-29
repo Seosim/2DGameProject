@@ -8,17 +8,21 @@ from weapon import *
 from monster import *
 from UI import *
 
+import title_state
+
 width = 1200
 height = 700
 
 def enter():
-    player.imageLoad('./res/idle.png')
+    print('r')
+    playerInit()
     background.imageLoad('./res/background.png')
     darkgrass.imageLoad('./res/dark_grass50.png')
     darkdirt.imageLoad('./res/dark_dirt.png')
     aim.imageLoad('./res/cursor.png')
     obj_1.imageLoad('./res/largeobject.png')
-    gun.imageLoad('./res/pistolR.png')
+    weaponInit()
+    monsterInit()
     MonsterImage()
     LoadUI()
 
@@ -47,23 +51,23 @@ def update():
     player.ColtoMonster(m_list)
     playerUpdate()
     gun.Update()
-    if Hero.player.hp <= 0: game_framework.quit() #게임종료
+    if Hero.player.hp <= 0: game_framework.change_state(title_state) #게임종료
     delay(0.01)
 
 def handle_events():
     Handle_events()
 
-def exit():
-    global player,background,darkdirt,darkgrass,aim,obj_1,gun,m_list,a_list,bullet_list
-    del player
-    del background
-    del darkdirt
-    del darkgrass
-    del aim
-    del obj_1
-    del gun
-    del m_list
-    del a_list
-    del bullet_list
+def exit(): pass
+    # global player,background,darkdirt,darkgrass,aim,obj_1,gun,m_list,a_list,bullet_list
+    # del player
+    # del background
+    # del darkdirt
+    # del darkgrass
+    # del aim
+    # del obj_1
+    # del gun
+    # del m_list
+    # del a_list
+    # del bullet_list
 
 

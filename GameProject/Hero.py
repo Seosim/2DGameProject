@@ -5,21 +5,24 @@ width = 1200
 height = 700
 
 class Player(Sprite):
-    speed = 4
-    jumpMax = 150
-    jumpPower = 15
-    hp = 100
 
-    jumpY = -1
-    gravitySpeed = 1
-
-    PushR = False
-    PushL = False
-
-    PushSpace = False
-    stand = True
 
     def __init__(self):
+
+        self.speed = 4
+        self.jumpMax = 150
+        self.jumpPower = 15
+        self.hp = 100
+
+        self.jumpY = -1
+        self.gravitySpeed = 1
+
+        self.PushR = False
+        self.PushL = False
+
+        self.PushSpace = False
+        self.stand = True
+
         self.posX = 300
         self.posY = 300
         self.i_w = 16 * 4
@@ -130,6 +133,11 @@ class Player(Sprite):
             self.inv = 0
 
 player = Player()
+
+def playerInit():
+    player.__init__()
+    player.imageLoad('./res/pistolR.png')
+
 
 def playerUpdate():
     player.getScreenX()

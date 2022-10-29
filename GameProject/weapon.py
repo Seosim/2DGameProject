@@ -6,14 +6,18 @@ from monster import m_list
 width = 1200
 height = 700
 
+
+
 class Weapon(Sprite):
-    cameraX = player.posX - (1200 / 2)
-    damage = 10
-    attack_speed = 30
-    dir = 1
-    rad = 0
+
 
     def __init__(self):
+        self.cameraX = player.posX - (1200 / 2)
+        self.damage = 10
+        self.attack_speed = 30
+        self.dir = 1
+        self.rad = 0
+
         self.posX = player.posX
         self.posY = player.posY
         self.w = 50
@@ -136,6 +140,10 @@ def UpdateBullet():
             continue
 
 gun = Weapon()
+
+def weaponInit():
+    gun.__init__()
+    gun.imageLoad('./res/pistolR.png')
 
 
 

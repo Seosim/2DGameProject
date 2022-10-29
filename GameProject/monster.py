@@ -3,8 +3,6 @@ from Hero import player
 import random
 import math
 
-
-
 class Monster(Sprite):
 
     def __init__(self):
@@ -12,7 +10,7 @@ class Monster(Sprite):
         self.maxhp = self.hp
         self.speed = 1
         self.maxSpeed = 3
-        self.power = 10
+        self.power = 35
         self.gravity = True
         self.posX = random.randint(10,65)*150
         self.posY = 1000
@@ -190,10 +188,19 @@ def UpdateArrow():
 m_list = []
 a_list = []
 
-hood = [Melee() for i in range(20)]
-m_list+=hood
-del hood
+def monsterInit():
+    global m_list,a_list
+    m_list.clear()
+    a_list.clear()
 
-archer = [Archer() for i in range(10)]
-m_list+=archer
-del archer
+    hood = [Melee() for i in range(20)]
+    m_list += hood
+    del hood
+
+    archer = [Archer() for i in range(10)]
+    m_list += archer
+    del archer
+
+
+
+
