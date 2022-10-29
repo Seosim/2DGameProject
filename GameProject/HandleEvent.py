@@ -8,9 +8,9 @@ import pause_state
 def Handle_events():
     events = get_events()
     for e in events:
-        if e.type == SDL_QUIT:  #종료버튼
-            game_framework.quit()
-        elif e.type == SDL_KEYDOWN: #키다운
+        # if e.type == SDL_QUIT:  #종료버튼
+        #     game_framework.quit()
+        if e.type == SDL_KEYDOWN: #키다운
             if e.key == SDLK_ESCAPE:
                 game_framework.push_state(pause_state)
             if e.key == SDLK_d:

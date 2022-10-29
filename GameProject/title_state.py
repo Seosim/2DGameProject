@@ -35,10 +35,10 @@ def handle_events():
     for e in events:
         if e.type == SDL_MOUSEBUTTONDOWN:
             if e.button == SDL_BUTTON_LEFT:
-                if start_button.InClick(e.x,699-e.y):
+                if start_button.InClick(e.x,e.y):
                     game_framework.change_state(play_state)
                     break
-                if quit_button.InClick(e.x,699-e.y):
+                if quit_button.InClick(e.x,e.y):
                     game_framework.quit()
         elif e.type == SDL_MOUSEMOTION: #마우스 움직임
             cursor.aim.UpdateCursor(e.x,e.y)

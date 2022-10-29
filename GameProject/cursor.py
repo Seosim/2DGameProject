@@ -6,6 +6,8 @@ class Cursor(Sprite) :
         self.i_h = 50
         self.w = 100
         self.h = 100
+        self.posX = 600
+        self.posY = 350
 
     def UpdateCursor(self,x,y):
         self.posX = x

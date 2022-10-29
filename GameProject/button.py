@@ -19,6 +19,7 @@ class Button():
         self.image.clip_draw(0,self.ySize*self.frame,self.xSize,self.ySize,self.posX,self.posY)
 
     def InClick(self,x,y):
+        y = 699 - y
         if self.posX - self.xSize/2 < x < self.posX+self.xSize/2:
             if self.posY - self.ySize/2 < y < self.posY+self.ySize/2:
                 return True

@@ -27,7 +27,7 @@ class Weapon(Sprite):
         self.delay = 0
         self.clickButton = False
         self.distance = 500
-        self.ammo = 6
+        self.ammo = 8
         self.maxAmmo = self.ammo
         self.reloadDelay = 0
         self.reloadTime = 50
