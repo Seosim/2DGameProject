@@ -1,5 +1,6 @@
 import game_framework
 import play_state
+import title_state
 from pico2d import *
 
 width = 1200
@@ -22,7 +23,7 @@ def update():
     if timer > 0: timer += 1
     if timer > 150:
         timer = 0
-        game_framework.change_state(play_state)
+        game_framework.change_state(title_state)
 
 def draw():
     clear_canvas()

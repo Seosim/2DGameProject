@@ -47,7 +47,7 @@ def update():
     player.ColtoMonster(m_list)
     playerUpdate()
     gun.Update()
-    if Hero.player.hp <= 0: game_framework.quit()
+    if Hero.player.hp <= 0: game_framework.quit() #게임종료
     delay(0.01)
 
 def handle_events():
