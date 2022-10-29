@@ -113,7 +113,7 @@ class Bullet(Sprite):
             if abs(self.posX - monster.posX) < (monster.w/2) + (self.w / 2):  # 가로줄 충돌
                 if abs(self.posY - monster.posY) < (monster.h / 2) + (self.h / 2)-15:  # 세로줄 충돌
                     monster.hp -= self.damage
-                    print('monster hp :' , monster.hp)
+                    # print('monster hp :' , monster.hp)
                     return True
         return False
 

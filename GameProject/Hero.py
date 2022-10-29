@@ -44,7 +44,7 @@ class Player(Sprite):
 
     def Show(self):
         self.image.clip_draw(self.i_w * (self.hitframe+int(self.frame)), self.i_h * self.action, self.w, self.h, self.screenX,self.posY)
-        self.frame = (self.frame + 0.1) % 4
+
 
     def move(self):
         stage = Map.stageData[Map.number]
@@ -140,6 +140,10 @@ class Player(Sprite):
             self.hitframe = 0
             self.inv = 0
 
+    def KeyReset(self):
+        self.PushL = False
+        self.PushR = False
+
 player = Player()
 
 def playerInit():
@@ -153,3 +157,4 @@ def playerUpdate():
     player.move()
     player.jump()
     player.Gravity()
+    player.frame = (player.frame + 0.1) % 4

@@ -3,7 +3,7 @@ import Hero
 import cursor
 import weapon
 import game_framework
-from MapData import Map
+import pause_state
 
 def Handle_events():
     events = get_events()
@@ -11,6 +11,8 @@ def Handle_events():
         if e.type == SDL_QUIT:  #종료버튼
             game_framework.quit()
         elif e.type == SDL_KEYDOWN: #키다운
+            if e.key == SDLK_ESCAPE:
+                game_framework.push_state(pause_state)
             if e.key == SDLK_d:
                 Hero.player.PushR = True
                 Hero.player.imageLoad('./res/running.png')
@@ -23,8 +25,6 @@ def Handle_events():
                 Hero.player.Flash()
             elif e.key == SDLK_r: #장전
                 if weapon.gun.ammo != weapon.gun.maxAmmo and not weapon.gun.R : weapon.gun.R = True
-            elif e.key == SDLK_t:
-                Map.NextMap()
         elif e.type == SDL_KEYUP:   # 키업
             if e.key == SDLK_d:
                 Hero.player.PushR = False

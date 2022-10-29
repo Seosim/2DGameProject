@@ -2,6 +2,7 @@ from pico2d import *
 import game_framework
 import play_state
 from button import Button
+import cursor
 
 background = None
 start_button = None
@@ -17,14 +18,16 @@ def enter():
     start_button.setButton(600,250,1)
     quit_button = Button()
     quit_button.setButton(600,100,0)
+    cursor.aim.imageLoad('./res/cursor.png')
 
 
 def draw():
     clear_canvas()
-    show_cursor()
+    hide_cursor()
     background.draw(width / 2, height / 2, width, height)
     start_button.draw()
     quit_button.draw()
+    cursor.aim.Show()
     update_canvas()
 
 def handle_events():
@@ -37,6 +40,8 @@ def handle_events():
                     break
                 if quit_button.InClick(e.x,699-e.y):
                     game_framework.quit()
+        elif e.type == SDL_MOUSEMOTION: #마우스 움직임
+            cursor.aim.UpdateCursor(e.x,e.y)
 
 def update(): pass
 
@@ -49,4 +54,3 @@ def exit():
     del background
     del start_button
     del quit_button
-

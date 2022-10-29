@@ -122,7 +122,7 @@ class Archer(Monster):
 
     def Show(self,x):
         self.image.clip_draw(self.i_w*int(self.frame),self.i_h*self.action,self.w,self.h,self.posX - x,self.posY)
-        self.frame = (self.frame+0.05) % 4
+
 
 
 class Arrow(Sprite):
@@ -155,6 +155,8 @@ def MonsterImage():
 def UpdateMonster():
     for monster in m_list:
         monster.Update()
+        if monster.value == 1: monster.frame = (monster.frame + 0.1) % 4
+        else : monster.frame = (monster.frame + 0.05) % 4
         if monster.hp <= 0: m_list.remove(monster)
 
 def ShowMonster():

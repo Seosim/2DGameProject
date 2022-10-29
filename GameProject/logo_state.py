@@ -19,8 +19,8 @@ def exit():
 def update():
     global timer
     delay(0.01)
-    if timer > 0: timer += 1
-    if timer > 150:
+    timer += 1
+    if timer > 500:
         timer = 0
         game_framework.change_state(title_state)
 
@@ -36,5 +36,5 @@ def handle_events():
         if e.type == SDL_MOUSEBUTTONDOWN:
             if e.button == SDL_BUTTON_LEFT:
                 logoImage = load_image('./res/logo_wakeUp.png')
-                timer = 1
+                timer = 400
 

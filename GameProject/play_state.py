@@ -37,11 +37,12 @@ def drawWorld():
     player.Show()
     gun.Show()
     aim.Show()
-    showUI()
+
 
 def draw():
     clear_canvas()
     drawWorld()
+    showUI()
     update_canvas()
 
 def update():
@@ -52,14 +53,13 @@ def update():
     playerUpdate()
     gun.Update()
     if Hero.player.hp <= 0:
-
         game_framework.change_state(title_state) #게임종료
     delay(0.01)
 
 def handle_events():
     Handle_events()
 
-def pause(): pass
+def pause(): player.KeyReset()
 
 def resume(): pass
 
