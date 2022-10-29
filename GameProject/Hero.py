@@ -107,12 +107,21 @@ class Player(Sprite):
         for _y in range(0,len(stage)):
             for _x in range(-2,2,1):
                 x = int(sx + _x)
-                if stage[_y][x]:
+                if stage[_y][x] and stage[_y][x] != 3:
                     y = len(stage) - 1 - _y
                     if abs(self.posX - (x * size + (size / 2)) + valX) < size / 2 + (self.w / 2) - 5:  # 가로줄 충돌
                         if self.posY + (size / 2) + valY > (y * size + (size / 2)) and abs(
                                 self.posY - (y * size + (size / 2)) + valY) < size / 2 + self.h / 2 - 5:  # 세로줄 충돌
-                            if abs((self.posY - self.h / 2) - ((y+1) * size)) <= 5:  # 땅에 착지
+                            if abs((self.posY - self.h / 2) - (y * size + size)) <= 5:  # 땅에 착지
+                                self.gravitySpeed = 1
+                            self.stand = True
+                            return True
+                elif stage[_y][x] == 3:
+                    y = len(stage) - 1 - _y
+                    if abs(self.posX - (x * size + (size / 2)) + valX) < size / 2 + (self.w / 2) - 5:  # 가로줄 충돌
+                        if self.posY + (size / 2) + valY > (y * size + (size / 2)) and abs(
+                                self.posY - (y * size + 15) + valY) < size / 2 + self.h / 2 - 5:  # 세로줄 충돌
+                            if abs((self.posY - self.h / 2) - (y * size + 50+15) ) <= 5:  # 땅에 착지
                                 self.gravitySpeed = 1
                             self.stand = True
                             return True

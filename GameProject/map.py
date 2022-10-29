@@ -17,6 +17,9 @@ def LoadMap():
             elif _x == 2:
                 if -100<(x * size)+size/2 - Hero.player.cameraX <1400:
                     darkdirt.image.clip_draw(0, 0, size, size, (x * size)+size/2 - Hero.player.cameraX, (y * size)+size/2)
+            elif _x == 3:
+                if -100<(x * size)+size/2 - Hero.player.cameraX <1400:
+                    halfgrass.image.clip_draw(0, 0, size, 30, (x * size)+size/2 - Hero.player.cameraX, (y * size)+size/2)
             x += 1
         y -= 1
         x = 0
@@ -31,4 +34,4 @@ def LoadMap():
 
 darkgrass = Sprite()
 darkdirt = Sprite()
-
+halfgrass = Sprite()
