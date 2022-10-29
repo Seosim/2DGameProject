@@ -13,8 +13,8 @@ import title_state
 width = 1200
 height = 700
 
+
 def enter():
-    print('r')
     playerInit()
     background.imageLoad('./res/background.png')
     darkgrass.imageLoad('./res/dark_grass50.png')
@@ -29,7 +29,7 @@ def enter():
 def drawWorld():
     hide_cursor()
     background.image.draw(width / 2, height / 2, width, height)
-    LoadMap(stage)
+    LoadMap()
     LoadObj(obj_loc)
     ShowMonster()
     ShowArrow()
@@ -51,11 +51,17 @@ def update():
     player.ColtoMonster(m_list)
     playerUpdate()
     gun.Update()
-    if Hero.player.hp <= 0: game_framework.change_state(title_state) #게임종료
+    if Hero.player.hp <= 0:
+
+        game_framework.change_state(title_state) #게임종료
     delay(0.01)
 
 def handle_events():
     Handle_events()
+
+def pause(): pass
+
+def resume(): pass
 
 def exit(): pass
     # global player,background,darkdirt,darkgrass,aim,obj_1,gun,m_list,a_list,bullet_list

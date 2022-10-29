@@ -1,5 +1,6 @@
 from pico2d import load_image
-from MapData import *
+from MapData import Map
+from MapData import size
 
 width = 1200
 height = 700
@@ -31,7 +32,10 @@ class Sprite:
         if self.posX > width - 40: self.posX = width - 40
 
     def collision(self,valX, valY):
+        stage = Map.stageData[Map.number]
+
         sx = self.posX//size
+        if sx > len(Map.stageData[Map.number][0]) : return False
 
         for _y in range(0,len(stage)):
             for _x in range(-2,2,1):

@@ -3,6 +3,7 @@ import Hero
 import cursor
 import weapon
 import game_framework
+from MapData import Map
 
 def Handle_events():
     events = get_events()
@@ -22,13 +23,13 @@ def Handle_events():
                 Hero.player.Flash()
             elif e.key == SDLK_r: #장전
                 if weapon.gun.ammo != weapon.gun.maxAmmo and not weapon.gun.R : weapon.gun.R = True
+            elif e.key == SDLK_t:
+                Map.NextMap()
         elif e.type == SDL_KEYUP:   # 키업
             if e.key == SDLK_d:
                 Hero.player.PushR = False
             elif e.key == SDLK_a:
                 Hero.player.PushL = False
-            #elif e.key == SDLK_SPACE:
-             #   Hero.player.PushSpace = False  #점프중 떼면 바로착지
         elif e.type == SDL_MOUSEMOTION: #마우스 움직임
             cursor.aim.UpdateCursor(e.x,e.y)
             weapon.gun.DefDir(e.x)

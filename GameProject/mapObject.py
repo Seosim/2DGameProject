@@ -1,5 +1,5 @@
 from sprite import Sprite
-import Hero
+from Hero import player
 
 size = 100
 
@@ -73,15 +73,15 @@ y = len(obj_loc)
 
 def LoadObj(stage):
     global x,y
-    cameraX = Hero.player.posX - (1200 / 2)
-    #카메라가 맵밖을 촬영하지 않게 설정
-    if cameraX <= 0: cameraX = 0
-    elif size * len(stage[6]) - Hero.player.posX <= 600: cameraX = size * len(stage[6]) - 1200
+    # cameraX = Hero.player.posX - (1200 / 2)
+    # #카메라가 맵밖을 촬영하지 않게 설정
+    # if cameraX <= 0: cameraX = 0
+    # elif size * len(stage[6]) - Hero.player.posX <= 600: cameraX = size * len(stage[6]) - 1200
 
     for _y in stage:
         for _x in _y:
             if _x:
-                obj_list[_x].Show(cameraX,(x * size) + size / 2,(y * size) + size / 2)
+                obj_list[_x].Show(player.cameraX,(x * size) + size / 2,(y * size) + size / 2)
             x += 1
         y -= 1
         x = 0

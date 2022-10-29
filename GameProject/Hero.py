@@ -1,11 +1,11 @@
 from sprite import Sprite
-from MapData import *
+from MapData import Map
+from MapData import size
 
 width = 1200
 height = 700
 
 class Player(Sprite):
-
 
     def __init__(self):
 
@@ -35,6 +35,8 @@ class Player(Sprite):
         self.cameraX = width/2
 
     def getScreenX(self):
+        stage = Map.stageData[Map.number]
+
         if width / 2 > self.posX: self.screenX = self.posX
         elif self.posX >= size * len(stage[6]) - width/2:
             self.screenX = width - (len(stage[6])*size-self.posX)
@@ -45,6 +47,8 @@ class Player(Sprite):
         self.frame = (self.frame + 0.1) % 4
 
     def move(self):
+        stage = Map.stageData[Map.number]
+
         if self.PushR and not self.collision(self.speed,0):
             self.posX += self.speed
             self.action = 1
@@ -94,7 +98,11 @@ class Player(Sprite):
             else: self.PushSpace = False
 
     def collision(self,valX, valY):
+
+        stage = Map.stageData[Map.number]
+
         sx = self.posX//size
+        if sx > len(Map.stageData[Map.number][0]) : return False
 
         for _y in range(0,len(stage)):
             for _x in range(-2,2,1):

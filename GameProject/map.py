@@ -1,11 +1,13 @@
 from sprite import Sprite
 import Hero
-from MapData import stage
+from MapData import Map
 from MapData import size
 
+def LoadMap():
+    stage = Map.stageData[Map.number]
 
-def LoadMap(stage):
-    global x,y
+    x = 0
+    y = len(stage) - 1
 
     for _y in stage:
         for _x in _y:
@@ -18,15 +20,14 @@ def LoadMap(stage):
             x += 1
         y -= 1
         x = 0
-    x = 0
-    y = 6
+    # x = 0
+    # y = 6
 
 
 
 
 # 가로타일 100개 세로타일 7개
-x = 0
-y = len(stage)-1
+
 
 darkgrass = Sprite()
 darkdirt = Sprite()

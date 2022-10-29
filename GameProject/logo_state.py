@@ -1,5 +1,4 @@
 import game_framework
-import play_state
 import title_state
 from pico2d import *
 
