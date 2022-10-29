@@ -10,7 +10,7 @@ class Player(Sprite):
     def __init__(self):
 
         self.speed = 4
-        self.jumpMax = 150
+        self.jumpMax = 180
         self.jumpPower = 15
         self.hp = 100
 
@@ -70,7 +70,7 @@ class Player(Sprite):
             if self.posY < self.jumpY + self.jumpMax and not self.collision(0, self.jumpPower):
                 self.posY += self.jumpPower
                 self.speed = 6
-                if self.jumpPower > 5: self.jumpPower -= 1
+                if self.jumpPower > 5: self.jumpPower -= 0.7
             else:
                 self.PushSpace = False
                 self.jumpY = -1

@@ -10,7 +10,7 @@ class Monster(Sprite):
         self.maxhp = self.hp
         self.speed = 1
         self.maxSpeed = 3
-        self.power = 55
+        self.power = 15
         self.gravity = True
         self.posX = random.randint(10,65)*150
         self.posY = 1000
