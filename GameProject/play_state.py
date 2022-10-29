@@ -47,6 +47,7 @@ def update():
     player.ColtoMonster(m_list)
     playerUpdate()
     gun.Update()
+    if Hero.player.hp <= 0: game_framework.quit()
     delay(0.01)
 
 def handle_events():
@@ -64,15 +65,5 @@ def exit():
     del m_list
     del a_list
     del bullet_list
-
-
-
-# while HandleEvent.running:
-#     show()
-#     update()
-#     Handle_events()
-#     delay(0.01)
-#
-# close_canvas()
 
 
