@@ -6,6 +6,7 @@ from cursor import *
 from mapObject import *
 from weapon import *
 from monster import *
+from UI import *
 
 width = 1200
 height = 700
@@ -19,6 +20,7 @@ def enter():
     obj_1.imageLoad('./res/largeobject.png')
     gun.imageLoad('./res/pistolR.png')
     MonsterImage()
+    LoadUI()
 
 def drawWorld():
     hide_cursor()
@@ -31,6 +33,7 @@ def drawWorld():
     player.Show()
     gun.Show()
     aim.Show()
+    showUI()
 
 def draw():
     clear_canvas()
