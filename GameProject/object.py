@@ -2,6 +2,8 @@ from sprite import Sprite
 from Hero import player
 from monster import *
 from MapData import *
+import loading_state
+import game_framework
 
 class Object(Sprite):
     freeze = False
@@ -33,6 +35,9 @@ class Portal(Object):
         m_list.clear()
         Map.NextMap()
         player.posX = 300
+        game_framework.push_state(loading_state)
+
+
 
 
 o_list = []
