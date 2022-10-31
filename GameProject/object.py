@@ -41,8 +41,8 @@ def ObjectInit():
     global o_list
     o_list.clear()
 
-    portal = Portal(0,100,100,9700,150)
-    portal.imageLoad('./res/hp.png')
+    portal = Portal(0,130,200,9700,200)
+    portal.imageLoad('./res/Portal.png')
     o_list.append(portal)
 
 def ShowObject():

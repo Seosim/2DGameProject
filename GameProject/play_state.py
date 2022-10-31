@@ -37,9 +37,9 @@ def drawWorld():
     ShowMonster()
     ShowArrow()
     ShowBullet()
+    ShowObject()
     player.Show()
     gun.Show()
-    ShowObject()
     aim.Show()
 
 
