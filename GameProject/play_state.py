@@ -7,6 +7,7 @@ from mapObject import *
 from weapon import *
 from monster import *
 from UI import *
+from object import *
 
 import title_state
 
@@ -25,6 +26,7 @@ def enter():
     weaponInit()
     monsterInit()
     MonsterImage()
+    ObjectInit()
     LoadUI()
 
 def drawWorld():
@@ -37,6 +39,7 @@ def drawWorld():
     ShowBullet()
     player.Show()
     gun.Show()
+    ShowObject()
     aim.Show()
 
 
@@ -47,6 +50,7 @@ def draw():
     update_canvas()
 
 def update():
+    UpdateObject()
     UpdateMonster()
     UpdateArrow()
     UpdateBullet()

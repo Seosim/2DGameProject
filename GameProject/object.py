@@ -1,8 +1,19 @@
 from sprite import Sprite
 from Hero import player
+from monster import *
+from MapData import *
 
 class Object(Sprite):
     freeze = False
+
+    def __init__(self,iw,sizeX,sizeY,pX,pY):
+        self.i_w = iw
+        self.w = sizeX
+        self.h = sizeY
+        self.posX = pX
+        self.posY = pY
+
+
     def Gravity(self):
         if self.freeze : return
 
@@ -10,10 +21,42 @@ class Object(Sprite):
             self.posY -=5
         else : self.freeze = True
 
-    def Interaction(self):
+    def InPlayer(self):
         if abs(player.posX - self.posX) < (player.w/2+self.w/2) \
             and abs(player.posY - self.posY) < (player.h/2+self.h/2):
             return True
         else : return False
+
+class Portal(Object):
+
+    def Interaction(self):
+        m_list.clear()
+        Map.NextMap()
+        player.posX = 300
+
+
+o_list = []
+
+def ObjectInit():
+    global o_list
+    o_list.clear()
+
+    portal = Portal(0,100,100,9700,150)
+    portal.imageLoad('./res/hp.png')
+    o_list.append(portal)
+
+def ShowObject():
+    for o in o_list:
+        o.Show(player.cameraX)
+
+def UpdateObject():
+    for o in o_list:
+        o.Gravity()
+
+def Interact():
+    for o in o_list:
+        if o.InPlayer():
+            o.Interaction()
+            return
 
 
