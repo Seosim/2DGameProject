@@ -10,7 +10,6 @@ def enter():
     global image, timer
     image = pico2d.load_image('./res/logo_Sleep.png')
     timer = 0
-    print('h')
 
 def update():
     global timer

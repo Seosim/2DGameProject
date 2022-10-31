@@ -10,7 +10,7 @@ timer = 0
 def enter():
     global logoImage , timer
     logoImage = load_image('./res/logo_Sleep.png')
-    timer = 0
+    timer = 200
 
 def exit():
     global logoImage,timer
