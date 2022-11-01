@@ -17,15 +17,11 @@ height = 700
 
 def enter():
     playerInit()
-    background.imageLoad('./res/background.png')
-    darkgrass.imageLoad('./res/dark_grass50.png')
-    darkdirt.imageLoad('./res/dark_dirt.png')
-    halfgrass.imageLoad('./res/half_grass.png')
+
     aim.imageLoad('./res/cursor.png')
     obj_1.imageLoad('./res/largeobject.png')
     weaponInit()
     monsterInit()
-    MonsterImage()
     ObjectInit()
     LoadUI()
 

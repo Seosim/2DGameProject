@@ -35,3 +35,7 @@ def LoadMap():
 darkgrass = Sprite()
 darkdirt = Sprite()
 halfgrass = Sprite()
+
+darkgrass.imageLoad('./res/dark_grass50.png')
+darkdirt.imageLoad('./res/dark_dirt.png')
+halfgrass.imageLoad('./res/half_grass.png')

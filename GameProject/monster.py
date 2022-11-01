@@ -1,3 +1,5 @@
+import pico2d
+
 from sprite import Sprite
 from Hero import player
 import random
@@ -53,6 +55,8 @@ class Melee(Monster):
     i_h = 25*4
     w = i_w
     h = i_h
+
+    image = pico2d.load_image('./res/Hoodman.png')
     def Hunting(self):
         dir = 0
         distanceX = abs(self.posX - player.posX)
@@ -97,6 +101,7 @@ class Archer(Monster):
     value = 2
     rad = 0
     dir = 0
+    image = pico2d.load_image('./res/archer.png')
     def Hunting(self):
         if abs(self.posX - player.posX) < 800 or self.maxhp != self.hp :
             if self.posX - player.posX > 5 and 3.05>=self.frame > 3.0:
@@ -117,7 +122,7 @@ class Archer(Monster):
             self.rad = math.atan2(player.posY - self.posY, player.posX - self.posX) * 180 / math.pi
         arrow = Arrow(self.posX,self.posY,self.power,self.rad,self.dir)
 
-        arrow.imageLoad('./res/arrow.png')
+        #arrow.imageLoad('./res/arrow.png')
         a_list.append(arrow)
 
     def Show(self,x):
@@ -126,6 +131,7 @@ class Archer(Monster):
 
 
 class Arrow(Sprite):
+    image = pico2d.load_image('./res/arrow.png')
     def __init__(self,px,py,dmg,rad,dir):
         self.speed = 5
         self.dir = dir

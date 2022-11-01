@@ -1,3 +1,5 @@
+import pico2d
+
 from sprite import Sprite
 from Hero import player
 import math
@@ -6,10 +8,7 @@ from monster import m_list
 width = 1200
 height = 700
 
-
-
 class Weapon(Sprite):
-
 
     def __init__(self):
         self.cameraX = player.posX - (1200 / 2)
@@ -48,7 +47,7 @@ class Weapon(Sprite):
             if self.ammo == 0:
                 return
             b = Bullet()
-            b.imageLoad('./res/Bullet.png')
+            #b.imageLoad('./res/Bullet.png')
             if self.dir < 0: b.dir = 0
             bullet_list.append(b)
             self.delay = 1
@@ -85,7 +84,7 @@ class Weapon(Sprite):
 bullet_list = []
 
 class Bullet(Sprite):
-
+    image = pico2d.load_image('./res/Bullet.png')
     def __init__(self):
         self.speed = 30
         self.rad = gun.rad
