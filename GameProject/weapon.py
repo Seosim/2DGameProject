@@ -44,7 +44,7 @@ class Weapon(Sprite):
         self.image.rotate_draw(self.rad / 360 * 2 * math.pi, self.posX-player.cameraX, self.posY, self.w, self.h)
 
     def Shot(self):
-        if self.delay == 0:
+        if self.delay == 0 and self.reloadDelay == 0:
             if self.ammo == 0:
                 return
             b = Bullet()
@@ -55,7 +55,8 @@ class Weapon(Sprite):
             self.ammo -= 1
 
     def Reload(self):
-        if self.R : self.reloadDelay += 1
+        if self.R :
+            self.reloadDelay += 1
         else: return
 
         if self.reloadTime == self.reloadDelay:

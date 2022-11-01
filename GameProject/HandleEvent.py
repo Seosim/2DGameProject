@@ -25,7 +25,8 @@ def Handle_events():
             elif e.key == SDLK_f:
                 Hero.player.Flash()
             elif e.key == SDLK_r: #장전
-                if weapon.gun.ammo != weapon.gun.maxAmmo and not weapon.gun.R : weapon.gun.R = True
+                if weapon.gun.ammo != weapon.gun.maxAmmo and not weapon.gun.R:
+                    weapon.gun.R = True
             elif e.key == SDLK_g:
                 object.Interact()
         elif e.type == SDL_KEYUP:   # 키업
