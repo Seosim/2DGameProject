@@ -8,6 +8,7 @@ from weapon import *
 from monster import *
 from UI import *
 from object import *
+from boss import *
 
 import title_state
 
@@ -24,10 +25,12 @@ def enter():
     monsterInit()
     ObjectInit()
     LoadUI()
+    InitBoss()
 
 def drawWorld():
     hide_cursor()
     background.image.draw(width / 2, height / 2, width, height)
+    skul.Draw()
     LoadMap()
     LoadObj(obj_loc)
     ShowMonster()
@@ -53,6 +56,7 @@ def update():
     player.ColtoMonster(m_list)
     playerUpdate()
     gun.Update()
+    skul.update()
     if Hero.player.hp <= 0:
         game_framework.change_state(title_state) #게임종료
     delay(0.01)

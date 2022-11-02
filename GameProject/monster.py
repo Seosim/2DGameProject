@@ -101,7 +101,7 @@ class Archer(Monster):
     value = 2
     rad = 0
     dir = 0
-    image = pico2d.load_image('./res/archer.png')
+    image = pico2d.load_image('./res/Archer.png')
     def Hunting(self):
         if abs(self.posX - player.posX) < 800 or self.maxhp != self.hp :
             if self.posX - player.posX > 5 and 3.05>=self.frame > 3.0:
@@ -165,6 +165,15 @@ def UpdateMonster():
         else : monster.frame = (monster.frame + 0.05) % 4
         if monster.hp <= 0: m_list.remove(monster)
 
+# boss = Melee()
+# boss.imageLoad('./res/Skull.png')
+# boss.i_w = 510
+# boss.i_h = 0
+# boss.w= 510
+# boss.h = 558
+# boss.posX = 600
+# boss.posY = 300
+
 def ShowMonster():
     for monster in m_list:
         #monster.Update()
@@ -195,6 +204,8 @@ def UpdateArrow():
 
 m_list = []
 a_list = []
+
+
 
 def monsterInit():
     global m_list,a_list
