@@ -33,7 +33,7 @@ class Boss(Sprite):
         elif  self.rdir < self.r_hand.posY : self.r_hand.posY -= 1
 
     def CreateGhost(self):
-        s = [Ghost() for i in range(1)]
+        s = [Ghost() for i in range(7)]
         self.s_list += s
 
 
@@ -44,8 +44,8 @@ class Boss(Sprite):
         self.frame = (self.frame+ 0.05) % 2
         if self.skillDelay % 300 == 0:
             self.UpdateHand()
-       # if self.skillDelay % 500 == 0:
-        #    self.CreateGhost()
+        if self.skillDelay % 500 == 0:
+            self.CreateGhost()
         for s in self.s_list:
             s.update()
             if s.col: self.s_list.remove(s)
@@ -54,7 +54,7 @@ class Boss(Sprite):
     def Draw(self):
         self.Show(player.cameraX,player.cameraY)
         self.r_hand.image.clip_composite_draw(0,0,self.r_hand.w,self.r_hand.h,0,'h',self.r_hand.posX-player.cameraX,self.r_hand.posY-player.cameraY,\
-                                              self.r_hand.w,self.r_hand.h)
+                                              self.r_hand.w*2,self.r_hand.h*2)
         self.l_hand.Show(player.cameraX,player.cameraY)
 
         for s in self.s_list:
@@ -67,6 +67,8 @@ class Ghost(Sprite):
         self.image = pico2d.load_image('./res/Ghost.png')
         self.w = 50
         self.h = 50
+        self.i_w = 25
+        self.i_h = 25
         self.posX = random.randint(200,1000)
         self.posY = random.randint(200,600)
         self.damage = 5
@@ -74,29 +76,33 @@ class Ghost(Sprite):
         self.rad = 0
         self.dir = 0
         self.speed = 5
+        self.action = 0
         self.col = False
 
     def update(self):
         self.ready += 1
+        self.frame = (self.frame+0.1) % 4
         self.setRad()
         self.Attack()
         self.hit()
 
     def hit(self):
+        if self.ready <= 250: return
+
         if abs(self.posX - player.posX) < player.w/2:
-            if abs(self.posY - player.posY)+25 < player.h/2:
+            if abs(self.posY - player.posY) < player.h/2:
                 if player.inv == 0:
                     player.hp -= self.damage
-                    player.inv = 2
-            self.col = True
+                    player.inv = 1
+                self.col = True
 
     def setRad(self):
             if self.posX > player.posX: #우측
                 self.dir = -1
-                self.rad = math.atan2(player.posY - self.posY + player.cameraY, player.posX - self.posX) * 180 / math.pi  # + 180
+                self.rad = math.atan2(player.posY - self.posY, player.posX - self.posX) * 180 / math.pi  # + 180
             elif self.posX <= player.posX: #좌측
                 self.dir = 1
-                self.rad = math.atan2(player.posY - self.posY+ player.cameraY, player.posX - self.posX) * 180 / math.pi
+                self.rad = math.atan2(player.posY - self.posY, player.posX - self.posX) * 180 / math.pi
 
     def Attack(self):
         if self.ready > 250:
@@ -111,8 +117,8 @@ def InitBoss():
     skul.r_hand.i_w = 111
     skul.l_hand.i_h = 0
     skul.r_hand.i_h = 0
-    skul.l_hand.w =  111
-    skul.l_hand.h = 102
+    skul.l_hand.w =  200
+    skul.l_hand.h = 200
     skul.r_hand.w =  111
     skul.r_hand.h = 102
     skul.l_hand.posX = skul.posX - 300

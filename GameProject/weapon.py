@@ -4,6 +4,7 @@ from sprite import Sprite
 from Hero import player
 import math
 from monster import m_list
+from boss import skul
 
 width = 1200
 height = 700
@@ -117,6 +118,12 @@ class Bullet(Sprite):
                     return True
         return False
 
+    def ColtoGhost(self):
+        for s in skul.s_list:
+            if abs(s.posX - self.posX) < (s.w / 2) \
+                and abs(s.posY - self.posY) < (s.h/2) :
+                s.col = True
+
 def ShowBullet():
     for bullet in bullet_list:
         bullet.Show()
@@ -125,11 +132,12 @@ def UpdateBullet():
     for bullet in bullet_list:
         bullet.Show()
         bullet.move()
+        bullet.ColtoGhost()
 
         if abs(bullet.posX - bullet.spawnX) > gun.distance:
             bullet_list.remove(bullet)
             continue
-        if bullet.posY > 700:
+        if bullet.posY > 3000:
             bullet_list.remove(bullet)
             continue
         if bullet.collision(0,0):

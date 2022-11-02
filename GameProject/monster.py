@@ -116,13 +116,12 @@ class Archer(Monster):
     def Shooting(self):
         if self.action == 2:
             self.dir = -1
-            self.rad = math.atan2(player.posY - self.posY+ player.cameraY, player.posX - self.posX) * 180 / math.pi #+ 180
+            self.rad = math.atan2(player.posY - self.posY, player.posX - self.posX) * 180 / math.pi #+ 180
         elif self.action ==3:
             self.dir = 1
-            self.rad = math.atan2(player.posY - self.posY+ player.cameraY, player.posX - self.posX) * 180 / math.pi
+            self.rad = math.atan2(player.posY - self.posY, player.posX - self.posX) * 180 / math.pi
         arrow = Arrow(self.posX,self.posY,self.power,self.rad,self.dir)
 
-        #arrow.imageLoad('./res/arrow.png')
         a_list.append(arrow)
 
     def Show(self,x,y):
