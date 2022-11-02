@@ -40,11 +40,12 @@ class Sprite:
         if sx > len(Map.stageData[Map.number][0]) : return False
         if sy > len(stage) : return False
 
-        for __y in range(-1,2):
+        for __y in range(-2,2):
             _y = len(stage)-1 - max(0,int(sy+__y))
-            if not pico2d.clamp(0,_y,len(stage)-1): continue
+            if _y != pico2d.clamp(0,_y,len(stage)-1): continue
             for _x in range(-2,2,1):
                 x = int(sx + _x)
+                if x != pico2d.clamp(0, x, len(stage[0]) - 1): continue
                 if stage[_y][x] and stage[_y][x] != 3:
                     y = len(stage) - 1 - _y
                     if abs(self.posX - (x * size + (size / 2)) + valX) < size / 2 + (self.w / 2) - 5:  # 가로줄 충돌

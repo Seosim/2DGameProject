@@ -45,11 +45,12 @@ class Boss(Sprite):
         self.frame = (self.frame+ 0.05) % 2
         if self.skillDelay % 300 == 0:
             self.UpdateHand()
-      #  if self.skillDelay % 500 == 0:
-       #     self.CreateGhost()
+        if self.skillDelay % 500 == 0:
+            self.CreateGhost()
         for s in self.s_list:
             s.update()
             if s.col: self.s_list.remove(s)
+            elif s.ready >400: self.s_list.remove(s)
 
 
     def Draw(self):

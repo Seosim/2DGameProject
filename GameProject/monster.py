@@ -4,7 +4,7 @@ from sprite import Sprite
 from Hero import player
 import random
 import math
-
+from MapData import Map
 class Monster(Sprite):
 
     def __init__(self):
@@ -102,7 +102,7 @@ class Archer(Monster):
     dir = 0
     image = pico2d.load_image('./res/Archer.png')
     def Hunting(self):
-        if abs(self.posX - player.posX) < 800 or self.maxhp != self.hp :
+        if abs(self.posX - player.posX) < 800 and abs(self.posY - player.posY) < 800  or self.maxhp != self.hp :
             if self.posX - player.posX > 5 and 3.05>=self.frame > 3.0:
                 self.action = 2
                 self.Shooting()
@@ -187,6 +187,9 @@ def UpdateArrow():
         a.move()
 
         if a.posY > 3000 :
+            a_list.remove(a)
+            continue
+        if a.posX > len(Map.stageData[Map.number][0])*100:
             a_list.remove(a)
             continue
         if a.collision(0,0) :

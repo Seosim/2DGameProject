@@ -5,6 +5,7 @@ from Hero import player
 import math
 from monster import m_list
 from boss import skul
+from MapData import Map
 
 width = 1200
 height = 700
@@ -138,6 +139,9 @@ def UpdateBullet():
             bullet_list.remove(bullet)
             continue
         if bullet.posY > 3000:
+            bullet_list.remove(bullet)
+            continue
+        if bullet.posX> len(Map.stageData[Map.number][0])*100:
             bullet_list.remove(bullet)
             continue
         if bullet.collision(0,0):
