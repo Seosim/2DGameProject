@@ -35,12 +35,12 @@ class Weapon(Sprite):
 
     def radian(self,x,y):
         if self.action == 1:
-            self.rad = math.atan2((height-y)-self.posY,x-player.screenX)*180/math.pi
+            self.rad = math.atan2((height-y)-self.posY+ player.cameraY,x-player.screenX)*180/math.pi
         else :
-            self.rad = math.atan2((height - y) - self.posY, x - player.screenX) * 180 / math.pi + 180
+            self.rad = math.atan2((height - y) - self.posY + player.cameraY, x - player.screenX) * 180 / math.pi + 180
 
     def Show(self):
-        self.image.rotate_draw(self.rad / 360 * 2 * math.pi, self.posX-player.cameraX, self.posY, self.w, self.h)
+        self.image.rotate_draw(self.rad / 360 * 2 * math.pi, self.posX-player.cameraX, self.posY-player.cameraY, self.w, self.h)
 
     def Shot(self):
         if self.delay == 0 and self.reloadDelay == 0:
@@ -98,7 +98,7 @@ class Bullet(Sprite):
 
 
     def Show(self):
-        self.image.rotate_draw(self.rad / 360*2*math.pi,self.posX-player.cameraX,self.posY,self.w,self.h)
+        self.image.rotate_draw(self.rad / 360*2*math.pi,self.posX-player.cameraX,self.posY-player.cameraY,self.w,self.h)
 
     def move(self):
         if self.dir == 1:

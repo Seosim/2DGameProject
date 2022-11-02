@@ -29,7 +29,7 @@ class object(Sprite):
 
     def Show(self,cam_x,posX,posY):
         if -150 < (x * size) + size / 2 - cam_x < 1500:#화면에 안보일땐 출력x
-            obj_1.image.clip_draw(self.i_w, 0, self.w, self.h, posX - cam_x,posY + (self.h-size)/2 )
+            obj_1.image.clip_draw(self.i_w, 0, self.w, self.h, posX - cam_x,posY + (self.h-size)/2-player.cameraY )
             #obj들은 모두 하나의 이미지를 쓰기 때문에 obj1의 이미지 출력으로만 출력
 
 obj_list = []

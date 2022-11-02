@@ -13,13 +13,13 @@ def LoadMap():
         for _x in _y:
             if _x == 1:
                 if -100<(x * size)+size/2 - Hero.player.cameraX <1400:
-                    darkgrass.image.clip_draw(0, 0, size, size, (x * size)+size/2 - Hero.player.cameraX, (y * size)+size/2)
+                    darkgrass.image.clip_draw(0, 0, size, size, (x * size)+size/2 - Hero.player.cameraX, (y * size)+size/2- Hero.player.cameraY)
             elif _x == 2:
                 if -100<(x * size)+size/2 - Hero.player.cameraX <1400:
-                    darkdirt.image.clip_draw(0, 0, size, size, (x * size)+size/2 - Hero.player.cameraX, (y * size)+size/2)
+                    darkdirt.image.clip_draw(0, 0, size, size, (x * size)+size/2 - Hero.player.cameraX, (y * size)+size/2- Hero.player.cameraY)
             elif _x == 3:
                 if -100<(x * size)+size/2 - Hero.player.cameraX <1400:
-                    halfgrass.image.clip_draw(0, 0, size, 30, (x * size)+size/2 - Hero.player.cameraX, (y * size)+size/2)
+                    halfgrass.image.clip_draw(0, 0, size, 30, (x * size)+size/2 - Hero.player.cameraX, (y * size)+size/2 - Hero.player.cameraY)
             x += 1
         y -= 1
         x = 0

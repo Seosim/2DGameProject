@@ -116,17 +116,17 @@ class Archer(Monster):
     def Shooting(self):
         if self.action == 2:
             self.dir = -1
-            self.rad = math.atan2(player.posY - self.posY, player.posX - self.posX) * 180 / math.pi #+ 180
+            self.rad = math.atan2(player.posY - self.posY+ player.cameraY, player.posX - self.posX) * 180 / math.pi #+ 180
         elif self.action ==3:
             self.dir = 1
-            self.rad = math.atan2(player.posY - self.posY, player.posX - self.posX) * 180 / math.pi
+            self.rad = math.atan2(player.posY - self.posY+ player.cameraY, player.posX - self.posX) * 180 / math.pi
         arrow = Arrow(self.posX,self.posY,self.power,self.rad,self.dir)
 
         #arrow.imageLoad('./res/arrow.png')
         a_list.append(arrow)
 
-    def Show(self,x):
-        self.image.clip_draw(self.i_w*int(self.frame),self.i_h*self.action,self.w,self.h,self.posX - x,self.posY)
+    def Show(self,x,y):
+        self.image.clip_draw(self.i_w*int(self.frame),self.i_h*self.action,self.w,self.h,self.posX - x,self.posY-y)
 
 
 
@@ -145,7 +145,7 @@ class Arrow(Sprite):
 
 
     def Show(self):
-        self.image.rotate_draw(self.rad / 360 * 2 * math.pi,self.posX - player.cameraX,self.posY,self.w,self.h)
+        self.image.rotate_draw(self.rad / 360 * 2 * math.pi,self.posX - player.cameraX,self.posY-player.cameraY,self.w,self.h)
     def move(self):
         self.posX += self.speed * math.cos(self.rad / 360 * 2 * math.pi)
         self.posY += self.speed * math.sin(self.rad / 360 * 2 * math.pi)
@@ -177,7 +177,7 @@ def UpdateMonster():
 def ShowMonster():
     for monster in m_list:
         #monster.Update()
-        monster.Show(player.cameraX)
+        monster.Show(player.cameraX,player.cameraY)
         #if monster.hp <= 0: m_list.remove(monster)
 
 def ShowArrow():

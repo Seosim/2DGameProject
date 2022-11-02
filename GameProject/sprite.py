@@ -23,8 +23,8 @@ class Sprite:
     def imageLoad(self,name):
         self.image = load_image(name)
 
-    def Show(self,x):
-        self.image.clip_draw(self.i_w*int(self.frame),self.i_h*self.action,self.w,self.h,self.posX-x,self.posY)
+    def Show(self,x,y):
+        self.image.clip_draw(self.i_w*int(self.frame),self.i_h*self.action,self.w,self.h,self.posX-x,self.posY-y)
 
 
     def OutOfMap(self):

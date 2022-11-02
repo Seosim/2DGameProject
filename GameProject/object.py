@@ -52,7 +52,7 @@ def ObjectInit():
 
 def ShowObject():
     for o in o_list:
-        o.Show(player.cameraX)
+        o.Show(player.cameraX,player.cameraY)
 
 def UpdateObject():
     for o in o_list:
