@@ -1,3 +1,5 @@
+import pico2d
+
 from sprite import Sprite
 from MapData import Map
 from MapData import size
@@ -24,7 +26,7 @@ class Player(Sprite):
         self.stand = True
 
         self.posX = 300
-        self.posY = 300
+        self.posY = 200
         self.i_w = 16 * 4
         self.i_h = 25 * 4
         self.w = self.i_w
@@ -105,9 +107,12 @@ class Player(Sprite):
         stage = Map.stageData[Map.number]
 
         sx = self.posX//size
+        sy = self.posY//size
         if sx > len(Map.stageData[Map.number][0]) : return False
 
-        for _y in range(0,len(stage)):
+        for __y in range(-1,2):
+            _y = len(stage)-1 - max(0,int(sy+__y))
+            if not pico2d.clamp(0,_y,len(stage)-1): continue
             for _x in range(-2,2,1):
                 x = int(sx + _x)
                 if stage[_y][x] and stage[_y][x] != 3:

@@ -1,6 +1,7 @@
 from pico2d import load_image
 from MapData import Map
 from MapData import size
+import pico2d
 
 width = 1200
 height = 700
@@ -24,7 +25,7 @@ class Sprite:
         self.image = load_image(name)
 
     def Show(self,x,y):
-        self.image.clip_draw(self.i_w*int(self.frame),self.i_h*self.action,self.w,self.h,self.posX-x,self.posY-y,self.w,self.h)
+        self.image.clip_draw(self.i_w*int(self.frame),self.i_h*self.action,self.i_w,self.i_h,self.posX-x,self.posY-y,self.w,self.h)
 
 
     def OutOfMap(self):
@@ -35,12 +36,15 @@ class Sprite:
         stage = Map.stageData[Map.number]
 
         sx = self.posX//size
+        sy = self.posY//size
         if sx > len(Map.stageData[Map.number][0]) : return False
+        if sy > len(stage) : return False
 
-        for _y in range(0,len(stage)):
+        for __y in range(-1,2):
+            _y = len(stage)-1 - max(0,int(sy+__y))
+            if not pico2d.clamp(0,_y,len(stage)-1): continue
             for _x in range(-2,2,1):
-                x = int(sx) + _x
-                if x >= len(stage[_y]): continue
+                x = int(sx + _x)
                 if stage[_y][x] and stage[_y][x] != 3:
                     y = len(stage) - 1 - _y
                     if abs(self.posX - (x * size + (size / 2)) + valX) < size / 2 + (self.w / 2) - 5:  # 가로줄 충돌

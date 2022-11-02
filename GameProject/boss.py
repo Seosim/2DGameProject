@@ -9,7 +9,7 @@ class Boss(Sprite):
         self.image = pico2d.load_image('./res/Skull.png')
         self.hp = 1000
         self.i_w = 510
-        self.i_h = 0
+        self.i_h = 558
         self.posX = 600
         self.posY = 400
         self.w = 510
@@ -19,6 +19,7 @@ class Boss(Sprite):
         self.ldir = 250
         self.rdir = 250
         self.skillDelay = 0
+        self.action = 0
         self.s_list = []
 
     def UpdateHand(self):
@@ -44,8 +45,8 @@ class Boss(Sprite):
         self.frame = (self.frame+ 0.05) % 2
         if self.skillDelay % 300 == 0:
             self.UpdateHand()
-        if self.skillDelay % 500 == 0:
-            self.CreateGhost()
+      #  if self.skillDelay % 500 == 0:
+       #     self.CreateGhost()
         for s in self.s_list:
             s.update()
             if s.col: self.s_list.remove(s)
@@ -54,7 +55,7 @@ class Boss(Sprite):
     def Draw(self):
         self.Show(player.cameraX,player.cameraY)
         self.r_hand.image.clip_composite_draw(0,0,self.r_hand.w,self.r_hand.h,0,'h',self.r_hand.posX-player.cameraX,self.r_hand.posY-player.cameraY,\
-                                              self.r_hand.w*2,self.r_hand.h*2)
+                                              self.r_hand.w,self.r_hand.h)
         self.l_hand.Show(player.cameraX,player.cameraY)
 
         for s in self.s_list:
@@ -115,14 +116,16 @@ def InitBoss():
     skul.r_hand.imageLoad('./res/Lhand.png')
     skul.l_hand.i_w = 111
     skul.r_hand.i_w = 111
-    skul.l_hand.i_h = 0
-    skul.r_hand.i_h = 0
+    skul.l_hand.i_h = 102
+    skul.r_hand.i_h = 102
     skul.l_hand.w =  200
     skul.l_hand.h = 200
-    skul.r_hand.w =  111
-    skul.r_hand.h = 102
+    skul.r_hand.w =  200
+    skul.r_hand.h = 200
     skul.l_hand.posX = skul.posX - 300
     skul.r_hand.posX = skul.posX + 300
+    skul.l_hand.action = 0
+
 
 
 

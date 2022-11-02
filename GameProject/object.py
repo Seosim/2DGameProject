@@ -8,12 +8,14 @@ import game_framework
 class Object(Sprite):
     freeze = False
 
-    def __init__(self,iw,sizeX,sizeY,pX,pY):
+    def __init__(self,iw,ih,sizeX,sizeY,pX,pY):
         self.i_w = iw
+        self.i_h = ih
         self.w = sizeX
         self.h = sizeY
         self.posX = pX
         self.posY = pY
+        self.action = 0
 
 
     def Gravity(self):
@@ -46,7 +48,7 @@ def ObjectInit():
     global o_list
     o_list.clear()
 
-    portal = Portal(0,130,200,9700,200)
+    portal = Portal(24,33,100,170,9700,200)
     portal.imageLoad('./res/Portal.png')
     o_list.append(portal)
 

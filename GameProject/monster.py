@@ -15,7 +15,7 @@ class Monster(Sprite):
         self.power = 15
         self.gravity = True
         self.posX = random.randint(10,65)*150
-        self.posY = 1000
+        self.posY = 3000
         self.jumpY = -1
         self.jump = False
         self.falling = True
@@ -46,7 +46,6 @@ class Monster(Sprite):
     def Update(self):
         self.Gravity()
         self.Hunting()
-
 
 class Melee(Monster):
     value = 1
@@ -187,7 +186,7 @@ def UpdateArrow():
     for a in a_list:
         a.move()
 
-        if a.posY > 700 :
+        if a.posY > 3000 :
             a_list.remove(a)
             continue
         if a.collision(0,0) :
