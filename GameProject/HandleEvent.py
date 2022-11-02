@@ -45,5 +45,7 @@ def Handle_events():
             if e.button == SDL_BUTTON_LEFT:
                 weapon.gun.clickButton = False
 
+
+
     if Hero.player.PushR == False and Hero.player.PushL == False:
         Hero.player.imageLoad('./res/idle.png')
