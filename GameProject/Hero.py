@@ -175,4 +175,5 @@ def playerUpdate():
     player.move()
     player.jump()
     player.Gravity()
+    player.OutOfMap()
     player.frame = (player.frame + 0.1) % 4

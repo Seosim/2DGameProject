@@ -30,7 +30,7 @@ class Sprite:
 
     def OutOfMap(self):
         if self.posX < 40: self.posX = 40
-        if self.posX > width - 40: self.posX = width - 40
+        if self.posX > (len(Map.stageData[Map.number][0])*size) - 40: self.posX = width - 40
 
     def collision(self,valX, valY):
         stage = Map.stageData[Map.number]

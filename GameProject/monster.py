@@ -46,6 +46,7 @@ class Monster(Sprite):
     def Update(self):
         self.Gravity()
         self.Hunting()
+        self.OutOfMap()
 
 class Melee(Monster):
     value = 1

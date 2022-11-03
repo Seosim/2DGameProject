@@ -124,6 +124,7 @@ class Bullet(Sprite):
             if abs(s.posX - self.posX) < (s.w / 2) \
                 and abs(s.posY - self.posY) < (s.h/2) :
                 s.col = True
+                return True
 
 def ShowBullet():
     for bullet in bullet_list:
@@ -148,6 +149,9 @@ def UpdateBullet():
             bullet_list.remove(bullet)
             continue
         if bullet.ColtoMonster(m_list):
+            bullet_list.remove(bullet)
+            continue
+        if bullet.ColtoGhost():
             bullet_list.remove(bullet)
             continue
 
