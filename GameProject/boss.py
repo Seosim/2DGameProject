@@ -23,15 +23,17 @@ class Boss(Sprite):
         self.s_list = []
 
     def UpdateHand(self):
-        self.ldir = random.randint(100,500)
-        self.rdir = random.randint(100,500)
+        # self.ldir = random.randint(100,500)
+        # self.rdir = random.randint(100,500)
+        self.ldir = player.posY
+        self.rdir = player.posY + random.randint(-100,100)
 
     def MoveHand(self):
-        if self.ldir > self.l_hand.posY : self.l_hand.posY += 1
-        elif  self.ldir < self.l_hand.posY : self.l_hand.posY -= 1
+        if self.ldir > self.l_hand.posY +3: self.l_hand.posY += 3
+        elif  self.ldir < self.l_hand.posY : self.l_hand.posY -= 3
 
-        if self.rdir > self.r_hand.posY : self.r_hand.posY += 1
-        elif  self.rdir < self.r_hand.posY : self.r_hand.posY -= 1
+        if self.rdir > self.r_hand.posY + 3 : self.r_hand.posY += 3
+        elif  self.rdir < self.r_hand.posY : self.r_hand.posY -= 3
 
     def CreateGhost(self):
         s = [Ghost() for i in range(7)]
@@ -84,7 +86,8 @@ class Ghost(Sprite):
     def update(self):
         self.ready += 1
         self.frame = (self.frame+0.1) % 4
-        self.setRad()
+        if self.ready == 250:
+            self.setRad()
         self.Attack()
         self.hit()
 
