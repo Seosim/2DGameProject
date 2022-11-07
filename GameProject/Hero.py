@@ -36,6 +36,7 @@ class Player(Sprite):
         self.screenX = self.posX
         self.cameraX = width/2
         self.cameraY = 0
+        self.hit = False
 
     def getScreenX(self):
         stage = Map.stageData[Map.number]
@@ -44,6 +45,8 @@ class Player(Sprite):
         elif self.posX >= size * len(stage[6]) - width/2:
             self.screenX = width - (len(stage[6])*size-self.posX)
         else : self.screenX =  width / 2
+
+
 
     def Show(self):
         self.image.clip_draw(self.i_w * (self.hitframe+int(self.frame)), self.i_h * self.action, self.w, self.h, self.screenX,self.posY-self.cameraY)
@@ -64,6 +67,12 @@ class Player(Sprite):
             self.cameraX = 0
         elif size * len(stage[6]) - player.posX <= 600:
             self.cameraX = size * len(stage[6]) - 1200
+
+        if self.hit:
+            if not player.PushR and not player.PushL:
+                self.cameraX += 10
+            else : self.cameraX += 15
+            self.hit = False
 
 
         self.cameraY = max(0,self.posY-height+250)
