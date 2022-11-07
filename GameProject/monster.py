@@ -132,7 +132,7 @@ class Archer(Monster):
 class Arrow(Sprite):
     image = pico2d.load_image('./res/arrow.png')
     def __init__(self,px,py,dmg,rad,dir):
-        self.speed = 5
+        self.speed = 8
         self.dir = dir
         self.rad = rad
         self.posX = px

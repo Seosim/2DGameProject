@@ -6,6 +6,7 @@ import math
 from monster import m_list
 from boss import skul
 from MapData import Map
+from cursor import aim
 
 width = 1200
 height = 700
@@ -48,6 +49,7 @@ class Weapon(Sprite):
         if self.delay == 0 and self.reloadDelay == 0:
             if self.ammo == 0:
                 return
+            gun.radian(aim.posX,aim.posY)
             b = Bullet()
             #b.imageLoad('./res/Bullet.png')
             if self.dir < 0: b.dir = 0

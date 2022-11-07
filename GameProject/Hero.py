@@ -65,7 +65,10 @@ class Player(Sprite):
         elif size * len(stage[6]) - player.posX <= 600:
             self.cameraX = size * len(stage[6]) - 1200
 
-        self.cameraY = max(0,self.posY-height+350)
+
+        self.cameraY = max(0,self.posY-height+250)
+
+
 
     def jump(self):
         if self.PushSpace:
@@ -166,7 +169,7 @@ player = Player()
 
 def playerInit():
     player.__init__()
-    player.imageLoad('./res/pistolR.png')
+    player.imageLoad('./res/idle.png')
 
 
 def playerUpdate():

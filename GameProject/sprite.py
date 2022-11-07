@@ -27,7 +27,6 @@ class Sprite:
     def Show(self,x,y):
         self.image.clip_draw(self.i_w*int(self.frame),self.i_h*self.action,self.i_w,self.i_h,self.posX-x,self.posY-y,self.w,self.h)
 
-
     def OutOfMap(self):
         if self.posX < 40: self.posX = 40
         if self.posX > (len(Map.stageData[Map.number][0])*size) - 40: self.posX = width - 40

@@ -18,18 +18,17 @@ height = 700
 
 def enter():
     playerInit()
-
     aim.imageLoad('./res/cursor.png')
     obj_1.imageLoad('./res/largeobject.png')
     weaponInit()
     monsterInit()
     ObjectInit()
     LoadUI()
-    InitBoss()
 
 def drawWorld():
     hide_cursor()
     background.image.draw(width / 2, height / 2, width, height)
+
     skul.Draw()
     LoadMap()
     LoadObj(obj_loc)
@@ -58,6 +57,7 @@ def update():
     gun.Update()
     skul.update()
     if Hero.player.hp <= 0:
+        Map.number = 0
         game_framework.change_state(title_state) #게임종료
     delay(0.01)
 

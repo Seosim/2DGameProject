@@ -54,3 +54,4 @@ def exit():
     del background
     del start_button
     del quit_button
+

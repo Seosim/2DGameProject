@@ -46,6 +46,5 @@ def Handle_events():
                 weapon.gun.clickButton = False
 
 
-
     if Hero.player.PushR == False and Hero.player.PushL == False:
         Hero.player.imageLoad('./res/idle.png')

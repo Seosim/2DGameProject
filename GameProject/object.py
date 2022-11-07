@@ -2,8 +2,10 @@ from sprite import Sprite
 from Hero import player
 from monster import *
 from MapData import *
+from boss import *
 import loading_state
 import game_framework
+
 
 class Object(Sprite):
     freeze = False
@@ -38,6 +40,7 @@ class Portal(Object):
         Map.NextMap()
         player.posX = 300
         game_framework.push_state(loading_state)
+        InitBoss()
 
 
 
@@ -48,7 +51,7 @@ def ObjectInit():
     global o_list
     o_list.clear()
 
-    portal = Portal(24,33,100,170,9700,200)
+    portal = Portal(24,33,100,170,300,200)
     portal.imageLoad('./res/Portal.png')
     o_list.append(portal)
 
