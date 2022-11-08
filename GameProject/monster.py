@@ -96,8 +96,8 @@ class Melee(Monster):
 class Archer(Monster):
     i_w = 25 * 4
     i_h = 25 * 4
-    w = i_w
-    h = i_h
+    w = 85
+    h = 100
     value = 2
     rad = 0
     dir = 0
@@ -125,7 +125,8 @@ class Archer(Monster):
         a_list.append(arrow)
 
     def Show(self,x,y):
-        self.image.clip_draw(self.i_w*int(self.frame),self.i_h*self.action,self.w,self.h,self.posX - x,self.posY-y)
+        self.image.clip_draw(self.i_w*int(self.frame),self.i_h*self.action,self.i_w,self.i_h,self.posX - x,self.posY-y\
+                             ,self.w,self.h)
 
 
 
