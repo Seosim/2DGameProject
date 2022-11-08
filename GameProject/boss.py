@@ -25,6 +25,8 @@ class Boss(Sprite):
         self.s_list = []
         self.e_list = []
 
+        self.ignore = False
+
     def UpdateHand(self):
         self.ldir = player.posY
         self.rdir = player.posY
@@ -37,7 +39,7 @@ class Boss(Sprite):
         elif  self.rdir < self.r_hand.posY : self.r_hand.posY -= 10
 
     def CreateGhost(self):
-        s = [Ghost() for i in range(7)]
+        s = [Ghost() for i in range(15)]
         self.s_list += s
         del s
 
@@ -45,8 +47,6 @@ class Boss(Sprite):
         e = [EBall(self.posX,self.posY,self.skillDelay + 180*i) for i in range(2)]
         self.e_list += e
         del e
-
-
 
     def update(self):
         if Map.number != 1: return
@@ -62,12 +62,14 @@ class Boss(Sprite):
             self.CreateGhost()
         for s in self.s_list:
             s.update()
-            if s.ready >400:
+            if s.ready >400 or s.col:
                 self.s_list.remove(s)
 
         for e in self.e_list:
             e.update()
             if e.timer > 100: self.e_list.remove(e)
+
+        shield.update()
 
 
 
@@ -85,7 +87,7 @@ class Boss(Sprite):
         for e in self.e_list:
             e.Show(player.cameraX, player.cameraY)
 
-skul = Boss()
+        shield.Show(player.cameraX,player.cameraY)
 
 class Ghost(Sprite):
     image = None
@@ -104,11 +106,12 @@ class Ghost(Sprite):
         self.dir = 0
         self.speed = 8
         self.action = 0
+        self.col = False
 
     def update(self):
         self.ready += 1
         self.frame = (self.frame+0.1) % 4
-        if self.ready == 150:
+        if self.ready >= 150:
             self.setRad()
         self.Attack()
         self.hit()
@@ -119,8 +122,9 @@ class Ghost(Sprite):
         if abs(self.posX - player.posX) < player.w/2:
             if abs(self.posY - player.posY) < player.h/2:
                 if player.inv == 0:
-                    player.hp -= self.damage
-                    player.inv = 1
+                    if not skul.ignore:
+                        player.hp -= self.damage
+                        player.inv = 2
                 self.col = True
 
     def setRad(self):
@@ -176,7 +180,35 @@ class EBall(Sprite):
         self.move()
         self.hit()
 
+class Shield(Sprite):
+    image = None
 
+    def __init__(self):
+        if Shield.image == None:
+            Shield.image = pico2d.load_image('./res/Shield.png')
+            self.posX = 600
+            self.posY = 200
+            self.i_w= 29
+            self.i_h=17
+            self.w = 200
+            self.h = 100
+            self.action = 0
+
+    def SavePlayer(self):
+            skul.ignore = False
+
+            if abs(self.posX - player.posX) < self.w/2:
+                if abs(self.posY - player.posY) < self.h/2:
+                    skul.ignore = True
+
+
+    def update(self):
+        self.frame = (self.frame+0.05) % 2
+        self.SavePlayer()
+
+
+skul = Boss()
+shield = Shield()
 
 def InitBoss():
 

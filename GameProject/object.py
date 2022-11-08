@@ -46,6 +46,7 @@ class Portal(Object):
 
 
 
+
 o_list = []
 
 def ObjectInit():
