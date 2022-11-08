@@ -137,25 +137,25 @@ def UpdateBullet():
         bullet.Show()
         bullet.move()
 
-        if abs(bullet.posX - bullet.spawnX) > gun.distance:
+        if abs(bullet.posX - bullet.spawnX) > gun.distance or bullet.posY > 3000 or \
+                bullet.posX> len(Map.stageData[Map.number][0])*100 or bullet.collision(0,0) or\
+                bullet.ColtoMonster(m_list) or bullet.ColtoBoss():
             bullet_list.remove(bullet)
+            del bullet
             continue
-        if bullet.posY > 3000:
-            bullet_list.remove(bullet)
-            continue
-        if bullet.posX> len(Map.stageData[Map.number][0])*100:
-            bullet_list.remove(bullet)
-            continue
-        if bullet.collision(0,0):
-            bullet_list.remove(bullet)
-            continue
-        if bullet.ColtoMonster(m_list):
-            bullet_list.remove(bullet)
-            continue
-        if bullet.ColtoBoss():
-            bullet_list.remove(bullet)
-            continue
-        # if bullet.ColtoMonster(skul.s_list):
+        # if bullet.posY > 3000:
+        #     bullet_list.remove(bullet)
+        #     continue
+        # if bullet.posX> len(Map.stageData[Map.number][0])*100:
+        #     bullet_list.remove(bullet)
+        #     continue
+        # if bullet.collision(0,0):
+        #     bullet_list.remove(bullet)
+        #     continue
+        # if bullet.ColtoMonster(m_list):
+        #     bullet_list.remove(bullet)
+        #     continue
+        # if bullet.ColtoBoss():
         #     bullet_list.remove(bullet)
         #     continue
 

@@ -5,7 +5,7 @@ from boss import skul
 from MapData import Map
 
 UI_hp = None
-hpBar = None
+hpBar = load_image('./res/hp.png')
 UI_ammo = None
 
 UI_BossHP = None
@@ -20,15 +20,15 @@ def LoadUI():
 
 
 def showUI():
-    for i in range(player.hp):
-        hpBar.clip_draw(0,0,1,20,40+i,700-28)
+    #for i in range(player.hp):
+        #hpBar.draw(0,0,1,20,40+i,700-28)
+    hpBar.draw(90 -(100 - player.hp)//2 ,700-28,player.hp,28)
     UI_hp.clip_draw(0,0,144,28,72,700-28)
 
     for i in range(gun.ammo):
         UI_ammo.clip_draw(0,0,5,15,10+(i*7),700-56)
 
     if Map.number == 1:
-        for i in range(skul.hp//3):
-            hpBar.clip_draw(0,0,1,20,100+i,50,1,50)
+        hpBar.draw(600 -(1000 - skul.hp//3)//2,50,skul.hp//3,50)
         UI_BossHP.clip_draw(0,0,144,28,600,50,1050,50)
 

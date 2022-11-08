@@ -43,10 +43,6 @@ class Portal(Object):
         game_framework.push_state(loading_state)
         InitBoss()
 
-
-
-
-
 o_list = []
 
 def ObjectInit():

@@ -187,7 +187,7 @@ class Shield(Sprite):
         if Shield.image == None:
             Shield.image = pico2d.load_image('./res/Shield.png')
             self.posX = 600
-            self.posY = 200
+            self.posY = 600
             self.i_w= 29
             self.i_h=17
             self.w = 200
@@ -214,6 +214,7 @@ def InitBoss():
 
     if Map.number != 1: return
 
+    skul.__init__()
     skul.l_hand.imageLoad('./res/belial_hand.png')
     skul.r_hand.imageLoad('./res/belial_hand.png')
     skul.l_hand.i_w = 111
