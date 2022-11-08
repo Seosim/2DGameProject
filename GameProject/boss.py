@@ -1,14 +1,15 @@
 import pico2d
 from sprite import Sprite
-import random
 from Hero import player
-import math
 from MapData import Map
+
+import random
+import math
 
 class Boss(Sprite):
     def __init__(self):
         self.image = pico2d.load_image('./res/belial.png')
-        self.hp = 1000
+        self.hp = 3000
         self.i_w = 100
         self.i_h = 130
         self.posX = 600
@@ -53,17 +54,15 @@ class Boss(Sprite):
         self.MoveHand()
         self.skillDelay += 1
         self.frame = (self.frame+ 0.1) % 4
-        if self.skillDelay % 1 == 0:
-            self.Breath()
+        # if self.skillDelay % 1 == 0:
+        #     self.Breath()
         if self.skillDelay % 300 == 0:
             self.UpdateHand()
         if self.skillDelay % 500 == 0:
             self.CreateGhost()
         for s in self.s_list:
             s.update()
-            if s.col:
-                self.s_list.remove(s)
-            elif s.ready >400:
+            if s.ready >400:
                 self.s_list.remove(s)
 
         for e in self.e_list:
@@ -105,7 +104,6 @@ class Ghost(Sprite):
         self.dir = 0
         self.speed = 8
         self.action = 0
-        self.col = False
 
     def update(self):
         self.ready += 1
@@ -181,6 +179,7 @@ class EBall(Sprite):
 
 
 def InitBoss():
+
     if Map.number != 1: return
 
     skul.l_hand.imageLoad('./res/belial_hand.png')

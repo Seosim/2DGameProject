@@ -39,6 +39,7 @@ class Portal(Object):
         m_list.clear()
         Map.NextMap()
         player.posX = 300
+        self.posX = 9700
         game_framework.push_state(loading_state)
         InitBoss()
 
@@ -62,6 +63,11 @@ def ShowObject():
 def UpdateObject():
     for o in o_list:
         o.Gravity()
+
+        if o.posY < - 100:
+            o_list.remove(o)
+            del o
+
 
 def Interact():
     for o in o_list:

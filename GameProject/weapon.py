@@ -122,11 +122,10 @@ class Bullet(Sprite):
                     return True
         return False
 
-    def ColtoGhost(self):
-        for s in skul.s_list:
-            if abs(s.posX - self.posX) < (s.w / 2) \
-                and abs(s.posY - self.posY) < (s.h/2) :
-                s.col = True
+    def ColtoBoss(self):
+        if abs(self.posX - skul.posX)+150 < (skul.w / 2) + (self.w / 2):  # 가로줄 충돌
+            if abs(self.posY - skul.posY) < (skul.h / 2) + (self.h / 2) - 15:  # 세로줄 충돌
+                skul.hp -= self.damage
                 return True
 
 def ShowBullet():
@@ -137,7 +136,6 @@ def UpdateBullet():
     for bullet in bullet_list:
         bullet.Show()
         bullet.move()
-        bullet.ColtoGhost()
 
         if abs(bullet.posX - bullet.spawnX) > gun.distance:
             bullet_list.remove(bullet)
@@ -154,9 +152,12 @@ def UpdateBullet():
         if bullet.ColtoMonster(m_list):
             bullet_list.remove(bullet)
             continue
-        if bullet.ColtoGhost():
+        if bullet.ColtoBoss():
             bullet_list.remove(bullet)
             continue
+        # if bullet.ColtoMonster(skul.s_list):
+        #     bullet_list.remove(bullet)
+        #     continue
 
 gun = Weapon()
 
