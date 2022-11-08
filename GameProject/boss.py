@@ -53,8 +53,8 @@ class Boss(Sprite):
         self.MoveHand()
         self.skillDelay += 1
         self.frame = (self.frame+ 0.1) % 4
-        if self.skillDelay % 2 == 0:
-            self.Breath()
+        # if self.skillDelay % 2 == 0:
+        #     self.Breath()
         if self.skillDelay % 300 == 0:
             self.UpdateHand()
         if self.skillDelay % 500 == 0:

@@ -84,9 +84,10 @@ class Player(Sprite):
 
         if self.pushS and self.PushSpace:
             self.PushSpace = False
-            self.fall = 1
+            if not self.collision(0,-20):
+                self.posY -= 20
 
-        if self.fall > 0: self.fall = (self.fall +1) % 30
+        # if self.fall > 0: self.fall = (self.fall +1) % 25
 
     def jump(self):
         if self.pushS: return
@@ -150,14 +151,14 @@ class Player(Sprite):
                             return True
                 elif stage[_y][x] == 3:
 
-                    if self.fall != 0:
-                        continue
+                    if self.PushSpace:continue
 
                     y = len(stage) - 1 - _y
                     if abs(self.posX - (x * size + (size / 2)) + valX) < size / 2 + (self.w / 2) - 5 :# 가로줄 충돌
-                         if self.posY + (size / 2) + valY > (y * size + (size / 2)) and abs(
-                                 self.posY - (y * size + (size/2)) + valY) < 30/2 + self.h / 2 -5:  # 세로줄 충돌
-                            if abs((self.posY - self.h / 2) - (y * size + 50+15) ) <= 5:  # 땅에 착지
+                         # if self.posY + (size / 2) + valY > (y * size + (size / 2)) and abs(
+                         #         self.posY - (y * size + (size/2)) + valY) < 30/2 + self.h / 2 -5:  # 세로줄 충돌
+                         if abs(self.posY+valY - (self.h/2) - (y * size + (size/2))) < 8 :
+                            if abs((self.posY - self.h / 2) - (y * size + 50+15) ) <= 15:  # 땅에 착지
                                 self.gravitySpeed = 1
                             self.stand = True
                             return True

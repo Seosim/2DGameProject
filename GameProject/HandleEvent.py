@@ -30,7 +30,7 @@ def Handle_events():
             elif e.key == SDLK_g:
                 object.Interact()
             elif e.key == SDLK_s:
-                Hero.player.pushS = True
+                if not Hero.player.PushSpace: Hero.player.pushS = True
         elif e.type == SDL_KEYUP:   # 키업
             if e.key == SDLK_d:
                 Hero.player.PushR = False
