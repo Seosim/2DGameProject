@@ -29,11 +29,15 @@ def Handle_events():
                     weapon.gun.R = True
             elif e.key == SDLK_g:
                 object.Interact()
+            elif e.key == SDLK_s:
+                Hero.player.pushS = True
         elif e.type == SDL_KEYUP:   # 키업
             if e.key == SDLK_d:
                 Hero.player.PushR = False
             elif e.key == SDLK_a:
                 Hero.player.PushL = False
+            elif e.key == SDLK_s:
+                Hero.player.pushS = False
         elif e.type == SDL_MOUSEMOTION: #마우스 움직임
             cursor.aim.UpdateCursor(e.x,e.y)
             weapon.gun.DefDir(e.x)

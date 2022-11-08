@@ -38,6 +38,9 @@ class Player(Sprite):
         self.cameraY = 0
         self.hit = False
 
+        self.pushS = False
+        self.fall = 0
+
     def getScreenX(self):
         stage = Map.stageData[Map.number]
 
@@ -69,17 +72,25 @@ class Player(Sprite):
             self.cameraX = size * len(stage[6]) - 1200
 
         if self.hit:
-            if not player.PushR and not player.PushL:
-                self.cameraX += 10
-            else : self.cameraX += 15
+            if player.PushL: self.cameraX -= 12
+            elif player.PushR: self.cameraX += 12
+            else: self.cameraX += 10
             self.hit = False
 
 
         self.cameraY = max(0,self.posY-height+250)
 
+    def down(self):
 
+        if self.pushS and self.PushSpace:
+            self.PushSpace = False
+            self.fall = 1
+
+        if self.fall > 0: self.fall = (self.fall +1) % 30
 
     def jump(self):
+        if self.pushS: return
+
         if self.PushSpace:
             if self.jumpY == -1:
                 self.jumpY = self.posY
@@ -138,6 +149,10 @@ class Player(Sprite):
                             self.stand = True
                             return True
                 elif stage[_y][x] == 3:
+
+                    if self.fall != 0:
+                        continue
+
                     y = len(stage) - 1 - _y
                     if abs(self.posX - (x * size + (size / 2)) + valX) < size / 2 + (self.w / 2) - 5 :# 가로줄 충돌
                          if self.posY + (size / 2) + valY > (y * size + (size / 2)) and abs(
@@ -186,6 +201,7 @@ def playerUpdate():
     player.invincibility()
     player.move()
     player.jump()
+    player.down()
     player.Gravity()
     player.OutOfMap()
     player.frame = (player.frame + 0.1) % 4
