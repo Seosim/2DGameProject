@@ -69,7 +69,7 @@ class Boss(Sprite):
             e.update()
             if e.timer > 100: self.e_list.remove(e)
 
-        shield.update()
+        if len(skul.s_list): shield.update()
 
 
 
@@ -87,7 +87,7 @@ class Boss(Sprite):
         for e in self.e_list:
             e.Show(player.cameraX, player.cameraY)
 
-        shield.Show(player.cameraX,player.cameraY)
+        if len(skul.s_list): shield.Show(player.cameraX,player.cameraY)
 
 class Ghost(Sprite):
     image = None
@@ -124,7 +124,7 @@ class Ghost(Sprite):
                 if player.inv == 0:
                     if not skul.ignore:
                         player.hp -= self.damage
-                        player.inv = 2
+                        player.inv = 1
                 self.col = True
 
     def setRad(self):
