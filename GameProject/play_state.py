@@ -31,7 +31,7 @@ def drawWorld():
 
     skul.Draw()
     LoadMap()
-    LoadObj(obj_loc)
+    LoadObj(Map.objData[Map.number])
     ShowMonster()
     ShowArrow()
     ShowBullet()

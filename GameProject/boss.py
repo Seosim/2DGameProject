@@ -10,17 +10,17 @@ class Boss(Sprite):
         self.image = pico2d.load_image('./res/belial.png')
         self.hp = 1000
         self.i_w = 100
-        self.i_h = 100
+        self.i_h = 130
         self.posX = 600
-        self.posY = 400
-        self.w = 510
-        self.h = 558
+        self.posY = 500
+        self.w = self.i_w*5
+        self.h = self.i_h*5
         self.l_hand = Sprite()
         self.r_hand = Sprite()
         self.ldir = 250
         self.rdir = 250
         self.skillDelay = 0
-        self.action = 0
+        self.action = 1
         self.s_list = []
         self.e_list = []
 
@@ -41,7 +41,7 @@ class Boss(Sprite):
         del s
 
     def Breath(self):
-        e = [EBall(self.posX,self.posY,random.randint(0,360)) for i in range(1)]
+        e = [EBall(self.posX,self.posY,self.skillDelay + 180*i) for i in range(2)]
         self.e_list += e
         del e
 
@@ -53,8 +53,8 @@ class Boss(Sprite):
         self.MoveHand()
         self.skillDelay += 1
         self.frame = (self.frame+ 0.1) % 4
-        # if self.skillDelay % 2 == 0:
-        #     self.Breath()
+        if self.skillDelay % 1 == 0:
+            self.Breath()
         if self.skillDelay % 300 == 0:
             self.UpdateHand()
         if self.skillDelay % 500 == 0:
@@ -148,7 +148,7 @@ class EBall(Sprite):
         self.posX = random.randint(-30+x,x+30)
         self.posY = random.randint(-130+y,y-100)
         self.toX = random.randint(-5,5)
-        self.damage = 10
+        self.damage = 7
         self.i_w =45
         self.i_h =45
         self.w = 50
@@ -158,21 +158,21 @@ class EBall(Sprite):
         self.timer = 0
 
     def move(self):
-        self.posX += 10 * math.cos(self.rad * math.pi /180)
-        self.posY += 10 * math.sin(self.rad * math.pi /180)
+        self.posX += 15 * math.cos(self.rad * math.pi /180)
+        self.posY += 15 * math.sin(self.rad * math.pi /180)
 
         # self.posX += self.toX
         # self.posY -= 5
 
         self.timer += 1
-        if self.timer > 100 or self.posY < -10: del self
+        if self.timer > 500 or self.posY < -10: del self
 
     def hit(self):
         if abs(self.posX - player.posX) < player.w/2:
             if abs(self.posY - player.posY) < player.h/2:
                 if player.inv == 0:
                     player.hp -= self.damage
-                    player.inv = 1
+                    player.inv = 2
 
     def update(self):
         self.move()
