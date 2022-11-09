@@ -84,7 +84,6 @@ def quit():
 import time
 frame_time = 0
 
-
 def run(start_state):
     global running, stack
     running = True
@@ -101,6 +100,7 @@ def run(start_state):
 
         global frame_time
         frame_time = time.time() - current_time
+        FRAME_SPEED = frame_time
         current_time += frame_time
 
     # repeatedly delete the top of the stack
@@ -126,4 +126,6 @@ def getSpeed(s):
     SPEED = RUN_SPEED_PPS * frame_time
     return SPEED
 
-PIXEL_PER_METER = (10.0 / 0.1) # 10 pixel 30 cm
+
+PIXEL_PER_METER = (10.0 / 0.1) # 10 pixel 10 cm
+MS = 1

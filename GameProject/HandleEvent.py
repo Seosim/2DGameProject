@@ -1,3 +1,5 @@
+import time
+
 from pico2d import *
 import Hero
 import cursor
@@ -31,6 +33,9 @@ def Handle_events():
                 object.Interact()
             elif e.key == SDLK_s:
                 if not Hero.player.PushSpace: Hero.player.pushS = True
+            elif e.key == SDLK_t:
+                if time.time() - Hero.player.slowMotionCD >10:
+                    Hero.player.PushT = True
         elif e.type == SDL_KEYUP:   # 키업
             if e.key == SDLK_d:
                 Hero.player.PushR = False

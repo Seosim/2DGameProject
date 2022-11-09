@@ -12,7 +12,7 @@ class Monster(Sprite):
     def __init__(self):
         self.hp = 50
         self.maxhp = self.hp
-        self.speed = 8
+        self.speed = 6
         self.maxSpeed = 3
         self.power = 15
         self.gravity = True
@@ -82,7 +82,7 @@ class Melee(Monster):
             else : # 점프 조건
                 self.Jump(33)
         else : self.action = 0
-        if self.hp < self.maxhp/2 : self.speed = 12
+        if self.hp < self.maxhp/2 : self.speed = 9
 
     def Jump(self,s):
         if not self.jump:
@@ -177,8 +177,8 @@ def MonsterImage():
 def UpdateMonster():
     for monster in m_list:
         monster.Update()
-        if monster.value == 1: monster.frame = (monster.frame + 4*2*game_framework.frame_time) % 4
-        elif monster.value == 2 : monster.frame = (monster.frame + 4*1*game_framework.frame_time) % 4
+        if monster.value == 1: monster.frame = (monster.frame + 4*2*game_framework.frame_time*game_framework.MS) % 4
+        elif monster.value == 2 : monster.frame = (monster.frame + 4*1*game_framework.frame_time*game_framework.MS) % 4
         if monster.hp <= 0: m_list.remove(monster)
 
 # boss = Melee()

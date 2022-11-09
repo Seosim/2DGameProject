@@ -43,6 +43,10 @@ class Player(Sprite):
         self.pushS = False
         self.fall = 0
 
+        self.slowMotionDelay = 0
+        self.slowMotionCD = 0
+        self.PushT = False
+
     def getScreenX(self):
         stage = Map.stageData[Map.number]
 
@@ -120,7 +124,21 @@ class Player(Sprite):
                 self.posX -= 35
                 self.action = 0
 
+    def SlowMotion(self):
+        if not self.PushT:return
 
+        if self.slowMotionDelay == 0:
+            self.slowMotionCD = 0
+            game_framework.PIXEL_PER_METER /= 5
+            game_framework.MS /= 5
+            self.slowMotionDelay = time.time()
+
+        if player.slowMotionDelay != 0 and time.time() - player.slowMotionDelay > 5:
+            player.slowMotionDelay = 0
+            game_framework.PIXEL_PER_METER *= 5
+            game_framework.MS *= 5
+            player.slowMotionCD = time.time()
+            self.PushT = False
 
     def Gravity(self):
 
@@ -212,6 +230,8 @@ def playerUpdate():
     player.jump()
     player.down()
     player.Gravity()
+    player.SlowMotion()
     player.OutOfMap()
-    player.frame = (player.frame + 4 * 2 * game_framework.frame_time) % 4
+    player.frame = (player.frame + 4 * 2 * game_framework.frame_time*game_framework.MS) % 4
+
 
