@@ -24,8 +24,8 @@ class Boss(Sprite):
         self.action = 1
         self.s_list = []
         self.e_list = []
-
         self.ignore = False
+        self.dead = False
 
     def UpdateHand(self):
         self.ldir = player.posY
@@ -48,6 +48,12 @@ class Boss(Sprite):
         self.e_list += e
         del e
 
+    def Dead(self):
+        self.frame = 0
+        self.action = 2
+        self.dead = True
+
+
     def update(self):
         if Map.number != 1: return
 
@@ -62,7 +68,10 @@ class Boss(Sprite):
 
         if len(skul.s_list): shield.update()
 
-        if self.hp <= 0: return
+        if self.hp <= 0:
+            self.Dead()
+            if self.posY > self.h/2 + 50: self.posY -= 1
+            return
 
         self.MoveHand()
         self.skillDelay += 1
@@ -73,9 +82,6 @@ class Boss(Sprite):
             self.UpdateHand()
         if self.skillDelay % 500 == 0:
             self.CreateGhost()
-
-
-
 
     def Draw(self):
         if Map.number != 1: return
@@ -92,6 +98,8 @@ class Boss(Sprite):
 
         for e in self.e_list:
             e.Show(player.cameraX, player.cameraY)
+
+
 
         if len(skul.s_list): shield.Show(player.cameraX,player.cameraY)
 
