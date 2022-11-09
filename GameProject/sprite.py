@@ -15,6 +15,8 @@ class Sprite:
     i_w = 0
     i_h = 0
     frame = 0
+    frameCnt = 0
+    frameTime = 0
     action = 1
     gravitySpeed = 10
     stand = True

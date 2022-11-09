@@ -109,15 +109,20 @@ class Archer(Monster):
     value = 2
     rad = 0
     dir = 0
+    shoot = False
     image = pico2d.load_image('./res/Archer.png')
     def Hunting(self):
         if abs(self.posX - player.posX) < 800 and abs(self.posY - player.posY) < 800  or self.maxhp != self.hp :
-            if self.posX - player.posX > 5 and 3.05>=self.frame > 3.0:
+            if self.posX - player.posX > 5 and 4.0> self.frame > 3.0 and not self.shoot :
                 self.action = 2
                 self.Shooting()
-            elif self.posX - player.posX <= -5 and 3.05>=self.frame > 3.0:
+                self.shoot = True
+            elif self.posX - player.posX <= -5 and 4.0> self.frame > 3.0 and not self.shoot :
                 self.action = 3
                 self.Shooting()
+                self.shoot = True
+
+            if self.frame < 3 and self.shoot: self.shoot = False
         else :
             self.action = 0
 
@@ -171,8 +176,8 @@ def MonsterImage():
 def UpdateMonster():
     for monster in m_list:
         monster.Update()
-        if monster.value == 1: monster.frame = (monster.frame + 0.1) % 4
-        else : monster.frame = (monster.frame + 0.05) % 4
+        if monster.value == 1: monster.frame = (monster.frame + 4*2*game_framework.frame_time) % 4
+        elif monster.value == 2 : monster.frame = (monster.frame + 4*1*game_framework.frame_time) % 4
         if monster.hp <= 0: m_list.remove(monster)
 
 # boss = Melee()

@@ -19,7 +19,8 @@ class Weapon(Sprite):
     def __init__(self):
         self.cameraX = player.posX - (1200 / 2)
         self.damage = 10
-        self.attack_speed = 30
+        self.attack_speed = 0.5 #공격속도
+        self.attack_delay = 0 #공격딜레이
         self.dir = 1
         self.rad = 0
 
@@ -29,7 +30,6 @@ class Weapon(Sprite):
         self.h = 50
         self.i_w = 48
         self.i_h = 48
-        self.delay = 0
         self.clickButton = False
         self.distance = 500
         self.ammo = 8
@@ -49,24 +49,27 @@ class Weapon(Sprite):
         self.image.rotate_draw(self.rad / 360 * 2 * math.pi, self.posX-player.cameraX, self.posY-player.cameraY, self.w, self.h)
 
     def Shot(self):
-        if self.delay == 0 and self.reloadDelay == 0:
+        if time.time() - self.attack_delay < self.attack_speed: return
+
+        if self.reloadDelay == 0:
             if self.ammo == 0:
                 return
+
             player.hit = True
             gun.radian(aim.posX,aim.posY)
             b = Bullet()
             #b.imageLoad('./res/Bullet.png')
             if self.dir < 0: b.dir = 0
             bullet_list.append(b)
-            self.delay = 1
             self.ammo -= 1
+
+            self.attack_delay = time.time()
 
     def Reload(self):
         if self.R:
             if self.reloadDelay == 0:
                 self.reloadDelay = time.time()
         else: return
-        print(time.time() - self.reloadDelay)
 
         if self.reloadTime <= time.time() - self.reloadDelay:
             self.ammo = self.maxAmmo
@@ -88,7 +91,7 @@ class Weapon(Sprite):
         self.cameraX = player.posX - (1200 / 2)
         self.posX = player.posX + self.dir*15
         self.posY = player.posY - 15
-        if self.delay: self.delay = (self.delay +1) % self.attack_speed
+        #if self.attack_delay: self.attack_delay = (self.attack_delay + 1) % self.attack_speed
         if self.clickButton: self.Shot()
 
 bullet_list = []
@@ -96,7 +99,7 @@ bullet_list = []
 class Bullet(Sprite):
     image = pico2d.load_image('./res/Bullet.png')
     def __init__(self):
-        self.speed = 30
+        self.speed = 45
         self.rad = gun.rad
         self.dir = 1
         self.posX = gun.posX
@@ -146,25 +149,14 @@ def UpdateBullet():
 
         if abs(bullet.posX - bullet.spawnX) > gun.distance or bullet.posY > 3000 or \
                 bullet.posX> len(Map.stageData[Map.number][0])*100 or bullet.collision(0,0) or\
-                bullet.ColtoMonster(m_list) or bullet.ColtoBoss():
+                bullet.ColtoMonster(m_list) :
             bullet_list.remove(bullet)
             del bullet
             continue
-        # if bullet.posY > 3000:
-        #     bullet_list.remove(bullet)
-        #     continue
-        # if bullet.posX> len(Map.stageData[Map.number][0])*100:
-        #     bullet_list.remove(bullet)
-        #     continue
-        # if bullet.collision(0,0):
-        #     bullet_list.remove(bullet)
-        #     continue
-        # if bullet.ColtoMonster(m_list):
-        #     bullet_list.remove(bullet)
-        #     continue
-        # if bullet.ColtoBoss():
-        #     bullet_list.remove(bullet)
-        #     continue
+
+        if bullet.ColtoBoss() and Map.number == 1:
+            bullet_list.remove(bullet)
+            continue
 
 gun = Weapon()
 
