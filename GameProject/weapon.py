@@ -1,5 +1,8 @@
+import time
+
 import pico2d
 
+import game_framework
 from sprite import Sprite
 from Hero import player
 import math
@@ -32,7 +35,7 @@ class Weapon(Sprite):
         self.ammo = 8
         self.maxAmmo = self.ammo
         self.reloadDelay = 0
-        self.reloadTime = 50
+        self.reloadTime = 2
         self.R = False
 
 
@@ -59,11 +62,13 @@ class Weapon(Sprite):
             self.ammo -= 1
 
     def Reload(self):
-        if self.R :
-            self.reloadDelay += 1
+        if self.R:
+            if self.reloadDelay == 0:
+                self.reloadDelay = time.time()
         else: return
+        print(time.time() - self.reloadDelay)
 
-        if self.reloadTime == self.reloadDelay:
+        if self.reloadTime <= time.time() - self.reloadDelay:
             self.ammo = self.maxAmmo
             self.reloadDelay = 0
             self.R = False
@@ -106,12 +111,14 @@ class Bullet(Sprite):
         self.image.rotate_draw(self.rad / 360*2*math.pi,self.posX-player.cameraX,self.posY-player.cameraY,self.w,self.h)
 
     def move(self):
+        SPEED = game_framework.getSpeed(self.speed)
+
         if self.dir == 1:
-            self.posX += self.speed * math.cos(self.rad / 360 * 2 * math.pi)
-            self.posY += self.speed * math.sin(self.rad / 360 * 2 * math.pi)
+            self.posX += SPEED * math.cos(self.rad / 360 * 2 * math.pi)
+            self.posY += SPEED * math.sin(self.rad / 360 * 2 * math.pi)
         else:
-            self.posX -= self.speed * math.cos(self.rad / 360 * 2 * math.pi)
-            self.posY -= self.speed * math.sin(self.rad / 360 * 2 * math.pi)
+            self.posX -= SPEED * math.cos(self.rad / 360 * 2 * math.pi)
+            self.posY -= SPEED * math.sin(self.rad / 360 * 2 * math.pi)
 
     def ColtoMonster(self,mlist):
         for monster in mlist:

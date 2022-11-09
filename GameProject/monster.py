@@ -1,4 +1,5 @@
 import pico2d
+import game_framework
 
 from sprite import Sprite
 from Hero import player
@@ -10,7 +11,7 @@ class Monster(Sprite):
     def __init__(self):
         self.hp = 50
         self.maxhp = self.hp
-        self.speed = 1
+        self.speed = 8
         self.maxSpeed = 3
         self.power = 15
         self.gravity = True
@@ -22,11 +23,14 @@ class Monster(Sprite):
 
 
     def Gravity(self):
-        if not self.collision(0, -self.gravitySpeed) and not self.MonsterCol(0, -self.gravitySpeed) and self.falling:
-            self.posY -= self.gravitySpeed
+        SPEED = game_framework.getSpeed(self.gravitySpeed)
+        G_SPEED = game_framework.getSpeed(5)
+
+        if not self.collision(0, -SPEED) and not self.MonsterCol(0, -SPEED) and self.falling:
+            self.posY -= SPEED
             self.falling = True
-            if self.gravitySpeed < 10:
-                self.gravitySpeed += 0.5
+            if self.gravitySpeed < 75:
+                self.gravitySpeed += G_SPEED
         else:
             self.jump = True
             self.falling = True
@@ -58,6 +62,8 @@ class Melee(Monster):
 
     image = pico2d.load_image('./res/Hoodman.png')
     def Hunting(self):
+        SPEED = game_framework.getSpeed(self.speed)
+
         dir = 0
         distanceX = abs(self.posX - player.posX)
         distanceY = abs(self.posY - player.posY)
@@ -69,23 +75,25 @@ class Melee(Monster):
                 self.action = 3
                 dir = 1
 
-            if not self.collision(dir* self.speed,0):
-                if not self.MonsterCol(dir* self.speed,0):
-                    self.posX += dir* self.speed
+            if not self.collision(dir* SPEED,0):
+                if not self.MonsterCol(dir* SPEED,0):
+                    self.posX += dir* SPEED
             else : # 점프 조건
                 self.Jump(11)
         else : self.action = 0
-        if self.hp < self.maxhp/2 : self.speed = 3
+        if self.hp < self.maxhp/2 : self.speed = 12
 
     def Jump(self,s):
         if not self.jump:
              return
 
+        SPEED = game_framework.getSpeed(40)
+
         if self.jumpY < 0:
             self.jumpY = self.posY
 
-        if self.collision(0,-100) and self.jumpY + 100  > self.posY and not self.collision(0,s) and not self.MonsterCol(0,s):
-            self.posY += s
+        if self.collision(0,-100) and self.jumpY + 100  > self.posY and not self.collision(0,SPEED) and not self.MonsterCol(0,SPEED):
+            self.posY += SPEED
         else:
             self.jump = False
             self.falling = True
@@ -133,7 +141,7 @@ class Archer(Monster):
 class Arrow(Sprite):
     image = pico2d.load_image('./res/arrow.png')
     def __init__(self,px,py,dmg,rad,dir):
-        self.speed = 8
+        self.speed = 20
         self.dir = dir
         self.rad = rad
         self.posX = px
@@ -147,8 +155,10 @@ class Arrow(Sprite):
     def Show(self):
         self.image.rotate_draw(self.rad / 360 * 2 * math.pi,self.posX - player.cameraX,self.posY-player.cameraY,self.w,self.h)
     def move(self):
-        self.posX += self.speed * math.cos(self.rad / 360 * 2 * math.pi)
-        self.posY += self.speed * math.sin(self.rad / 360 * 2 * math.pi)
+        SPEED = game_framework.getSpeed(self.speed)
+
+        self.posX += SPEED * math.cos(self.rad / 360 * 2 * math.pi)
+        self.posY += SPEED * math.sin(self.rad / 360 * 2 * math.pi)
 
 
 def MonsterImage():
