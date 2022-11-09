@@ -9,7 +9,7 @@ import math
 class Boss(Sprite):
     def __init__(self):
         self.image = pico2d.load_image('./res/belial.png')
-        self.hp = 3000
+        self.hp = 50
         self.i_w = 100
         self.i_h = 130
         self.posX = 600
@@ -39,27 +39,18 @@ class Boss(Sprite):
         elif  self.rdir < self.r_hand.posY : self.r_hand.posY -= 10
 
     def CreateGhost(self):
-        s = [Ghost() for i in range(15)]
+        s = [Ghost() for i in range(20)]
         self.s_list += s
         del s
 
     def Breath(self):
-        e = [EBall(self.posX,self.posY,self.skillDelay + 180*i) for i in range(2)]
+        e = [EBall(self.posX,self.posY,(self.skillDelay//2) + 180*i) for i in range(2)]
         self.e_list += e
         del e
 
     def update(self):
         if Map.number != 1: return
 
-        self.MoveHand()
-        self.skillDelay += 1
-        self.frame = (self.frame+ 0.1) % 4
-        # if self.skillDelay % 1 == 0:
-        #     self.Breath()
-        if self.skillDelay % 300 == 0:
-            self.UpdateHand()
-        if self.skillDelay % 500 == 0:
-            self.CreateGhost()
         for s in self.s_list:
             s.update()
             if s.ready >400 or s.col:
@@ -71,15 +62,30 @@ class Boss(Sprite):
 
         if len(skul.s_list): shield.update()
 
+        if self.hp <= 0: return
+
+        self.MoveHand()
+        self.skillDelay += 1
+        self.frame = (self.frame+ 0.1) % 4
+        if self.skillDelay % 5 == 0:
+            self.Breath()
+        if self.skillDelay % 300 == 0:
+            self.UpdateHand()
+        if self.skillDelay % 500 == 0:
+            self.CreateGhost()
+
+
 
 
     def Draw(self):
         if Map.number != 1: return
 
         self.Show(player.cameraX,player.cameraY)
-        self.r_hand.image.clip_composite_draw(0,0,self.r_hand.w,self.r_hand.h,0,'h',self.r_hand.posX-player.cameraX,self.r_hand.posY-player.cameraY,\
-                                              self.r_hand.w,self.r_hand.h)
-        self.l_hand.Show(player.cameraX,player.cameraY)
+
+        if self.hp > 0:
+            self.r_hand.image.clip_composite_draw(0,0,self.r_hand.w,self.r_hand.h,0,'h',self.r_hand.posX-player.cameraX,self.r_hand.posY-player.cameraY,\
+                                                  self.r_hand.w,self.r_hand.h)
+            self.l_hand.Show(player.cameraX,player.cameraY)
 
         for s in self.s_list:
             s.Show(player.cameraX,player.cameraY)
@@ -98,9 +104,9 @@ class Ghost(Sprite):
         self.h = 50
         self.i_w = 25
         self.i_h = 25
-        self.posX = random.randint(200,1000)
-        self.posY = random.randint(200,600)
-        self.damage = 10
+        self.posX = random.randint(50,1150)
+        self.posY = random.randint(100,650)
+        self.damage = 1
         self.ready = 0
         self.rad = 0
         self.dir = 0
@@ -124,7 +130,6 @@ class Ghost(Sprite):
                 if player.inv == 0:
                     if not skul.ignore:
                         player.hp -= self.damage
-                        player.inv = 1
                 self.col = True
 
     def setRad(self):
