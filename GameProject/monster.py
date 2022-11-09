@@ -15,7 +15,7 @@ class Monster(Sprite):
         self.power = 15
         self.gravity = True
         self.posX = random.randint(10,65)*150
-        self.posY = 3000
+        self.posY = 1500
         self.jumpY = -1
         self.jump = False
         self.falling = True

@@ -9,7 +9,7 @@ import math
 class Boss(Sprite):
     def __init__(self):
         self.image = pico2d.load_image('./res/belial.png')
-        self.hp = 50
+        self.hp = 55
         self.i_w = 100
         self.i_h = 130
         self.posX = 600
@@ -21,7 +21,7 @@ class Boss(Sprite):
         self.ldir = 250
         self.rdir = 250
         self.skillDelay = 0
-        self.action = 1
+        self.action = 0
         self.s_list = []
         self.e_list = []
         self.ignore = False
@@ -49,7 +49,10 @@ class Boss(Sprite):
         del e
 
     def Dead(self):
-        self.frame = 0
+        if self.action == 0:
+            self.frame = 1
+        elif self.action == 1 :
+            self.frame = 0
         self.action = 2
         self.dead = True
 

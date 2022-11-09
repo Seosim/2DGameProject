@@ -1,4 +1,5 @@
 import pico2d
+import game_framework
 
 from sprite import Sprite
 from MapData import Map
@@ -11,13 +12,13 @@ class Player(Sprite):
 
     def __init__(self):
 
-        self.speed = 4
+        self.speed = 12
         self.jumpMax = 180
-        self.jumpPower = 15
+        self.jumpPower = 40
         self.hp = 100
 
         self.jumpY = -1
-        self.gravitySpeed = 1
+        self.gravitySpeed = 10
 
         self.PushR = False
         self.PushL = False
@@ -49,8 +50,6 @@ class Player(Sprite):
             self.screenX = width - (len(stage[6])*size-self.posX)
         else : self.screenX =  width / 2
 
-
-
     def Show(self):
         self.image.clip_draw(self.i_w * (self.hitframe+int(self.frame)), self.i_h * self.action, self.w, self.h, self.screenX,self.posY-self.cameraY)
 
@@ -58,11 +57,13 @@ class Player(Sprite):
     def move(self):
         stage = Map.stageData[Map.number]
 
-        if self.PushR and not self.collision(self.speed,0):
-            self.posX += self.speed
+        SPEED = game_framework.getSpeed(self.speed)
+
+        if self.PushR and not self.collision(SPEED,0):
+            self.posX += SPEED
             self.action = 1
-        elif self.PushL and not self.collision(-1*self.speed,0):
-            self.posX -= self.speed
+        elif self.PushL and not self.collision(-1*SPEED,0):
+            self.posX -= SPEED
             self.action = 0
 
         self.cameraX = player.posX - (1200 / 2)
@@ -92,19 +93,22 @@ class Player(Sprite):
     def jump(self):
         if self.pushS: return
 
+        SPEED = game_framework.getSpeed(self.jumpPower)
+        J_SPEED = game_framework.getSpeed(5)
+
         if self.PushSpace:
             if self.jumpY == -1:
                 self.jumpY = self.posY
 
-            if self.posY < self.jumpY + self.jumpMax and not self.collision(0, self.jumpPower):
-                self.posY += self.jumpPower
-                self.speed = 6
-                if self.jumpPower > 5: self.jumpPower -= 0.7
+            if self.posY < self.jumpY + self.jumpMax and not self.collision(0, SPEED):
+                self.posY += SPEED
+                self.speed = 16
+                if self.jumpPower > 20: self.jumpPower -= J_SPEED
             else:
                 self.PushSpace = False
                 self.jumpY = -1
-                self.speed = 4
-                self.jumpPower = 15
+                self.speed = 12
+                self.jumpPower = 40
 
     def Flash(self):
         for i in range(5):
@@ -118,11 +122,16 @@ class Player(Sprite):
 
 
     def Gravity(self):
+
         if not self.PushSpace:
-            if not self.collision(0, -self.gravitySpeed):
-                self.posY -= self.gravitySpeed
-                if self.gravitySpeed < 10:
-                    self.gravitySpeed += 0.5
+
+            SPEED = game_framework.getSpeed(self.gravitySpeed)
+            G_SPEED = game_framework.getSpeed(5)
+
+            if not self.collision(0, -SPEED):
+                self.posY -= SPEED
+                if self.gravitySpeed < 75:
+                    self.gravitySpeed += G_SPEED
 
             else: self.PushSpace = False
 
