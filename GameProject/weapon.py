@@ -19,6 +19,7 @@ class Weapon(Sprite):
     def __init__(self):
         self.cameraX = player.posX - (1200 / 2)
         self.damage = 10
+        self.speed = 35
         self.attack_speed = 0.5 #공격속도
         self.attack_delay = 0 #공격딜레이
         self.dir = 1
@@ -35,7 +36,7 @@ class Weapon(Sprite):
         self.ammo = 8
         self.maxAmmo = self.ammo
         self.reloadDelay = 0
-        self.reloadTime = 2
+        self.reloadTime = 1
         self.R = False
 
 
@@ -99,7 +100,7 @@ bullet_list = []
 class Bullet(Sprite):
     image = pico2d.load_image('./res/Bullet.png')
     def __init__(self):
-        self.speed = 45
+        self.speed = gun.speed
         self.rad = gun.rad
         self.dir = 1
         self.posX = gun.posX

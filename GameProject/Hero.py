@@ -1,5 +1,6 @@
 import pico2d
 import game_framework
+import time
 
 from sprite import Sprite
 from MapData import Map
@@ -180,18 +181,16 @@ class Player(Sprite):
                 if abs(self.posY - monster.posY) < (monster.h / 2) + (self.h / 2)-15:  # 세로줄 충돌
                     if self.inv == 0:
                         self.hp -= monster.power
-                        self.inv = 2
+                        self.inv = time.time()
                         return
 
     def invincibility(self):
         if self.inv == 0 : return
 
-        if self.inv :
-            self.inv -= 0.015
+        if time.time() - self.inv < 2 :
             if self.hitframe == 0 : self.hitframe = 5
             else : self.hitframe = 0
-
-        if self.inv <= 0 :
+        else :
             self.hitframe = 0
             self.inv = 0
 
@@ -214,4 +213,5 @@ def playerUpdate():
     player.down()
     player.Gravity()
     player.OutOfMap()
-    player.frame = (player.frame + 0.1) % 4
+    player.frame = (player.frame + 4 * 2 * game_framework.frame_time) % 4
+

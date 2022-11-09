@@ -1,10 +1,14 @@
 import pico2d
+import game_framework
+
 from sprite import Sprite
 from Hero import player
 from MapData import Map
 
+
 import random
 import math
+import time
 
 class Boss(Sprite):
     def __init__(self):
@@ -62,12 +66,12 @@ class Boss(Sprite):
 
         for s in self.s_list:
             s.update()
-            if s.ready >400 or s.col:
+            if time.time() - s.ready > 6 or s.col:
                 self.s_list.remove(s)
 
         for e in self.e_list:
             e.update()
-            if e.timer > 100: self.e_list.remove(e)
+            if time.time() - e.timer > 10: self.e_list.remove(e)
 
         if len(skul.s_list): shield.update()
 
@@ -78,7 +82,7 @@ class Boss(Sprite):
 
         self.MoveHand()
         self.skillDelay += 1
-        self.frame = (self.frame+ 0.1) % 4
+        self.frame = (self.frame+ 4*2*game_framework.frame_time) % 4
         if self.skillDelay % 5 == 0:
             self.Breath()
         if self.skillDelay % 300 == 0:
@@ -118,23 +122,22 @@ class Ghost(Sprite):
         self.posX = random.randint(50,1150)
         self.posY = random.randint(100,650)
         self.damage = 1
-        self.ready = 0
+        self.ready = time.time()
         self.rad = 0
         self.dir = 0
-        self.speed = 8
+        self.speed = 18
         self.action = 0
         self.col = False
 
     def update(self):
-        self.ready += 1
-        self.frame = (self.frame+0.1) % 4
+        self.frame = (self.frame+ 4*2*game_framework.frame_time) % 4
         if self.ready >= 150:
             self.setRad()
         self.Attack()
         self.hit()
 
     def hit(self):
-        if self.ready <= 150: return
+        if time.time() - self.ready <= 3: return
 
         if abs(self.posX - player.posX) < player.w/2:
             if abs(self.posY - player.posY) < player.h/2:
@@ -152,9 +155,12 @@ class Ghost(Sprite):
                 self.rad = math.atan2(player.posY - self.posY, player.posX - self.posX) * 180 / math.pi
 
     def Attack(self):
-        if self.ready > 150:
-            self.posX += self.speed * math.cos(self.rad / 360 * 2 * math.pi)
-            self.posY += self.speed * math.sin(self.rad / 360 * 2 * math.pi)
+        if time.time() - self.ready > 3:
+
+            SPEED =game_framework.getSpeed(self.speed)
+
+            self.posX += SPEED * math.cos(self.rad / 360 * 2 * math.pi)
+            self.posY += SPEED * math.sin(self.rad / 360 * 2 * math.pi)
 
 class EBall(Sprite):
     image = None
@@ -173,11 +179,14 @@ class EBall(Sprite):
         self.h = 50
         self.action = 0
         self.rad = r
-        self.timer = 0
+        self.timer = time.time()
 
     def move(self):
-        self.posX += 15 * math.cos(self.rad * math.pi /180)
-        self.posY += 15 * math.sin(self.rad * math.pi /180)
+
+        SPEED = game_framework.getSpeed(30)
+
+        self.posX += SPEED * math.cos(self.rad * math.pi /180)
+        self.posY += SPEED * math.sin(self.rad * math.pi /180)
 
         # self.posX += self.toX
         # self.posY -= 5
@@ -190,7 +199,7 @@ class EBall(Sprite):
             if abs(self.posY - player.posY) < player.h/2:
                 if player.inv == 0:
                     player.hp -= self.damage
-                    player.inv = 2
+                    player.inv = time.time()
 
     def update(self):
         self.move()

@@ -1,5 +1,6 @@
 import pico2d
 import game_framework
+import time
 
 from sprite import Sprite
 from Hero import player
@@ -79,7 +80,7 @@ class Melee(Monster):
                 if not self.MonsterCol(dir* SPEED,0):
                     self.posX += dir* SPEED
             else : # 점프 조건
-                self.Jump(11)
+                self.Jump(33)
         else : self.action = 0
         if self.hp < self.maxhp/2 : self.speed = 12
 
@@ -87,7 +88,7 @@ class Melee(Monster):
         if not self.jump:
              return
 
-        SPEED = game_framework.getSpeed(40)
+        SPEED = game_framework.getSpeed(s)
 
         if self.jumpY < 0:
             self.jumpY = self.posY
@@ -216,7 +217,7 @@ def UpdateArrow():
             if abs(a.posY - player.posY)+25 < player.h/2:
                 if player.inv == 0:
                     player.hp -= a.power
-                    player.inv = 2
+                    player.inv = time.time()
                 a_list.remove(a)
                 continue
 
