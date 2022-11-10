@@ -131,14 +131,14 @@ class Player(Sprite):
         self.OutOfMap()
 
     def DashGet(self,x,y):
-        self.DashCnt = 25
+        self.DashCnt = 25/game_framework.MS
         self.DashDirX = x
         self.DashDirY = y
 
     def Dash(self,x,y):
         if self.DashCnt:
-            SPEEDX = game_framework.getSpeed(self.speed * 5)
-            SPEEDY = game_framework.getSpeed(self.speed * 5)
+            SPEEDX = game_framework.getSpeed(self.speed * 5 )
+            SPEEDY = game_framework.getSpeed(self.speed * 5 )
             rad = math.atan2((height - y) - self.posY + player.cameraY, x - player.screenX) * 180 / math.pi
             if not self.collision(SPEEDX * math.cos(rad * math.pi / 180), SPEEDY * math.sin(rad * math.pi / 180)):
                 self.posX += SPEEDX * math.cos(rad / 360 * 2 * math.pi)
