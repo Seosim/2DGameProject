@@ -17,7 +17,7 @@ class Player(Sprite):
         self.speed = 12
         self.jumpMax = 180
         self.jumpPower = 40
-        self.hp = 100
+        self.hp = 999
 
         self.jumpY = -1
         self.gravitySpeed = 10
@@ -47,6 +47,10 @@ class Player(Sprite):
         self.slowMotionDelay = 0
         self.slowMotionCD = 0
         self.PushT = False
+
+        self.DashCnt = 0
+        self.DashDirX = 0
+        self.DashDirY = 0
 
     def getScreenX(self):
         stage = Map.stageData[Map.number]
@@ -126,16 +130,24 @@ class Player(Sprite):
                 self.action = 0
         self.OutOfMap()
 
+    def DashGet(self,x,y):
+        self.DashCnt = 25
+        self.DashDirX = x
+        self.DashDirY = y
+
     def Dash(self,x,y):
-        SPEED = game_framework.getSpeed(self.speed * 50)
-        if x > self.screenX:
-            rad = math.atan2((height-y)-self.posY+ player.cameraY,x-player.screenX)*180/math.pi
-        else :
-            rad = math.atan2((height - y) - self.posY + player.cameraY, x - player.screenX) * 180 / math.pi + 180
-        
-        if not self.collision(SPEED*math.cos(rad*math.pi/180),SPEED*math.sin(rad*math.pi/180)):
-            self.posX +=SPEED*math.cos(rad*math.pi/180)
-            self.posY +=SPEED*math.sin(rad*math.pi/180)
+        if self.DashCnt:
+            SPEEDX = game_framework.getSpeed(self.speed * 5)
+            SPEEDY = game_framework.getSpeed(self.speed * 5)
+            rad = math.atan2((height - y) - self.posY + player.cameraY, x - player.screenX) * 180 / math.pi
+            if not self.collision(SPEEDX * math.cos(rad * math.pi / 180), SPEEDY * math.sin(rad * math.pi / 180)):
+                self.posX += SPEEDX * math.cos(rad / 360 * 2 * math.pi)
+                self.posY += SPEEDY * math.sin(rad / 360 * 2 * math.pi)
+            self.DashCnt -= 1
+        else:
+            self.DashDirX = 0
+            self.DashDirY = 0
+
 
 
     def SlowMotion(self):
@@ -155,7 +167,7 @@ class Player(Sprite):
             self.PushT = False
 
     def Gravity(self):
-
+        if self.DashCnt : return
         if not self.PushSpace:
 
             SPEED = game_framework.getSpeed(self.gravitySpeed)
@@ -165,7 +177,6 @@ class Player(Sprite):
                 self.posY -= SPEED
                 if self.gravitySpeed < 75:
                     self.gravitySpeed += G_SPEED
-
             else: self.PushSpace = False
 
     def collision(self,valX, valY):
@@ -194,16 +205,20 @@ class Player(Sprite):
                 elif stage[_y][x] == 3:
 
                     if self.PushSpace:continue
+                    if self.DashCnt:continue
 
                     y = len(stage) - 1 - _y
                     if abs(self.posX - (x * size + (size / 2)) + valX) < size / 2 + (self.w / 2) - 5 :# 가로줄 충돌
                          # if self.posY + (size / 2) + valY > (y * size + (size / 2)) and abs(
                          #         self.posY - (y * size + (size/2)) + valY) < 30/2 + self.h / 2 -5:  # 세로줄 충돌
-                         if abs(self.posY+valY - (self.h/2) - (y * size + (size/2))) < 8 :
-                            if abs((self.posY - self.h / 2) - (y * size + 50+15) ) <= 15:  # 땅에 착지
-                                self.gravitySpeed = 1
-                            self.stand = True
-                            return True
+                         if abs(self.posY + valY - (self.h / 2) - (y * size + (size / 2))) < 8:
+                             if abs((y * size + (size / 2)) - (self.posY - (self.h / 2))) < 8:  # 포지션 조정처리(끼임방지)
+                                 self.posY = (y * size + (size / 2)) + 9 + (self.h / 2)
+
+                             if abs((self.posY - self.h / 2) - (y * size + 50 + 15)) <= 15:  # 땅에 착지
+                                 self.gravitySpeed = 1
+                             self.stand = True
+                             return True
         self.stand = False
         return False
 
@@ -245,6 +260,7 @@ def playerUpdate():
     player.down()
     player.Gravity()
     player.SlowMotion()
+    player.Dash(player.DashDirX,player.DashDirY)
     player.OutOfMap()
     player.frame = (player.frame + 4 * 2 * game_framework.frame_time*game_framework.MS) % 4
 
