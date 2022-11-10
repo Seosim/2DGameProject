@@ -1,7 +1,7 @@
 from HandleEvent import *
 from Background import *
 from Hero import *
-from map import  *
+from map import *
 from cursor import *
 from mapObject import *
 from weapon import *
@@ -15,8 +15,12 @@ import title_state
 width = 1200
 height = 700
 
+tile = []
 
 def enter():
+    global tile
+    tile = [Tile((x*100) + 50,(y*100) + 50,100,100,val) for x,y,val in Mapgenerator() if val]
+
     playerInit()
     aim.imageLoad('./res/cursor.png')
     obj_1.imageLoad('./res/largeobject.png')
@@ -29,8 +33,11 @@ def drawWorld():
     hide_cursor()
     background.image.draw(width / 2, height / 2, width, height)
 
+    for t in tile:
+        t.draw()
+
     skul.Draw()
-    LoadMap()
+    #LoadMap()
     LoadObj(Map.objData[Map.number])
     ShowArrow()
     ShowBullet()
@@ -65,7 +72,11 @@ def handle_events():
 
 def pause(): player.KeyReset()
 
-def resume(): pass
+def resume():
+    global tile
+
+    tile.clear()
+    tile = [Tile((x*100) + 50,(y*100) + 50,100,100,val) for x,y,val in Mapgenerator() if val]
 
 def exit(): pass
     # global player,background,darkdirt,darkgrass,aim,obj_1,gun,m_list,a_list,bullet_list

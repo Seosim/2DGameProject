@@ -1,7 +1,11 @@
+import pico2d
+
 from sprite import Sprite
 import Hero
 from MapData import Map
 from MapData import size
+
+from Hero import player
 
 def LoadMap():
     stage = Map.stageData[Map.number]
@@ -36,3 +40,44 @@ halfgrass = Sprite()
 darkgrass.imageLoad('./res/dark_grass50.png')
 darkdirt.imageLoad('./res/dark_dirt.png')
 halfgrass.imageLoad('./res/half_grass.png')
+
+def Mapgenerator():
+    _x = -1
+    #_y = -1
+    _y = len(Map.stageData[Map.number])
+
+    for y in Map.stageData[Map.number]:
+        _y -= 1
+        _x = -1
+        for val in y:
+            _x += 1
+            yield _x,_y,val
+
+
+class Tile(Sprite):
+    image = None
+    def __init__(self,x,y,w,h,v):
+        if self.image == None:
+            self.image = pico2d.load_image('./res/dark_grass50.png')
+
+        if v == 2:
+            self.image = pico2d.load_image('./res/dark_dirt.png')
+        elif v == 3:
+            self.image = pico2d.load_image('./res/half_grass.png')
+
+        self.posX = x
+        self.posY = y
+        self.w = w
+        self.h = h
+        self.frame = 0
+        self.action = 0
+        self.i_w = w
+        self.i_h= h
+
+        if v ==3 :
+            self.h = 30
+
+    def update(self): pass
+
+    def draw(self):
+        self.image.clip_draw(0,0,self.w,self.h,self.posX-player.cameraX,self.posY-player.cameraY)

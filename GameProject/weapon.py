@@ -50,7 +50,7 @@ class Weapon(Sprite):
         self.image.rotate_draw(self.rad / 360 * 2 * math.pi, self.posX-player.cameraX, self.posY-player.cameraY, self.w, self.h)
 
     def Shot(self):
-        if time.time() - self.attack_delay < self.attack_speed: return
+        if (time.time() - self.attack_delay) < self.attack_speed: return
 
         if self.reloadDelay == 0:
             if self.ammo == 0:
