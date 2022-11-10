@@ -1,6 +1,7 @@
 import pico2d
 import game_framework
 import time
+import math
 
 from sprite import Sprite
 from MapData import Map
@@ -123,6 +124,19 @@ class Player(Sprite):
             elif self.PushL and not self.collision(-35, 0):
                 self.posX -= 35
                 self.action = 0
+        self.OutOfMap()
+
+    def Dash(self,x,y):
+        SPEED = game_framework.getSpeed(self.speed * 50)
+        if x > self.screenX:
+            rad = math.atan2((height-y)-self.posY+ player.cameraY,x-player.screenX)*180/math.pi
+        else :
+            rad = math.atan2((height - y) - self.posY + player.cameraY, x - player.screenX) * 180 / math.pi + 180
+        
+        if not self.collision(SPEED*math.cos(rad*math.pi/180),SPEED*math.sin(rad*math.pi/180)):
+            self.posX +=SPEED*math.cos(rad*math.pi/180)
+            self.posY +=SPEED*math.sin(rad*math.pi/180)
+
 
     def SlowMotion(self):
         if not self.PushT:return

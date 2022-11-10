@@ -43,6 +43,11 @@ class Boss(Sprite):
         elif  self.rdir < self.r_hand.posY : self.r_hand.posY -= 10
 
     def CreateGhost(self):
+        randPos = random.randint(0,1)
+
+        if randPos: shield.posY = 215
+        else : shield.posY = 615
+
         s = [Ghost() for i in range(20)]
         self.s_list += s
         del s
@@ -93,6 +98,8 @@ class Boss(Sprite):
     def Draw(self):
         if Map.number != 1: return
 
+        if len(skul.s_list): shield.Show(player.cameraX,player.cameraY)
+
         self.Show(player.cameraX,player.cameraY)
 
         if self.hp > 0:
@@ -106,9 +113,6 @@ class Boss(Sprite):
         for e in self.e_list:
             e.Show(player.cameraX, player.cameraY)
 
-
-
-        if len(skul.s_list): shield.Show(player.cameraX,player.cameraY)
 
 class Ghost(Sprite):
     image = None

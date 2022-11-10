@@ -65,7 +65,6 @@ def UpdateObject():
             o_list.remove(o)
             del o
 
-
 def Interact():
     for o in o_list:
         if o.InPlayer():
