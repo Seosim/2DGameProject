@@ -3,7 +3,7 @@ import game_framework
 
 from sprite import Sprite
 from Hero import player
-from MapData import Map
+from MapData import Map,width,height
 
 
 import random
@@ -16,7 +16,7 @@ class Boss(Sprite):
         self.hp = 55
         self.i_w = 100
         self.i_h = 130
-        self.posX = 600
+        self.posX = width/2
         self.posY = 500
         self.w = self.i_w*5
         self.h = self.i_h*5
@@ -28,25 +28,30 @@ class Boss(Sprite):
         self.action = 0
         self.s_list = []
         self.e_list = []
+        self.beam = Beam()
         self.ignore = False
         self.dead = False
 
     def UpdateHand(self):
         self.ldir = player.posY
         self.rdir = player.posY
+        self.l_hand.action = 1
+        self.r_hand.action = 1
+        self.beam.timer = time.time()
 
     def MoveHand(self):
-        if self.ldir > self.l_hand.posY +10: self.l_hand.posY += 10
-        elif  self.ldir < self.l_hand.posY : self.l_hand.posY -= 10
 
-        if self.rdir > self.r_hand.posY + 10 : self.r_hand.posY += 10
-        elif  self.rdir < self.r_hand.posY : self.r_hand.posY -= 10
+        SPEED = game_framework.getSpeed(10)
+
+        if self.ldir > self.l_hand.posY +SPEED: self.l_hand.posY += SPEED
+        elif  self.ldir < self.l_hand.posY : self.l_hand.posY -= SPEED
+
+        if self.rdir > self.r_hand.posY + SPEED : self.r_hand.posY += SPEED
+        elif  self.rdir < self.r_hand.posY : self.r_hand.posY -= SPEED
+        else:
+            if self.l_hand.action: self.beam.setBeam(self.l_hand.posY,self.r_hand.posX-self.l_hand.posX)
 
     def CreateGhost(self):
-        randPos = random.randint(0,1)
-
-        if randPos: shield.posY = 215
-        else : shield.posY = 615
 
         s = [Ghost() for i in range(20)]
         self.s_list += s
@@ -65,6 +70,8 @@ class Boss(Sprite):
         self.action = 2
         self.frame = 1
         self.dead = True
+        self.e_list.clear()
+        self.s_list.clear()
 
 
     def update(self):
@@ -114,8 +121,6 @@ class Boss(Sprite):
         self.Show(player.cameraX,player.cameraY)
 
         if self.hp > 0:
-            # self.r_hand.image.clip_composite_draw(self.i_w*self.frame,self.i_h,self.r_hand.w,self.r_hand.h,0,'h',self.r_hand.posX-player.cameraX,self.r_hand.posY-player.cameraY,\
-            #                                       self.r_hand.w,self.r_hand.h)
             self.l_hand.Show(player.cameraX,player.cameraY)
             self.r_hand.flipShow(player.cameraX,player.cameraY)
 
@@ -124,6 +129,9 @@ class Boss(Sprite):
 
         for e in self.e_list:
             e.Show(player.cameraX, player.cameraY)
+
+        if time.time() - self.beam.timer < 5:
+            self.beam.Show(player.cameraX,player.cameraY)
 
 
 class Ghost(Sprite):
@@ -137,11 +145,11 @@ class Ghost(Sprite):
         self.i_h = 25
         self.posX = random.randint(50,1150)
         self.posY = random.randint(100,650)
-        self.damage = 1
+        self.damage = 2
         self.ready = time.time()
         self.rad = 0
         self.dir = 0
-        self.speed = 18
+        self.speed = 20
         self.action = 0
         self.col = False
 
@@ -153,7 +161,7 @@ class Ghost(Sprite):
         self.hit()
 
     def hit(self):
-        if time.time() - self.ready <= 3: return
+        if time.time() - self.ready <= 2: return
 
         if abs(self.posX - player.posX) < player.w/2:
             if abs(self.posY - player.posY) < player.h/2:
@@ -170,8 +178,9 @@ class Ghost(Sprite):
                 self.dir = 1
                 self.rad = math.atan2(player.posY - self.posY, player.posX - self.posX) * 180 / math.pi
 
+
     def Attack(self):
-        if time.time() - self.ready > 3:
+        if time.time() - self.ready > 2:
 
             SPEED =game_framework.getSpeed(self.speed)
 
@@ -181,18 +190,18 @@ class Ghost(Sprite):
 class EBall(Sprite):
     image = None
 
-    def __init__(self,x,y,r):
+    def __init__(self,x,y,r,Size = 50):
         if EBall.image == None:
             EBall.image = pico2d.load_image('./res/DarkBall.png')
 
         self.posX = x + 50* math.cos(r* math.pi /180)
         self.posY = y + 50* math.sin(r* math.pi /180) - 125
         self.toX = random.randint(-5,5)
-        self.damage = 7
+        self.damage = 25
         self.i_w =45
         self.i_h =45
-        self.w = 50
-        self.h = 50
+        self.w = Size
+        self.h = Size
         self.action = 0
         self.rad = r
         self.timer = time.time()
@@ -200,13 +209,15 @@ class EBall(Sprite):
     def move(self):
         if time.time() - self.timer < 1: return
 
-        SPEED = game_framework.getSpeed(10)
+        SPEED = game_framework.getSpeed(20)
 
         self.posX += SPEED * math.cos(self.rad * math.pi /180)
         self.posY += SPEED * math.sin(self.rad * math.pi /180)
 
 
     def hit(self):
+        if time.time() - self.timer < 1:return
+
         if abs(self.posX - player.posX) < player.w/2:
             if abs(self.posY - player.posY) < player.h/2:
                 if player.inv == 0:
@@ -223,8 +234,8 @@ class Shield(Sprite):
     def __init__(self):
         if Shield.image == None:
             Shield.image = pico2d.load_image('./res/Shield.png')
-            self.posX = 600
-            self.posY = 600
+            self.posX = width/2
+            self.posY = 215
             self.i_w= 29
             self.i_h=17
             self.w = 200
@@ -242,6 +253,27 @@ class Shield(Sprite):
     def update(self):
         self.frame = (self.frame+0.05) % 2
         self.SavePlayer()
+
+class Beam(Sprite):
+    image = None
+    def __init__(self):
+        if Beam.image == None:
+            Beam.image = pico2d.load_image('./res/EnergyBeam.png')
+        self.i_w = 175
+        self.i_h = 43
+        self.w = 800
+        self.h = 150
+        self.posX = width/2
+        self.posY = -100
+        self.timer = 0
+        self.frame = 0
+        self.action = 0
+
+    def setBeam(self,y,w):
+        self.w = w
+        self.posY = y
+
+
 
 
 skul = Boss()

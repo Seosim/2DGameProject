@@ -137,7 +137,7 @@ class Player(Sprite):
         self.DashDirY = y
 
     def Dash(self,x,y):
-        if time.time() - self.DashCD > 5: self.DashCD = 0
+        if time.time() - self.DashCD > 1: self.DashCD = 0
 
         if self.DashCnt:
             SPEEDX = game_framework.getSpeed(self.speed * 5 )

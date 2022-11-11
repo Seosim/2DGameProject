@@ -8,11 +8,8 @@ from Hero import player
 import math
 from monster import m_list
 from boss import skul
-from MapData import Map
+from MapData import Map , width,height
 from cursor import aim
-
-width = 1200
-height = 700
 
 class Weapon(Sprite):
 
