@@ -1,10 +1,6 @@
 from pico2d import load_image
-from MapData import Map
-from MapData import size
+from MapData import Map,size,width,height
 import pico2d
-
-width = 1200
-height = 700
 
 class Sprite:
     image = None
@@ -28,6 +24,9 @@ class Sprite:
 
     def Show(self,x,y):
         self.image.clip_draw(self.i_w*int(self.frame),self.i_h*self.action,self.i_w,self.i_h,self.posX-x,self.posY-y,self.w,self.h)
+
+    def flipShow(self,x,y):
+        self.image.clip_composite_draw(self.i_w*int(self.frame),self.i_h*self.action,self.i_w,self.i_h,0,'h',self.posX-x,self.posY-y,self.w,self.h)
 
     def OutOfMap(self):
         if self.posX < 40: self.posX = 40

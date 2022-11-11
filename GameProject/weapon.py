@@ -135,9 +135,14 @@ class Bullet(Sprite):
 
     def ColtoBoss(self):
         if abs(self.posX - skul.posX)+150 < (skul.w / 2) + (self.w / 2):  # 가로줄 충돌
-            if abs(self.posY - skul.posY) < (skul.h / 2) + (self.h / 2) - 15:  # 세로줄 충돌
-                skul.hp -= self.damage
-                return True
+            if skul.action == 0:
+                if self.posY == pico2d.clamp(130,self.posY,650):  # 세로줄 충돌
+                    skul.hp -= self.damage
+                    return True
+            elif skul.action == 1:
+                if self.posY == pico2d.clamp(130,self.posY,750):  # 세로줄 충돌
+                    skul.hp -= self.damage
+                    return True
 
 def ShowBullet():
     for bullet in bullet_list:

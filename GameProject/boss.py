@@ -53,7 +53,7 @@ class Boss(Sprite):
         del s
 
     def Breath(self):
-        e = [EBall(self.posX,self.posY,(self.skillDelay//2) + 180*i) for i in range(2)]
+        e = [EBall(self.posX,self.posY,(20*i)) for i in range(18)]
         self.e_list += e
         del e
 
@@ -63,11 +63,14 @@ class Boss(Sprite):
         elif self.action == 1 :
             self.frame = 0
         self.action = 2
+        self.frame = 1
         self.dead = True
 
 
     def update(self):
         if Map.number != 1: return
+
+        if self.skillDelay == 0: self.skillDelay = time.time()
 
         for s in self.s_list:
             s.update()
@@ -76,24 +79,32 @@ class Boss(Sprite):
 
         for e in self.e_list:
             e.update()
-            if time.time() - e.timer > 10: self.e_list.remove(e)
+            if time.time() - e.timer > 5: self.e_list.remove(e)
 
-        if len(skul.s_list): shield.update()
+        if len(self.s_list): shield.update()
+
+        if len(self.e_list): self.action = 1
+        else : self.action = 0
 
         if self.hp <= 0:
             self.Dead()
             if self.posY > self.h/2 + 50: self.posY -= 1
             return
 
+
+        if time.time() - self.skillDelay > 7:
+            rSkill = random.randint(0, 2)
+            if rSkill == 0:
+                self.Breath()
+            if rSkill == 1:
+                self.UpdateHand()
+            if rSkill == 2:
+                self.CreateGhost()
+            self.skillDelay = 0
         self.MoveHand()
-        self.skillDelay += 1
-        self.frame = (self.frame+ 4*2*game_framework.frame_time) % 4
-        if self.skillDelay % 5 == 0:
-            self.Breath()
-        if self.skillDelay % 300 == 0:
-            self.UpdateHand()
-        if self.skillDelay % 500 == 0:
-            self.CreateGhost()
+        self.frame = (self.frame + 4 * 2 * game_framework.frame_time) % 4
+        self.l_hand.frame = (self.l_hand.frame + 4 * 2 * game_framework.frame_time) % 4
+        self.r_hand.frame = (self.r_hand.frame + 4 * 2 * game_framework.frame_time) % 4
 
     def Draw(self):
         if Map.number != 1: return
@@ -103,9 +114,10 @@ class Boss(Sprite):
         self.Show(player.cameraX,player.cameraY)
 
         if self.hp > 0:
-            self.r_hand.image.clip_composite_draw(0,0,self.r_hand.w,self.r_hand.h,0,'h',self.r_hand.posX-player.cameraX,self.r_hand.posY-player.cameraY,\
-                                                  self.r_hand.w,self.r_hand.h)
+            # self.r_hand.image.clip_composite_draw(self.i_w*self.frame,self.i_h,self.r_hand.w,self.r_hand.h,0,'h',self.r_hand.posX-player.cameraX,self.r_hand.posY-player.cameraY,\
+            #                                       self.r_hand.w,self.r_hand.h)
             self.l_hand.Show(player.cameraX,player.cameraY)
+            self.r_hand.flipShow(player.cameraX,player.cameraY)
 
         for s in self.s_list:
             s.Show(player.cameraX,player.cameraY)
@@ -173,8 +185,8 @@ class EBall(Sprite):
         if EBall.image == None:
             EBall.image = pico2d.load_image('./res/DarkBall.png')
 
-        self.posX = random.randint(-30+x,x+30)
-        self.posY = random.randint(-130+y,y-100)
+        self.posX = x + 50* math.cos(r* math.pi /180)
+        self.posY = y + 50* math.sin(r* math.pi /180) - 125
         self.toX = random.randint(-5,5)
         self.damage = 7
         self.i_w =45
@@ -186,17 +198,13 @@ class EBall(Sprite):
         self.timer = time.time()
 
     def move(self):
+        if time.time() - self.timer < 1: return
 
-        SPEED = game_framework.getSpeed(30)
+        SPEED = game_framework.getSpeed(10)
 
         self.posX += SPEED * math.cos(self.rad * math.pi /180)
         self.posY += SPEED * math.sin(self.rad * math.pi /180)
 
-        # self.posX += self.toX
-        # self.posY -= 5
-
-        self.timer += 1
-        if self.timer > 500 or self.posY < -10: del self
 
     def hit(self):
         if abs(self.posX - player.posX) < player.w/2:
@@ -246,10 +254,10 @@ def InitBoss():
     skul.__init__()
     skul.l_hand.imageLoad('./res/belial_hand.png')
     skul.r_hand.imageLoad('./res/belial_hand.png')
-    skul.l_hand.i_w = 111
-    skul.r_hand.i_w = 111
-    skul.l_hand.i_h = 102
-    skul.r_hand.i_h = 102
+    skul.l_hand.i_w = 58
+    skul.r_hand.i_w = 58
+    skul.l_hand.i_h = 67
+    skul.r_hand.i_h = 67
     skul.l_hand.w =  200
     skul.l_hand.h = 200
     skul.r_hand.w =  200
@@ -257,6 +265,7 @@ def InitBoss():
     skul.l_hand.posX = skul.posX - 400
     skul.r_hand.posX = skul.posX + 400
     skul.l_hand.action = 0
+    skul.r_hand.action = 0
 
 
 

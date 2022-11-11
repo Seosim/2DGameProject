@@ -1,9 +1,8 @@
 import game_framework
 import title_state
 from pico2d import *
+from MapData import width,height
 
-width = 1200
-height = 700
 logoImage = None
 timer = 0
 

@@ -2,8 +2,7 @@ import pico2d
 
 from sprite import Sprite
 import Hero
-from MapData import Map
-from MapData import size
+from MapData import width,height,Map,size
 
 from Hero import player
 
@@ -16,13 +15,13 @@ def LoadMap():
     for _y in stage:
         for _x in _y:
             if _x == 1:
-                if -100<(x * size)+size/2 - Hero.player.cameraX <1400:
+                if -100<(x * size)+size/2 - Hero.player.cameraX <width+200:
                     darkgrass.image.clip_draw(0, 0, size, size, (x * size)+size/2 - Hero.player.cameraX, (y * size)+size/2- Hero.player.cameraY)
             elif _x == 2:
-                if -100<(x * size)+size/2 - Hero.player.cameraX <1400:
+                if -100<(x * size)+size/2 - Hero.player.cameraX <width+200:
                     darkdirt.image.clip_draw(0, 0, size, size, (x * size)+size/2 - Hero.player.cameraX, (y * size)+size/2- Hero.player.cameraY)
             elif _x == 3:
-                if -100<(x * size)+size/2 - Hero.player.cameraX <1400:
+                if -100<(x * size)+size/2 - Hero.player.cameraX <width+200:
                     halfgrass.image.clip_draw(0, 0, size, 30, (x * size)+size/2 - Hero.player.cameraX, (y * size)+size/2 - Hero.player.cameraY)
             x += 1
         y -= 1

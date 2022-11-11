@@ -12,9 +12,6 @@ from boss import *
 
 import title_state
 
-width = 1200
-height = 700
-
 tile = []
 
 def enter():

@@ -4,11 +4,7 @@ import time
 import math
 
 from sprite import Sprite
-from MapData import Map
-from MapData import size
-
-width = 1200
-height = 700
+from MapData import width,height,Map,size
 
 class Player(Sprite):
 
@@ -77,11 +73,11 @@ class Player(Sprite):
             self.posX -= SPEED
             self.action = 0
 
-        self.cameraX = player.posX - (1200 / 2)
+        self.cameraX = player.posX - (width / 2)
         if self.cameraX <= 0:
             self.cameraX = 0
-        elif size * len(stage[6]) - player.posX <= 600:
-            self.cameraX = size * len(stage[6]) - 1200
+        elif size * len(stage[6]) - player.posX <= width/2:
+            self.cameraX = size * len(stage[6]) - width
 
         if self.hit: #카메라 진동효과
             if player.PushL:

@@ -1,6 +1,5 @@
 from sprite import Sprite
-width = 1200
-height = 700
+from MapData import width,height
 
 background = Sprite()
 

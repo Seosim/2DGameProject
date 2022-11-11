@@ -1,4 +1,5 @@
 from sprite import Sprite
+from MapData import width,height
 
 class Cursor(Sprite) :
     def __init__(self):
@@ -6,15 +7,15 @@ class Cursor(Sprite) :
         self.i_h = 50
         self.w = 100
         self.h = 100
-        self.posX = 600
-        self.posY = 350
+        self.posX = width/2
+        self.posY = height/2
 
     def UpdateCursor(self,x,y):
         self.posX = x
         self.posY = y
 
     def Show(self):
-        self.image.clip_draw(0,0,self.w,self.h,self.posX,699 - self.posY)
+        self.image.clip_draw(0,0,self.w,self.h,self.posX,height-1 - self.posY)
 
 aim = Cursor()
 

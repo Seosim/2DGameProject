@@ -3,6 +3,7 @@ from pico2d import *
 from button import Button
 import play_state
 import cursor
+from MapData import width,height
 
 start_button = None
 quit_button = None
@@ -10,9 +11,9 @@ quit_button = None
 def enter():
     global start_button , quit_button
     start_button = Button()
-    start_button.setButton(600,450,1)
+    start_button.setButton(width/2,height/2 + 100,1)
     quit_button = Button()
-    quit_button.setButton(600,300,0)
+    quit_button.setButton(width/2,height/2 - 100,0)
 
 def handle_events():
     events = get_events()
@@ -29,7 +30,7 @@ def handle_events():
                 if quit_button.InClick(e.x,e.y):
                     game_framework.quit()
 
-def update():delay(0.01)
+def update(): pass
 
 def draw():
     clear_canvas()

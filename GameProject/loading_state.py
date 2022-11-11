@@ -1,10 +1,9 @@
 import game_framework
 import pico2d
+from MapData import width,height
 
 image = None
 timer = 0
-width = 1200
-height = 700
 
 def enter():
     global image, timer

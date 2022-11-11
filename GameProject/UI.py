@@ -2,7 +2,7 @@ from pico2d import *
 from Hero import player
 from weapon import gun
 from boss import skul
-from MapData import Map
+from MapData import Map,width,height
 
 UI_hp = None
 hpBar = load_image('./res/hp.png')
@@ -22,11 +22,11 @@ def LoadUI():
 def showUI():
     #for i in range(player.hp):
         #hpBar.draw(0,0,1,20,40+i,700-28)
-    hpBar.draw(90 -(100 - player.hp)//2 ,700-28,player.hp,28)
-    UI_hp.clip_draw(0,0,144,28,72,700-28)
+    hpBar.draw(90 -(100 - player.hp)//2 ,height-28,player.hp,28)
+    UI_hp.clip_draw(0,0,144,28,72,height-28)
 
     for i in range(gun.ammo):
-        UI_ammo.clip_draw(0,0,5,15,10+(i*7),700-56)
+        UI_ammo.clip_draw(0,0,5,15,10+(i*7),height-56)
 
     if Map.number == 1:
         hpBar.draw(600 -(1000 - skul.hp//3)//2,50,skul.hp//3,50)

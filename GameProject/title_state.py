@@ -3,21 +3,19 @@ import game_framework
 import play_state
 from button import Button
 import cursor
+from MapData import width,height
 
 background = None
 start_button = None
 quit_button = None
 
-width = 1200
-height = 700
-
 def enter():
     global background , start_button , quit_button
     background = load_image('./res/background.png')
     start_button = Button()
-    start_button.setButton(600,250,1)
+    start_button.setButton(width/2,height/2,1)
     quit_button = Button()
-    quit_button.setButton(600,100,0)
+    quit_button.setButton(width/2,height/2 - 250,0)
     cursor.aim.imageLoad('./res/cursor.png')
 
 
