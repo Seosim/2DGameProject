@@ -56,7 +56,7 @@ class Weapon(Sprite):
             if self.ammo == 0:
                 return
 
-            player.hit = True
+            player.hit = time.time()
             gun.radian(aim.posX,aim.posY)
             b = Bullet()
             #b.imageLoad('./res/Bullet.png')

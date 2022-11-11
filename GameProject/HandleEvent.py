@@ -51,7 +51,7 @@ def Handle_events():
             if e.button == SDL_BUTTON_LEFT:
                 weapon.gun.clickButton = True
             if e.button == SDL_BUTTON_RIGHT:
-                if Hero.player.DashCnt == 0: Hero.player.DashGet(e.x,e.y)
+                if Hero.player.DashCD == 0: Hero.player.DashGet(e.x,e.y)
         elif e.type == SDL_MOUSEBUTTONUP:
             if e.button == SDL_BUTTON_LEFT:
                 weapon.gun.clickButton = False

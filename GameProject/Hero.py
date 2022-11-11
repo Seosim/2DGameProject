@@ -17,7 +17,7 @@ class Player(Sprite):
         self.speed = 12
         self.jumpMax = 180
         self.jumpPower = 40
-        self.hp = 999
+        self.hp = 100
 
         self.jumpY = -1
         self.gravitySpeed = 10
@@ -39,7 +39,7 @@ class Player(Sprite):
         self.screenX = self.posX
         self.cameraX = width/2
         self.cameraY = 0
-        self.hit = False
+        self.hit = 0
 
         self.pushS = False
         self.fall = 0
@@ -51,6 +51,7 @@ class Player(Sprite):
         self.DashCnt = 0
         self.DashDirX = 0
         self.DashDirY = 0
+        self.DashCD = 0
 
     def getScreenX(self):
         stage = Map.stageData[Map.number]
@@ -82,11 +83,13 @@ class Player(Sprite):
         elif size * len(stage[6]) - player.posX <= 600:
             self.cameraX = size * len(stage[6]) - 1200
 
-        if self.hit:
-            if player.PushL: self.cameraX -= 12
-            elif player.PushR: self.cameraX += 12
-            else: self.cameraX += 10
-            self.hit = False
+        if self.hit: #카메라 진동효과
+            if player.PushL:
+                self.cameraX -= 5
+            elif player.PushR:
+                self.cameraX += 5
+            else: self.cameraX += 4
+            if time.time() - self.hit > 0.05:self.hit = 0
 
 
         self.cameraY = max(0,self.posY-height+250)
@@ -131,11 +134,15 @@ class Player(Sprite):
         self.OutOfMap()
 
     def DashGet(self,x,y):
+        self.inv = time.time()-1
+        self.DashCD = time.time()
         self.DashCnt = 25/game_framework.MS
         self.DashDirX = x
         self.DashDirY = y
 
     def Dash(self,x,y):
+        if time.time() - self.DashCD > 5: self.DashCD = 0
+
         if self.DashCnt:
             SPEEDX = game_framework.getSpeed(self.speed * 5 )
             SPEEDY = game_framework.getSpeed(self.speed * 5 )
