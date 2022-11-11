@@ -298,6 +298,7 @@ class Beam(Sprite):
     def setBeam(self,y,w):
         self.w = w
         self.posY = y
+        self.action = (self.action + 4 * 2 * game_framework.frame_time) % 4
 
 
 

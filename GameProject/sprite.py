@@ -23,7 +23,7 @@ class Sprite:
         self.image = load_image(name)
 
     def Show(self,x,y):
-        self.image.clip_draw(self.i_w*int(self.frame),self.i_h*self.action,self.i_w,self.i_h,self.posX-x,self.posY-y,self.w,self.h)
+        self.image.clip_draw(self.i_w*int(self.frame),self.i_h*int(self.action),self.i_w,self.i_h,self.posX-x,self.posY-y,self.w,self.h)
 
     def flipShow(self,x,y):
         self.image.clip_composite_draw(self.i_w*int(self.frame),self.i_h*self.action,self.i_w,self.i_h,0,'h',self.posX-x,self.posY-y,self.w,self.h)
