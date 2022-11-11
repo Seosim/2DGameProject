@@ -22,6 +22,7 @@ class Boss(Sprite):
         self.h = self.i_h*5
         self.l_hand = Sprite()
         self.r_hand = Sprite()
+        self.handTimer = 0
         self.ldir = 250
         self.rdir = 250
         self.skillDelay = 0
@@ -37,7 +38,7 @@ class Boss(Sprite):
         self.rdir = player.posY
         self.l_hand.action = 1
         self.r_hand.action = 1
-        self.beam.timer = time.time()
+        self.handTimer = time.time()
 
     def MoveHand(self):
 
@@ -49,7 +50,12 @@ class Boss(Sprite):
         if self.rdir > self.r_hand.posY + SPEED : self.r_hand.posY += SPEED
         elif  self.rdir < self.r_hand.posY : self.r_hand.posY -= SPEED
         else:
-            if self.l_hand.action: self.beam.setBeam(self.l_hand.posY,self.r_hand.posX-self.l_hand.posX)
+            if self.r_hand.action:
+                self.beam.setBeam(self.l_hand.posY,self.r_hand.posX-self.l_hand.posX)
+                self.beam.on = True
+                return
+
+        self.beam.on = False
 
     def CreateGhost(self):
 
@@ -73,6 +79,18 @@ class Boss(Sprite):
         self.e_list.clear()
         self.s_list.clear()
 
+    def handAnimation(self):
+        if self.handTimer :
+            self.l_hand.action = 1
+            self.r_hand.action = 1
+        else :
+            self.l_hand.action = 0
+            self.r_hand.action = 0
+
+        if time.time() - self.handTimer > 5:
+            self.handTimer =0
+
+
 
     def update(self):
         if Map.number != 1: return
@@ -86,9 +104,11 @@ class Boss(Sprite):
 
         for e in self.e_list:
             e.update()
-            if time.time() - e.timer > 5: self.e_list.remove(e)
+            if time.time() - e.timer > 3: self.e_list.remove(e)
 
         if len(self.s_list): shield.update()
+
+        self.handAnimation()
 
         if len(self.e_list): self.action = 1
         else : self.action = 0
@@ -98,7 +118,16 @@ class Boss(Sprite):
             if self.posY > self.h/2 + 50: self.posY -= 1
             return
 
+        self.UseSkill()
 
+        self.FrameUpdate()
+
+    def FrameUpdate(self):
+        self.frame = (self.frame + 4 * 2 * game_framework.frame_time) % 4
+        self.l_hand.frame = (self.l_hand.frame + 4 * 2 * game_framework.frame_time) % 4
+        self.r_hand.frame = (self.r_hand.frame + 4 * 2 * game_framework.frame_time) % 4
+
+    def UseSkill(self):
         if time.time() - self.skillDelay > 7:
             rSkill = random.randint(0, 2)
             if rSkill == 0:
@@ -109,9 +138,6 @@ class Boss(Sprite):
                 self.CreateGhost()
             self.skillDelay = 0
         self.MoveHand()
-        self.frame = (self.frame + 4 * 2 * game_framework.frame_time) % 4
-        self.l_hand.frame = (self.l_hand.frame + 4 * 2 * game_framework.frame_time) % 4
-        self.r_hand.frame = (self.r_hand.frame + 4 * 2 * game_framework.frame_time) % 4
 
     def Draw(self):
         if Map.number != 1: return
@@ -130,7 +156,7 @@ class Boss(Sprite):
         for e in self.e_list:
             e.Show(player.cameraX, player.cameraY)
 
-        if time.time() - self.beam.timer < 5:
+        if self.handTimer and self.beam.on:
             self.beam.Show(player.cameraX,player.cameraY)
 
 
@@ -265,7 +291,7 @@ class Beam(Sprite):
         self.h = 150
         self.posX = width/2
         self.posY = -100
-        self.timer = 0
+        self.on = False
         self.frame = 0
         self.action = 0
 
@@ -294,8 +320,8 @@ def InitBoss():
     skul.l_hand.h = 200
     skul.r_hand.w =  200
     skul.r_hand.h = 200
-    skul.l_hand.posX = skul.posX - 400
-    skul.r_hand.posX = skul.posX + 400
+    skul.l_hand.posX = skul.posX - 550
+    skul.r_hand.posX = skul.posX + 550
     skul.l_hand.action = 0
     skul.r_hand.action = 0
 

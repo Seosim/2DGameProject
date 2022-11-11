@@ -32,10 +32,9 @@ def drawWorld():
 
     for t in tile:
         t.draw()
-
-    skul.Draw()
     #LoadMap()
     LoadObj(Map.objData[Map.number])
+    skul.Draw()
     ShowArrow()
     ShowBullet()
     ShowObject()
