@@ -59,9 +59,9 @@ def update():
     playerUpdate()
     gun.Update()
     skul.update()
-    if Hero.player.hp <= 0:
-        Map.number = 0
-        game_framework.change_state(title_state) #게임종료
+    # if Hero.player.hp <= 0:
+    #     Map.number = 0
+    #     game_framework.change_state(title_state) #게임종료
 
 def handle_events():
     Handle_events()

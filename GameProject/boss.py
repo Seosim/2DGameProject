@@ -13,7 +13,7 @@ import time
 class Boss(Sprite):
     def __init__(self):
         self.image = pico2d.load_image('./res/belial.png')
-        self.hp = 55
+        self.hp = 3000
         self.i_w = 100
         self.i_h = 130
         self.posX = width/2
@@ -52,7 +52,6 @@ class Boss(Sprite):
         else:
             if self.r_hand.action:
                 self.beam.setBeam(self.l_hand.posY,self.r_hand.posX-self.l_hand.posX)
-                self.beam.on = True
                 return
 
         self.beam.on = False
@@ -104,7 +103,9 @@ class Boss(Sprite):
 
         for e in self.e_list:
             e.update()
-            if time.time() - e.timer > 3: self.e_list.remove(e)
+            if time.time() - e.timer > 3/game_framework.MS: self.e_list.remove(e)
+
+        self.beam.hit()
 
         if len(self.s_list): shield.update()
 
@@ -128,7 +129,7 @@ class Boss(Sprite):
         self.r_hand.frame = (self.r_hand.frame + 4 * 2 * game_framework.frame_time) % 4
 
     def UseSkill(self):
-        if time.time() - self.skillDelay > 7:
+        if time.time() - self.skillDelay > 7/game_framework.MS:
             rSkill = random.randint(0, 2)
             if rSkill == 0:
                 self.Breath()
@@ -176,6 +177,7 @@ class Ghost(Sprite):
         self.rad = 0
         self.dir = 0
         self.speed = 20
+        self.frame = random.randint(0,3)
         self.action = 0
         self.col = False
 
@@ -242,7 +244,7 @@ class EBall(Sprite):
 
 
     def hit(self):
-        if time.time() - self.timer < 1:return
+        if time.time() - self.timer < 1/game_framework.MS:return
 
         if abs(self.posX - player.posX) < player.w/2:
             if abs(self.posY - player.posY) < player.h/2:
@@ -299,6 +301,14 @@ class Beam(Sprite):
         self.w = w
         self.posY = y
         self.action = (self.action + 4 * 2 * game_framework.frame_time) % 4
+        self.on = True
+
+    def hit(self):
+        if self.on :
+            if abs(self.posX - player.posX) < (self.w+player.w)/2:
+                if abs(self.posY - player.posY) < (self.h+player.h)/2:
+                    player.hit(15,1)
+
 
 
 

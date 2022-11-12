@@ -29,6 +29,6 @@ def showUI():
         UI_ammo.clip_draw(0,0,5,15,10+(i*7),height-56)
 
     if Map.number == 1:
-        hpBar.draw(600 -(1000 - skul.hp//3)//2,50,skul.hp//3,50)
-        UI_BossHP.clip_draw(0,0,144,28,600,50,1050,50)
+        hpBar.draw(width/2 -(1000 - skul.hp//3)//2,50,skul.hp//3,50)
+        UI_BossHP.clip_draw(0,0,144,28,width/2,50,1050,50)
 

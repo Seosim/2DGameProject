@@ -2,6 +2,7 @@ import pico2d
 import game_framework
 import time
 import math
+import gameover_state
 
 from sprite import Sprite
 from MapData import width,height,Map,size
@@ -14,6 +15,7 @@ class Player(Sprite):
         self.jumpMax = 180
         self.jumpPower = 40
         self.hp = 100
+        self.live = True
 
         self.jumpY = -1
         self.gravitySpeed = 10
@@ -35,7 +37,7 @@ class Player(Sprite):
         self.screenX = self.posX
         self.cameraX = width/2
         self.cameraY = 0
-        self.hit = 0
+        self.shooting = 0
 
         self.pushS = False
         self.fall = 0
@@ -60,6 +62,10 @@ class Player(Sprite):
     def Show(self):
         self.image.clip_draw(self.i_w * (self.hitframe+int(self.frame)), self.i_h * self.action, self.w, self.h, self.screenX,self.posY-self.cameraY)
 
+    def Dead(self):
+        if self.live and self.hp <= 0:
+            game_framework.push_state(gameover_state)
+            self.live = False
 
     def move(self):
         stage = Map.stageData[Map.number]
@@ -79,13 +85,13 @@ class Player(Sprite):
         elif size * len(stage[6]) - player.posX <= width/2:
             self.cameraX = size * len(stage[6]) - width
 
-        if self.hit: #카메라 진동효과
+        if self.shooting: #카메라 진동효과
             if player.PushL:
                 self.cameraX -= 5
             elif player.PushR:
                 self.cameraX += 5
             else: self.cameraX += 4
-            if time.time() - self.hit > 0.05:self.hit = 0
+            if time.time() - self.shooting > 0.05:self.shooting = 0
 
 
         self.cameraY = max(0,self.posY-height+250)
@@ -150,7 +156,6 @@ class Player(Sprite):
         else:
             self.DashDirX = 0
             self.DashDirY = 0
-
 
 
     def SlowMotion(self):
@@ -225,14 +230,17 @@ class Player(Sprite):
         self.stand = False
         return False
 
+    def hit(self,damage,t = 0):
+        if self.inv == 0:
+            self.hp -= damage
+            self.inv = time.time() - t
+
     def ColtoMonster(self,mlist):
         for monster in mlist:
             if abs(self.posX - monster.posX)+35 < (monster.w/2) + (self.w / 2):  # 가로줄 충돌
                 if abs(self.posY - monster.posY) < (monster.h / 2) + (self.h / 2)-15:  # 세로줄 충돌
-                    if self.inv == 0:
-                        self.hp -= monster.power
-                        self.inv = time.time()
-                        return
+                    self.hit(monster.power)
+                    return
 
     def invincibility(self):
         if self.inv == 0 : return
@@ -265,6 +273,7 @@ def playerUpdate():
     player.SlowMotion()
     player.Dash(player.DashDirX,player.DashDirY)
     player.OutOfMap()
+    player.Dead()
     player.frame = (player.frame + 4 * 2 * game_framework.frame_time*game_framework.MS) % 4
 
 
