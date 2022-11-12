@@ -16,6 +16,7 @@ class Player(Sprite):
         self.jumpPower = 40
         self.hp = 100
         self.live = True
+        self.god = False
 
         self.jumpY = -1
         self.gravitySpeed = 10
@@ -143,14 +144,16 @@ class Player(Sprite):
         self.OutOfMap()
 
     def DashGet(self,x,y):
-        self.inv = time.time()-1
+        self.god = True
         self.DashCD = time.time()
         self.DashCnt = 25/game_framework.MS
         self.DashDirX = x
         self.DashDirY = y
 
     def Dash(self,x,y):
-        if time.time() - self.DashCD > 1: self.DashCD = 0
+        if time.time() - self.DashCD > 1:
+            self.DashCD = 0
+
 
         if self.DashCnt:
             SPEEDX = game_framework.getSpeed(self.speed * 5 )
@@ -163,6 +166,7 @@ class Player(Sprite):
         else:
             self.DashDirX = 0
             self.DashDirY = 0
+            self.god = False
 
 
     def SlowMotion(self):
@@ -238,6 +242,8 @@ class Player(Sprite):
         return False
 
     def hit(self,damage,t = 0):
+        if self.god : return
+
         if self.inv == 0:
             self.hp -= damage
             self.inv = time.time() - t

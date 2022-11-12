@@ -215,9 +215,7 @@ def UpdateArrow():
             continue
         if abs(a.posX - player.posX) < player.w/2:
             if abs(a.posY - player.posY)+25 < player.h/2:
-                if player.inv == 0:
-                    player.hp -= a.power
-                    player.inv = time.time()
+                player.hit(a.power)
                 a_list.remove(a)
                 continue
 
