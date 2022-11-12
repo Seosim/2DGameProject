@@ -13,9 +13,10 @@ from boss import *
 import title_state
 
 tile = []
+bgm = None
 
 def enter():
-    global tile
+    global tile,bgm
     tile = [Tile((x*100) + 50,(y*100) + 50,100,100,val) for x,y,val in Mapgenerator() if val]
 
     playerInit()
@@ -25,6 +26,9 @@ def enter():
     monsterInit()
     ObjectInit()
     LoadUI()
+
+    bgm = load_music('./sound/bgm.mp3')
+    bgm.repeat_play()
 
 def drawWorld():
     hide_cursor()

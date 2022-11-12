@@ -23,6 +23,7 @@ def Handle_events():
                 Hero.player.PushL = True
                 Hero.player.imageLoad('./res/running.png')
             elif e.key == SDLK_SPACE and  Hero.player.stand:
+                Hero.player.jumpSound.play()
                 Hero.player.PushSpace = True
             elif e.key == SDLK_f:
                 Hero.player.Flash()
@@ -49,12 +50,12 @@ def Handle_events():
             weapon.gun.radian(e.x,e.y)
         elif e.type == SDL_MOUSEBUTTONDOWN: #마우스 클릭
             if e.button == SDL_BUTTON_LEFT:
-                weapon.gun.clickButton = True
+                Hero.player.clickButton = True
             if e.button == SDL_BUTTON_RIGHT:
                 Hero.player.DashGet(e.x,e.y)
         elif e.type == SDL_MOUSEBUTTONUP:
             if e.button == SDL_BUTTON_LEFT:
-                weapon.gun.clickButton = False
+                Hero.player.clickButton = False
 
 
     if Hero.player.PushR == False and Hero.player.PushL == False:

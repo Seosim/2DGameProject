@@ -79,4 +79,6 @@ class Tile(Sprite):
     def update(self): pass
 
     def draw(self):
-        self.image.clip_draw(0,0,self.w,self.h,self.posX-player.cameraX,self.posY-player.cameraY)
+        if  abs(self.posX - player.posX) < width:
+            self.image.clip_draw(0,0,self.w,self.h,self.posX-player.cameraX,self.posY-player.cameraY)
+

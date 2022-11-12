@@ -17,7 +17,10 @@ def enter():
     title_button.setButton(width/2,height/2,2)
     quit_button = Button()
     quit_button.setButton(width/2,height/2 - 150,0)
-    gameover = load_image('./res/GameOver.png')
+    if play_state.Hero.player.hp <= 0:
+        gameover = load_image('./res/GameOver.png')
+    else :
+        gameover = load_image('./res/GameClear.png')
 
 def handle_events():
     events = get_events()
@@ -50,8 +53,8 @@ def pause(): pass
 
 def resume(): pass
 
-def exit():
-    global title_button , quit_button,gameover
-    del title_button
-    del quit_button
-    del gameover
+def exit(): pass
+    # global title_button , quit_button,gameover
+    # del title_button
+    # del quit_button
+    # del gameover

@@ -1,5 +1,6 @@
 import pico2d
 import game_framework
+import gameover_state
 
 from sprite import Sprite
 from Hero import player
@@ -13,7 +14,7 @@ import time
 class Boss(Sprite):
     def __init__(self):
         self.image = pico2d.load_image('./res/belial.png')
-        self.hp = 3000
+        self.hp = 30
         self.i_w = 100
         self.i_h = 130
         self.posX = width/2
@@ -32,6 +33,8 @@ class Boss(Sprite):
         self.beam = Beam()
         self.ignore = False
         self.dead = False
+
+        self.debugSkill = 0
 
     def UpdateHand(self):
         self.ldir = player.posY
@@ -77,6 +80,8 @@ class Boss(Sprite):
         self.dead = True
         self.e_list.clear()
         self.s_list.clear()
+        self.beam.on = False
+        game_framework.push_state(gameover_state)
 
     def handAnimation(self):
         if self.handTimer :
@@ -127,8 +132,12 @@ class Boss(Sprite):
         self.r_hand.frame = (self.r_hand.frame + 4 * 2 * game_framework.frame_time) % 4
 
     def UseSkill(self):
-        if time.time() - self.skillDelay > 7/game_framework.MS:
+        if time.time() - self.skillDelay > 5/game_framework.MS:
             rSkill = random.randint(0, 2)
+
+            rSkill = self.debugSkill
+            self.debugSkill = (self.debugSkill +1) % 3
+
             if rSkill == 0:
                 self.Breath()
             if rSkill == 1:
@@ -309,7 +318,7 @@ class Beam(Sprite):
         self.posY = y
         self.action = (self.action + 4 * 2 * game_framework.frame_time) % 4
         if self.timer == 0 :self.timer = time.time()
-        if time.time() - self.timer > 1.5:
+        if time.time() - self.timer > 0.7:
             self.on = True
 
     def hit(self):

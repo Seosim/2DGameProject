@@ -28,13 +28,14 @@ class Weapon(Sprite):
         self.h = 50
         self.i_w = 48
         self.i_h = 48
-        self.clickButton = False
         self.distance = 500
         self.ammo = 8
         self.maxAmmo = self.ammo
         self.reloadDelay = 0
         self.reloadTime = 1
         self.R = False
+
+        self.sound = pico2d.load_wav('./sound/pistol.wav')
 
 
     def radian(self,x,y):
@@ -59,8 +60,8 @@ class Weapon(Sprite):
             #b.imageLoad('./res/Bullet.png')
             if self.dir < 0: b.dir = 0
             bullet_list.append(b)
+            self.sound.play()
             self.ammo -= 1
-
             self.attack_delay = time.time()
 
     def Reload(self):
@@ -90,7 +91,7 @@ class Weapon(Sprite):
         self.posX = player.posX + self.dir*15
         self.posY = player.posY - 15
         #if self.attack_delay: self.attack_delay = (self.attack_delay + 1) % self.attack_speed
-        if self.clickButton: self.Shot()
+        if player.clickButton: self.Shot()
 
 bullet_list = []
 

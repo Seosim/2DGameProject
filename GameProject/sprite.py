@@ -1,6 +1,5 @@
-from pico2d import load_image
+from pico2d import *
 from MapData import Map,size,width,height
-import pico2d
 
 class Sprite:
     image = None
@@ -21,6 +20,7 @@ class Sprite:
 
     def imageLoad(self,name):
         self.image = load_image(name)
+
 
     def Show(self,x,y):
         self.image.clip_draw(self.i_w*int(self.frame),self.i_h*int(self.action),self.i_w,self.i_h,self.posX-x,self.posY-y,self.w,self.h)

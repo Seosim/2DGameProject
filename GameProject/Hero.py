@@ -26,6 +26,7 @@ class Player(Sprite):
 
         self.PushSpace = False
         self.stand = True
+        self.clickButton = False
 
         self.posX = 300
         self.posY = 200
@@ -40,17 +41,26 @@ class Player(Sprite):
         self.cameraY = 0
         self.shooting = 0
 
+        #하향점프 관련 변수
         self.pushS = False
         self.fall = 0
 
+        #슬로우모션 관련 변수
         self.slowMotionDelay = 0
         self.slowMotionCD = 0
         self.PushT = False
 
+        #대쉬 관련 변수
         self.DashCnt = 0
         self.DashDirX = 0
         self.DashDirY = 0
         self.DashCD = 0
+
+        #사운드 변수
+        self.hitSound = pico2d.load_wav('./sound/Hit_Player.wav')
+        self.hitSound.set_volume(50)
+        self.jumpSound = pico2d.load_wav('./sound/Jumping.wav')
+        self.dashSound = pico2d.load_wav('./sound/dash.wav')
 
     def getScreenX(self):
         stage = Map.stageData[Map.number]
@@ -78,6 +88,7 @@ class Player(Sprite):
             game_framework.push_state(gameover_state)
             self.live = False
 
+
     def move(self):
         stage = Map.stageData[Map.number]
 
@@ -98,12 +109,11 @@ class Player(Sprite):
 
         if self.shooting: #카메라 진동효과
             if player.PushL:
-                self.cameraX -= 5
+                self.cameraX -= 10
             elif player.PushR:
-                self.cameraX += 5
-            else: self.cameraX += 4
+                self.cameraX += 10
+            else: self.cameraX += 8
             if time.time() - self.shooting > 0.05:self.shooting = 0
-
 
         self.cameraY = max(0,self.posY-height+250)
 
@@ -156,6 +166,8 @@ class Player(Sprite):
             self.PushSpace = False
             self.jumpPower = 40
             self.jumpY = -1
+            self.speed = 12
+            self.dashSound.play()
 
     def Dash(self,x,y):
         if not self.live : return
@@ -255,6 +267,7 @@ class Player(Sprite):
         if self.god : return
 
         if self.inv == 0:
+            self.hitSound.play()
             self.hp -= damage
             self.inv = time.time() - t
 
@@ -283,6 +296,7 @@ class Player(Sprite):
     def KeyReset(self):
         self.PushL = False
         self.PushR = False
+        self.clickButton = False
 
 player = Player()
 
