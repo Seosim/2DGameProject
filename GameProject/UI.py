@@ -9,17 +9,18 @@ hpBar = None
 UI_ammo = None
 UI_BossHP = None
 DashGage = None
-
+Reloading = None
 
 
 
 def LoadUI():
-    global UI_hp,hpBar,UI_ammo,UI_BossHP,DashGage
+    global UI_hp,hpBar,UI_ammo,UI_BossHP,DashGage,Reloading
     UI_hp = load_image('./res/HP_UI.png')
     hpBar = load_image('./res/hp.png')
     UI_ammo = load_image('./res/ui_bullet.png')
     UI_BossHP = load_image('./res/Bar.png')
     DashGage = load_image('./res/DashGage.png')
+    Reloading = load_image('./res/ReloadingUI.png')
 
 
 def showUI():
@@ -33,6 +34,8 @@ def showUI():
 
     for i in range(gun.ammo): #총알갯수 UI
         UI_ammo.clip_draw(0,0,5,15,10+(i*7),height-56)
+    if gun.reloadDelay:
+        Reloading.clip_draw(0,0,150,25,player.screenX,(player.posY- player.cameraY)+player.h/2,100,15)
 
     if Map.number == 1: #보스 체력 UI
         hpBar.draw(width/2 -(1000 - skul.hp//3)//2,50,skul.hp//3,50)
