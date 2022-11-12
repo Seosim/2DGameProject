@@ -60,10 +60,17 @@ class Player(Sprite):
         else : self.screenX =  width / 2
 
     def Show(self):
-        self.image.clip_draw(self.i_w * (self.hitframe+int(self.frame)), self.i_h * self.action, self.w, self.h, self.screenX,self.posY-self.cameraY)
+        self.image.clip_draw(self.i_w * (self.hitframe+int(self.frame)), self.i_h * self.action, self.i_w, self.i_h, self.screenX,self.posY-self.cameraY,\
+                             self.w,self.h)
 
     def Dead(self):
         if self.live and self.hp <= 0:
+            self.imageLoad('./res/dead.png')
+            self.i_w = 76
+            self.i_h = 53
+            self.w = 76
+            self.h = 53
+            self.frame = 0
             game_framework.push_state(gameover_state)
             self.live = False
 
@@ -274,6 +281,7 @@ def playerUpdate():
     player.Dash(player.DashDirX,player.DashDirY)
     player.OutOfMap()
     player.Dead()
-    player.frame = (player.frame + 4 * 2 * game_framework.frame_time*game_framework.MS) % 4
+    if player.live:
+        player.frame = (player.frame + 4 * 2 * game_framework.frame_time*game_framework.MS) % 4
 
 
