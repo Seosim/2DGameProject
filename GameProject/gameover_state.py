@@ -9,13 +9,15 @@ from MapData import width,height,Map
 
 title_button = None
 quit_button = None
+gameover = None
 
 def enter():
-    global title_button , quit_button
+    global title_button , quit_button,gameover
     title_button = Button()
-    title_button.setButton(width/2,height/2 + 100,2)
+    title_button.setButton(width/2,height/2,2)
     quit_button = Button()
-    quit_button.setButton(width/2,height/2 - 100,0)
+    quit_button.setButton(width/2,height/2 - 150,0)
+    gameover = load_image('./res/GameOver.png')
 
 def handle_events():
     events = get_events()
@@ -35,6 +37,7 @@ def handle_events():
 def draw():
     clear_canvas()
     play_state.drawWorld()
+    gameover.clip_draw(0,0,width - (width//5) , 200 ,width//2 ,height - (height//4))
     title_button.draw()
     quit_button.draw()
     cursor.aim.Show()
@@ -48,6 +51,7 @@ def pause(): pass
 def resume(): pass
 
 def exit():
-    global title_button , quit_button
+    global title_button , quit_button,gameover
     del title_button
     del quit_button
+    del gameover
