@@ -49,7 +49,7 @@ def ObjectInit():
     global o_list
     o_list.clear()
 
-    portal = Portal(24,33,100,170,300,200)
+    portal = Portal(24,33,100,170,9700,200)
     portal.imageLoad('./res/Portal.png')
     o_list.append(portal)
 

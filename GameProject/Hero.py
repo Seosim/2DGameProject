@@ -155,7 +155,7 @@ class Player(Sprite):
     def Dash(self,x,y):
         if not self.live : return
 
-        if time.time() - self.DashCD > 1:
+        if time.time() - self.DashCD > 5:
             self.DashCD = 0
 
 
