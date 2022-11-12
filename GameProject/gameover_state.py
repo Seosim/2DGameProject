@@ -13,7 +13,7 @@ quit_button = None
 def enter():
     global title_button , quit_button
     title_button = Button()
-    title_button.setButton(width/2,height/2 + 100,1)
+    title_button.setButton(width/2,height/2 + 100,2)
     quit_button = Button()
     quit_button.setButton(width/2,height/2 - 100,0)
 
