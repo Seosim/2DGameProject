@@ -155,6 +155,7 @@ class Player(Sprite):
             self.DashDirY = y
             self.PushSpace = False
             self.jumpPower = 40
+            self.jumpY = -1
 
     def Dash(self,x,y):
         if not self.live : return

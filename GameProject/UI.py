@@ -40,4 +40,6 @@ def showUI():
     if Map.number == 1: #보스 체력 UI
         hpBar.draw(width / 2 - (1000 - Belial.hp // 3) // 2, 50, Belial.hp // 3, 50)
         UI_BossHP.clip_draw(0,0,144,28,width/2,50,1050,50)
+        name = load_font('./res/BMJUA_ttf.ttf',30)
+        name.draw(200,90,'Belial',(0,0,0))
 
