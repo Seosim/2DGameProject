@@ -72,6 +72,8 @@ class Player(Sprite):
             self.w = 76
             self.h = 53
             self.frame = 0
+            self.god = True
+            self.hitframe = 0
             game_framework.push_state(gameover_state)
             self.live = False
 
@@ -151,6 +153,8 @@ class Player(Sprite):
         self.DashDirY = y
 
     def Dash(self,x,y):
+        if not self.live : return
+
         if time.time() - self.DashCD > 1:
             self.DashCD = 0
 
@@ -282,11 +286,11 @@ def playerUpdate():
     player.move()
     player.jump()
     player.down()
-    player.Gravity()
     player.SlowMotion()
     player.Dash(player.DashDirX,player.DashDirY)
     player.OutOfMap()
     player.Dead()
+    player.Gravity()
     if player.live:
         player.frame = (player.frame + 4 * 2 * game_framework.frame_time*game_framework.MS) % 4
 
