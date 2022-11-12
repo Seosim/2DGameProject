@@ -7,7 +7,7 @@ from sprite import Sprite
 from Hero import player
 import math
 from monster import m_list
-from boss import skul
+from boss import Belial
 from MapData import Map , width,height
 from cursor import aim
 
@@ -131,14 +131,14 @@ class Bullet(Sprite):
         return False
 
     def ColtoBoss(self):
-        if abs(self.posX - skul.posX)+150 < (skul.w / 2) + (self.w / 2):  # 가로줄 충돌
-            if skul.action == 0:
+        if abs(self.posX - Belial.posX)+150 < (Belial.w / 2) + (self.w / 2):  # 가로줄 충돌
+            if Belial.action == 0:
                 if self.posY == pico2d.clamp(130,self.posY,650):  # 세로줄 충돌
-                    skul.hp -= self.damage
+                    Belial.hp -= self.damage
                     return True
-            elif skul.action == 1:
+            elif Belial.action == 1:
                 if self.posY == pico2d.clamp(130,self.posY,750):  # 세로줄 충돌
-                    skul.hp -= self.damage
+                    Belial.hp -= self.damage
                     return True
 
 def ShowBullet():

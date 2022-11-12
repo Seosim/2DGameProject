@@ -34,7 +34,7 @@ def drawWorld():
         t.draw()
     #LoadMap()
     LoadObj(Map.objData[Map.number])
-    skul.Draw()
+    Belial.Draw()
     ShowArrow()
     ShowBullet()
     ShowObject()
@@ -58,7 +58,7 @@ def update():
     player.ColtoMonster(m_list)
     playerUpdate()
     gun.Update()
-    skul.update()
+    Belial.update()
     # if Hero.player.hp <= 0:
     #     Map.number = 0
     #     game_framework.change_state(title_state) #게임종료

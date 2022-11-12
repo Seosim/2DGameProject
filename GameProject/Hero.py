@@ -274,6 +274,11 @@ class Player(Sprite):
             self.hitframe = 0
             self.inv = 0
 
+    def CoolTimeSet(self , t):
+        self.DashCD += t
+        self.slowMotionCD += t
+        self.inv += t
+
     def KeyReset(self):
         self.PushL = False
         self.PushR = False

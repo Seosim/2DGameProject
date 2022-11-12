@@ -89,8 +89,6 @@ class Boss(Sprite):
         if time.time() - self.handTimer > 5:
             self.handTimer =0
 
-
-
     def update(self):
         if Map.number != 1: return
 
@@ -143,7 +141,7 @@ class Boss(Sprite):
     def Draw(self):
         if Map.number != 1: return
 
-        if len(skul.s_list): shield.Show(player.cameraX,player.cameraY)
+        if len(Belial.s_list): shield.Show(player.cameraX, player.cameraY)
 
         self.Show(player.cameraX,player.cameraY)
 
@@ -159,6 +157,14 @@ class Boss(Sprite):
 
         if self.handTimer and self.beam.on:
             self.beam.Show(player.cameraX,player.cameraY)
+
+    def CoolTimeSet(self,t):
+        self.handTimer += t
+        self.skillDelay += t
+        for s in self.s_list:
+            s.ready += t
+        for e in self.e_list:
+            e.timer += t
 
 
 class Ghost(Sprite):
@@ -194,7 +200,7 @@ class Ghost(Sprite):
         if abs(self.posX - player.posX) < player.w/2:
             if abs(self.posY - player.posY) < player.h/2:
                 if player.inv == 0:
-                    if not skul.ignore:
+                    if not Belial.ignore:
                         player.hp -= self.damage
                 self.col = True
 
@@ -271,11 +277,11 @@ class Shield(Sprite):
             self.action = 0
 
     def SavePlayer(self):
-            skul.ignore = False
+            Belial.ignore = False
 
             if abs(self.posX - player.posX) < self.w/2:
                 if abs(self.posY - player.posY) < self.h/2:
-                    skul.ignore = True
+                    Belial.ignore = True
 
 
     def update(self):
@@ -316,28 +322,28 @@ class Beam(Sprite):
 
 
 
-skul = Boss()
+Belial = Boss()
 shield = Shield()
 
 def InitBoss():
 
     if Map.number != 1: return
 
-    skul.__init__()
-    skul.l_hand.imageLoad('./res/belial_hand.png')
-    skul.r_hand.imageLoad('./res/belial_hand.png')
-    skul.l_hand.i_w = 58
-    skul.r_hand.i_w = 58
-    skul.l_hand.i_h = 67
-    skul.r_hand.i_h = 67
-    skul.l_hand.w =  200
-    skul.l_hand.h = 200
-    skul.r_hand.w =  200
-    skul.r_hand.h = 200
-    skul.l_hand.posX = skul.posX - 550
-    skul.r_hand.posX = skul.posX + 550
-    skul.l_hand.action = 0
-    skul.r_hand.action = 0
+    Belial.__init__()
+    Belial.l_hand.imageLoad('./res/belial_hand.png')
+    Belial.r_hand.imageLoad('./res/belial_hand.png')
+    Belial.l_hand.i_w = 58
+    Belial.r_hand.i_w = 58
+    Belial.l_hand.i_h = 67
+    Belial.r_hand.i_h = 67
+    Belial.l_hand.w =  200
+    Belial.l_hand.h = 200
+    Belial.r_hand.w =  200
+    Belial.r_hand.h = 200
+    Belial.l_hand.posX = Belial.posX - 550
+    Belial.r_hand.posX = Belial.posX + 550
+    Belial.l_hand.action = 0
+    Belial.r_hand.action = 0
 
 
 

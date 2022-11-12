@@ -1,7 +1,7 @@
 from pico2d import *
 from Hero import player
 from weapon import gun
-from boss import skul
+from boss import Belial
 from MapData import Map,width,height
 
 UI_hp = None
@@ -38,6 +38,6 @@ def showUI():
         Reloading.clip_draw(0,0,150,25,player.screenX,(player.posY- player.cameraY)+player.h/2,100,15)
 
     if Map.number == 1: #보스 체력 UI
-        hpBar.draw(width/2 -(1000 - skul.hp//3)//2,50,skul.hp//3,50)
+        hpBar.draw(width / 2 - (1000 - Belial.hp // 3) // 2, 50, Belial.hp // 3, 50)
         UI_BossHP.clip_draw(0,0,144,28,width/2,50,1050,50)
 
