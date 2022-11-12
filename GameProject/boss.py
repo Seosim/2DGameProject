@@ -53,7 +53,7 @@ class Boss(Sprite):
             if self.r_hand.action:
                 self.beam.setBeam(self.l_hand.posY,self.r_hand.posX-self.l_hand.posX)
                 return
-
+        self.beam.timer = 0
         self.beam.on = False
 
     def CreateGhost(self):
@@ -296,12 +296,15 @@ class Beam(Sprite):
         self.on = False
         self.frame = 0
         self.action = 0
+        self.timer = 0
 
     def setBeam(self,y,w):
         self.w = w
         self.posY = y
         self.action = (self.action + 4 * 2 * game_framework.frame_time) % 4
-        self.on = True
+        if self.timer == 0 :self.timer = time.time()
+        if time.time() - self.timer > 1.5:
+            self.on = True
 
     def hit(self):
         if self.on :

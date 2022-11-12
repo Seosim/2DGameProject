@@ -74,6 +74,7 @@ class Player(Sprite):
             self.frame = 0
             self.god = True
             self.hitframe = 0
+            self.PushSpace = False
             game_framework.push_state(gameover_state)
             self.live = False
 
