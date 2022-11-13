@@ -35,6 +35,7 @@ def handle_events():
                     game_framework.pop_state()
                 if quit_button.InClick(e.x,e.y):
                     game_framework.quit()
+        play_state.Hero.player.handle_event(e)
 
 def update(): pass
 

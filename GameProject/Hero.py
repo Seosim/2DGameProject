@@ -7,8 +7,8 @@ import gameover_state
 from sprite import Sprite
 from MapData import width,height,Map,size
 
-RD, LD, RU, LU, LMD,RMD,LMU,RMU,SPACE= range(9)
-event_name = ['RD', 'LD', 'RU', 'LU', 'LMD','RMD','LMU','RMU','SPACE']
+RD, LD, RU, LU, LMD,RMD,LMU,RMU,SPACE,DEAD= range(10)
+event_name = ['RD', 'LD', 'RU', 'LU', 'LMD','RMD','LMU','RMU','SPACE','DEAD']
 
 key_event_table = {
     (SDL_KEYDOWN, SDLK_d): RD,
@@ -36,16 +36,13 @@ class IDLE:
            if self.stand :self.PushSpace = True
 
     @staticmethod
-    def do(self):pass
+    def do(self): pass
 
 
 
     @staticmethod
     def draw(self):
-        if self.face_dir == 1:
-            self.Show()
-        else:
-            self.Show()
+        self.Show()
 
 
 class RUN:
@@ -83,9 +80,31 @@ class RUN:
         elif self.dir == 1:
             self.Show()
 
+class SLEEP:
+    @staticmethod
+    def enter(self, event):
+        print('ENTER SLEEP')
+        self.imageLoad('./res/dead.png')
+        self.action = 0
+        self.frame = 0
+
+
+    def exit(self,event):
+        print('EXIT SLEEP')
+
+
+    @staticmethod
+    def do(self):pass
+
+
+    @staticmethod
+    def draw(self):
+        self.Show()
+
 next_state = {
-    IDLE:  {RU: RUN,  LU: RUN,  RD: RUN,  LD: RUN,  SPACE:IDLE},
-    RUN:   {RU: IDLE, LU: IDLE, RD: IDLE, LD: IDLE, SPACE:RUN},
+    IDLE:  {RU: RUN,  LU: RUN,  RD: RUN,  LD: RUN,  SPACE:IDLE , DEAD:SLEEP},
+    RUN:   {RU: IDLE, LU: IDLE, RD: IDLE, LD: IDLE, SPACE:RUN,DEAD:SLEEP},
+    SLEEP: {RU: SLEEP,  LU: SLEEP,  RD: SLEEP,  LD: SLEEP,  SPACE:SLEEP , DEAD:SLEEP}
 }
 
 class Player(Sprite):
@@ -210,6 +229,7 @@ class Player(Sprite):
             self.PushSpace = False
             game_framework.push_state(gameover_state)
             self.live = False
+            self.add_event(DEAD)
 
 
     def move(self):
@@ -233,14 +253,11 @@ class Player(Sprite):
         elif size * len(stage[6]) - self.posX <= width / 2:
             self.cameraX = size * len(stage[6]) - width
         if self.shooting:  # 카메라 진동효과
-            if self.PushL:
-                self.cameraX -= 10
-            elif self.PushR:
-                self.cameraX += 10
-            else:
-                self.cameraX += 8
+            self.cameraX += 12
             if time.time() - self.shooting > 0.05: self.shooting = 0
+
         self.cameraY = max(0, self.posY - height + 250)
+        self.getScreenX()
 
     def down(self):
 
@@ -300,7 +317,6 @@ class Player(Sprite):
         if time.time() - self.DashCD > 0:
             self.DashCD = 0
 
-
         if self.DashCnt:
             SPEEDX = game_framework.getSpeed(self.speed * 5 )
             SPEEDY = game_framework.getSpeed(self.speed * 5 )
@@ -314,6 +330,7 @@ class Player(Sprite):
             self.DashDirX = 0
             self.DashDirY = 0
             self.god = False
+        self.SetCamera(Map.stageData[Map.number])
 
 
     def SlowMotion(self):
@@ -395,6 +412,7 @@ class Player(Sprite):
             self.hitSound.play()
             self.hp -= damage
             self.inv = time.time() - t
+            self.shooting = time.time()
 
     def ColtoMonster(self,mlist):
         for monster in mlist:

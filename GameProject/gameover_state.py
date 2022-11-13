@@ -40,6 +40,7 @@ def handle_events():
                     game_framework.quit()
         elif e.type == SDL_MOUSEMOTION: #마우스 움직임
             cursor.aim.UpdateCursor(e.x,e.y)
+        play_state.Hero.player.handle_event(e)
 
 def draw():
     clear_canvas()

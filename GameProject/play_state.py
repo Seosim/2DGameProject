@@ -19,7 +19,7 @@ def enter():
     global tile,bgm
     tile = [Tile((x*100) + 50,(y*100) + 50,100,100,val) for x,y,val in Mapgenerator() if val]
 
-    playerInit()
+    #playerInit()
     aim.imageLoad('./res/cursor.png')
     obj_1.imageLoad('./res/largeobject.png')
     weaponInit()

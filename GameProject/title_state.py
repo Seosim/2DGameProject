@@ -19,6 +19,7 @@ def enter():
     quit_button = Button()
     quit_button.setButton(width/2,height/2 - 250,0)
     cursor.aim.imageLoad('./res/cursor.png')
+    play_state.playerInit()
 
 
 def draw():
@@ -43,6 +44,7 @@ def handle_events():
                     game_framework.quit()
         elif e.type == SDL_MOUSEMOTION: #마우스 움직임
             cursor.aim.UpdateCursor(e.x,e.y)
+        play_state.Hero.player.handle_event(e)
 
 def update(): pass
 
