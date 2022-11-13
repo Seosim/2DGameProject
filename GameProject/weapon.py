@@ -64,6 +64,7 @@ class Weapon(Sprite):
             self.sound.play()
             self.ammo -= 1
             self.attack_delay = time.time()
+            player.vibration = self.damage
 
     def Reload(self):
         if self.R:

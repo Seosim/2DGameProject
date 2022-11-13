@@ -1,4 +1,4 @@
-width = 1280
+width = 1400
 height = 720
 
 size = 100

@@ -143,6 +143,7 @@ class Player(Sprite):
         self.cameraX = width/2
         self.cameraY = 0
         self.shooting = 0
+        self.vibration = 8
 
         #하향점프 관련 변수
         self.pushS = False
@@ -253,7 +254,7 @@ class Player(Sprite):
         elif size * len(stage[6]) - self.posX <= width / 2:
             self.cameraX = size * len(stage[6]) - width
         if self.shooting:  # 카메라 진동효과
-            self.cameraX += 12
+            self.cameraX += self.vibration
             if time.time() - self.shooting > 0.05: self.shooting = 0
 
         self.cameraY = max(0, self.posY - height + 250)
@@ -413,6 +414,7 @@ class Player(Sprite):
             self.hp -= damage
             self.inv = time.time() - t
             self.shooting = time.time()
+            self.vibration = 8
 
     def ColtoMonster(self,mlist):
         for monster in mlist:

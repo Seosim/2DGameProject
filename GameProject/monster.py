@@ -194,7 +194,7 @@ def UpdateMonster():
         elif monster.value == 2 : monster.frame = (monster.frame + 4*1*game_framework.frame_time*game_framework.MS) % 4
 
         if monster.hp <= 0:
-            item = Item_W(48,48,50,50,monster.posX,monster.posY,'./res/pistol.png')
+            item = Item_W(monster.posX,monster.posY)
             item.addList()
             m_list.remove(monster)
 

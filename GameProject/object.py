@@ -1,3 +1,5 @@
+import time
+
 from sprite import Sprite
 from Hero import player
 import game_framework
@@ -14,6 +16,7 @@ class Object(Sprite):
         self.posY = pY
         self.action = 0
         self.imageLoad(name)
+        self.timer = 0
 
 
 
@@ -47,6 +50,7 @@ def UpdateObject():
         if o.posY < - 100:
             o_list.remove(o)
             del o
+        if o.timer and time.time()-o.timer > 10: o_list.remove(o)
 
 def Interact():
     for o in o_list:
