@@ -1,6 +1,7 @@
 import game_framework
 import pico2d
 from MapData import width,height
+from monster import *
 
 image = None
 timer = 0
@@ -9,6 +10,7 @@ def enter():
     global image, timer
     image = pico2d.load_image('./res/logo_Sleep.png')
     timer = 0
+    m_list.clear()
 
 def update():
     global timer

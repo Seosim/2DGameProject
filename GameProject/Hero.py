@@ -290,10 +290,10 @@ class Player(Sprite):
 
     def Flash(self):
         for i in range(5):
-            if self.PushR and not self.collision(35, 0):
+            if self.dir == 1 and not self.collision(35, 0):
                 self.posX += 35
                 self.action = 1
-            elif self.PushL and not self.collision(-35, 0):
+            elif self.dir ==-1 and not self.collision(-35, 0):
                 self.posX -= 35
                 self.action = 0
         self.OutOfMap()
@@ -442,6 +442,7 @@ class Player(Sprite):
         self.clickButton = False
 
 player = Player()
+
 
 def playerInit():
     player.__init__()

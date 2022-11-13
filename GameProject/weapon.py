@@ -14,7 +14,6 @@ from cursor import aim
 class Weapon(Sprite):
 
     def __init__(self):
-        self.cameraX = player.posX - (1200 / 2)
         self.damage = 10
         self.speed = 35
         self.attack_speed = 0.5 #공격속도
@@ -34,6 +33,7 @@ class Weapon(Sprite):
         self.reloadDelay = 0
         self.reloadTime = 1
         self.R = False
+        self.image = pico2d.load_image('./res/pistolR.png')
 
         self.sound = pico2d.load_wav('./sound/pistol.wav')
 
@@ -45,8 +45,11 @@ class Weapon(Sprite):
             self.rad = math.atan2((height - y) - self.posY + player.cameraY, x - player.screenX) * 180 / math.pi + 180
 
     def Show(self):
-        self.image.rotate_draw(self.rad / 360 * 2 * math.pi, self.posX-player.cameraX, self.posY-player.cameraY, self.w, self.h)
-
+        if self.action == 1:
+            self.image.rotate_draw(self.rad / 360 * 2 * math.pi, self.posX-player.cameraX, self.posY-player.cameraY, self.w, self.h)
+        else:
+            self.image.clip_composite_draw(self.i_w * int(self.frame), self.i_h * self.action, self.i_w, self.i_h, self.rad / 360 * 2 * math.pi,
+                                           'h', self.posX-player.cameraX, self.posY-player.cameraY, self.w, self.h)
     def Shot(self):
         if (time.time() - self.attack_delay) < self.attack_speed: return
 
@@ -77,20 +80,16 @@ class Weapon(Sprite):
 
     def DefDir(self,x):
         if player.screenX < x:
-            self.imageLoad('./res/pistolR.png')
             self.action = 1
         else :
-            self.imageLoad('./res/pistolL.png')
             self.action = 0
 
 
     def Update(self):
         self.Reload()
         self.dir = (-1 + (self.action * 2))
-        self.cameraX = player.posX - (1200 / 2)
         self.posX = player.posX + self.dir*15
         self.posY = player.posY - 15
-        #if self.attack_delay: self.attack_delay = (self.attack_delay + 1) % self.attack_speed
         if player.clickButton: self.Shot()
 
 bullet_list = []
@@ -167,6 +166,9 @@ gun = Weapon()
 def weaponInit():
     gun.__init__()
     gun.imageLoad('./res/pistolR.png')
+
+
+
 
 
 
