@@ -9,22 +9,25 @@ from monster import *
 from UI import *
 from object import *
 from boss import *
+from portal import Portal
 
 import title_state
 
 tile = []
 bgm = None
+portal = None
 
 def enter():
-    global tile,bgm
+    global tile,bgm,portal
     tile = [Tile((x*100) + 50,(y*100) + 50,100,100,val) for x,y,val in Mapgenerator() if val]
-
+    portal = Portal(24, 33, 100, 170, 300, 200, './res/Portal.png')
     #playerInit()
     aim.imageLoad('./res/cursor.png')
     obj_1.imageLoad('./res/largeobject.png')
     weaponInit()
     monsterInit()
     ObjectInit()
+    portal.addList()
     LoadUI()
 
     bgm = load_music('./sound/bgm.mp3')
