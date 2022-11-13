@@ -1,7 +1,7 @@
 import game_framework
 import pico2d
 from MapData import width,height
-from monster import *
+from monster import m_list
 
 image = None
 timer = 0

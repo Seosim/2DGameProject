@@ -6,8 +6,6 @@ import game_framework
 from sprite import Sprite
 from Hero import player
 import math
-from monster import m_list
-from boss import Belial
 from MapData import Map , width,height
 from cursor import aim
 
@@ -33,7 +31,7 @@ class Weapon(Sprite):
         self.reloadDelay = 0
         self.reloadTime = 1
         self.R = False
-        self.image = pico2d.load_image('./res/pistolR.png')
+        self.image = pico2d.load_image('./res/pistol.png')
 
         self.sound = pico2d.load_wav('./sound/pistol.wav')
 
@@ -121,25 +119,7 @@ class Bullet(Sprite):
             self.posX -= SPEED * math.cos(self.rad / 360 * 2 * math.pi)
             self.posY -= SPEED * math.sin(self.rad / 360 * 2 * math.pi)
 
-    def ColtoMonster(self,mlist):
-        for monster in mlist:
-            if abs(self.posX - monster.posX) < (monster.w/2) + (self.w / 2):  # 가로줄 충돌
-                if abs(self.posY - monster.posY) < (monster.h / 2) + (self.h / 2)-15:  # 세로줄 충돌
-                    monster.hp -= self.damage
-                    # print('monster hp :' , monster.hp)
-                    return True
-        return False
 
-    def ColtoBoss(self):
-        if abs(self.posX - Belial.posX)+150 < (Belial.w / 2) + (self.w / 2):  # 가로줄 충돌
-            if Belial.action == 0:
-                if self.posY == pico2d.clamp(130,self.posY,650):  # 세로줄 충돌
-                    Belial.hp -= self.damage
-                    return True
-            elif Belial.action == 1:
-                if self.posY == pico2d.clamp(130,self.posY,750):  # 세로줄 충돌
-                    Belial.hp -= self.damage
-                    return True
 
 def ShowBullet():
     for bullet in bullet_list:
@@ -151,21 +131,19 @@ def UpdateBullet():
         bullet.move()
 
         if abs(bullet.posX - bullet.spawnX) > gun.distance or bullet.posY > 3000 or \
-                bullet.posX> len(Map.stageData[Map.number][0])*100 or bullet.collision(0,0) or\
-                bullet.ColtoMonster(m_list) :
+                bullet.posX> len(Map.stageData[Map.number][0])*100 or bullet.collision(0,0):
             bullet_list.remove(bullet)
             del bullet
             continue
 
-        if bullet.ColtoBoss() and Map.number == 1:
-            bullet_list.remove(bullet)
-            continue
+        # if bullet.ColtoBoss() and Map.number == 1:
+        #     bullet_list.remove(bullet)
+        #     continue
 
 gun = Weapon()
 
 def weaponInit():
     gun.__init__()
-    gun.imageLoad('./res/pistolR.png')
 
 
 

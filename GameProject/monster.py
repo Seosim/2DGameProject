@@ -7,6 +7,9 @@ from Hero import player
 import random
 import math
 from MapData import Map
+from weapon import bullet_list
+from item import Item_W
+
 class Monster(Sprite):
 
     def __init__(self):
@@ -48,10 +51,20 @@ class Monster(Sprite):
             if cnt > 1 : return True
         return False
 
+    def ColtoBullet(self):
+        for b in bullet_list:
+            if abs(self.posX - b.posX) < (b.w/2) + (self.w / 2):  # 가로줄 충돌
+                if abs(self.posY - b.posY) < (b.h / 2) + (self.h / 2)-15:  # 세로줄 충돌
+                    self.hp -= b.damage
+                    bullet_list.remove(b)
+                    return True
+        return False
+
     def Update(self):
         self.Gravity()
         self.Hunting()
         self.OutOfMap()
+        self.ColtoBullet()
 
 class Melee(Monster):
     value = 1
@@ -179,7 +192,11 @@ def UpdateMonster():
         monster.Update()
         if monster.value == 1: monster.frame = (monster.frame + 4*2*game_framework.frame_time*game_framework.MS) % 4
         elif monster.value == 2 : monster.frame = (monster.frame + 4*1*game_framework.frame_time*game_framework.MS) % 4
-        if monster.hp <= 0: m_list.remove(monster)
+
+        if monster.hp <= 0:
+            item = Item_W(48,48,50,50,monster.posX,monster.posY,'./res/pistol.png')
+            item.addList()
+            m_list.remove(monster)
 
 # boss = Melee()
 # boss.imageLoad('./res/Skull.png')
