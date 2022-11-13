@@ -10,17 +10,21 @@ from MapData import width,height,Map
 title_button = None
 quit_button = None
 gameover = None
+sound = None
 
 def enter():
-    global title_button , quit_button,gameover
+    global title_button , quit_button,gameover,sound
     title_button = Button()
     title_button.setButton(width/2,height/2,2)
     quit_button = Button()
     quit_button.setButton(width/2,height/2 - 150,0)
     if play_state.Hero.player.hp <= 0:
         gameover = load_image('./res/GameOver.png')
+        sound = load_music('./sound/Dead.mp3')
     else :
         gameover = load_image('./res/GameClear.png')
+        sound = load_music('./sound/Clear.mp3')
+    sound.play()
 
 def handle_events():
     events = get_events()
@@ -53,7 +57,9 @@ def pause(): pass
 
 def resume(): pass
 
-def exit(): pass
+def exit():
+    global sound
+    sound.stop()
     # global title_button , quit_button,gameover
     # del title_button
     # del quit_button

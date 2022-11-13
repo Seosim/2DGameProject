@@ -30,6 +30,7 @@ def enter():
     bgm = load_music('./sound/bgm.mp3')
     bgm.repeat_play()
 
+
 def drawWorld():
     hide_cursor()
     background.image.draw(width / 2, height / 2, width, height)
@@ -43,7 +44,8 @@ def drawWorld():
     ShowBullet()
     ShowObject()
     ShowMonster()
-    player.Show()
+    #player.Show()
+    player.draw()
     gun.Show()
     aim.Show()
 
@@ -55,12 +57,12 @@ def draw():
     update_canvas()
 
 def update():
+    player.update()
     UpdateObject()
     UpdateMonster()
     UpdateArrow()
     UpdateBullet()
     player.ColtoMonster(m_list)
-    playerUpdate()
     gun.Update()
     Belial.update()
     # if Hero.player.hp <= 0:
@@ -70,11 +72,16 @@ def update():
 def handle_events():
     Handle_events()
 
-def pause(): player.KeyReset()
+
+def pause():
+    global bgm
+    player.KeyReset()
+    bgm.pause()
 
 def resume():
-    global tile
+    global tile,bgm
 
+    bgm.resume()
     tile.clear()
     tile = [Tile((x*100) + 50,(y*100) + 50,100,100,val) for x,y,val in Mapgenerator() if val]
 

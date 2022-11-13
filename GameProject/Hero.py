@@ -1,4 +1,4 @@
-import pico2d
+from pico2d import *
 import game_framework
 import time
 import math
@@ -6,6 +6,87 @@ import gameover_state
 
 from sprite import Sprite
 from MapData import width,height,Map,size
+
+RD, LD, RU, LU, LMD,RMD,LMU,RMU,SPACE= range(9)
+event_name = ['RD', 'LD', 'RU', 'LU', 'LMD','RMD','LMU','RMU','SPACE']
+
+key_event_table = {
+    (SDL_KEYDOWN, SDLK_d): RD,
+    (SDL_KEYDOWN, SDLK_a): LD,
+    (SDL_KEYUP, SDLK_d): RU,
+    (SDL_KEYUP, SDLK_a): LU,
+    (SDL_KEYDOWN,SDLK_SPACE) : SPACE,
+    (SDL_MOUSEBUTTONDOWN,SDL_BUTTON_RIGHT) : RMD
+}
+
+class IDLE:
+    @staticmethod
+    def enter(self,event):
+        print('ENTER IDLE')
+        self.imageLoad('./res/idle.png')
+        self.dir = 0
+        if self.dir == 1: self.action = 1
+        elif self.dir == -1: self.action = 0
+        self.SetCamera(Map.stageData[Map.number])
+
+    @staticmethod
+    def exit(self,event):
+        print('EXIT IDLE')
+        if event == SPACE:
+           if self.stand :self.PushSpace = True
+
+    @staticmethod
+    def do(self):pass
+
+
+
+    @staticmethod
+    def draw(self):
+        if self.face_dir == 1:
+            self.Show()
+        else:
+            self.Show()
+
+
+class RUN:
+    @staticmethod
+    def enter(self, event):
+        print('ENTER RUN')
+        self.imageLoad('./res/running.png')
+        if event == RD:
+            self.dir = 1
+        elif event == LD:
+            self.dir -= 1
+        elif event == RU:
+            self.dir -= 1
+        elif event == LU:
+            self.dir += 1
+
+        if self.dir == 1: self.action = 1
+        elif self.dir == -1: self.action = 0
+
+    def exit(self,event):
+        print('EXIT RUN')
+        self.face_dir = self.dir
+        if event == SPACE:
+           if self.stand: self.PushSpace = True
+
+    @staticmethod
+    def do(self):
+        self.move()
+
+
+    @staticmethod
+    def draw(self):
+        if self.dir == -1:
+            self.Show()
+        elif self.dir == 1:
+            self.Show()
+
+next_state = {
+    IDLE:  {RU: RUN,  LU: RUN,  RD: RUN,  LD: RUN,  SPACE:IDLE},
+    RUN:   {RU: IDLE, LU: IDLE, RD: IDLE, LD: IDLE, SPACE:RUN},
+}
 
 class Player(Sprite):
 
@@ -17,6 +98,9 @@ class Player(Sprite):
         self.hp = 100
         self.live = True
         self.god = False
+
+        self.face_dir = 0
+        self.dir = 0
 
         self.jumpY = -1
         self.gravitySpeed = 10
@@ -62,6 +146,45 @@ class Player(Sprite):
         self.jumpSound = pico2d.load_wav('./sound/Jumping.wav')
         self.dashSound = pico2d.load_wav('./sound/dash.wav')
 
+        self.event_que = []
+        self.cur_state = IDLE
+        self.cur_state.enter(self, None)
+
+    def update(self):
+        self.cur_state.do(self)
+        self.getScreenX()
+        self.invincibility()
+        self.jump()
+        self.down()
+        self.SlowMotion()
+        self.Dash(self.DashDirX, self.DashDirY)
+        self.OutOfMap()
+        self.Dead()
+        self.Gravity()
+        if self.live:
+            self.frame = (self.frame + 4 * 2 * game_framework.frame_time*game_framework.MS) % 4
+
+        if self.event_que:
+            event = self.event_que.pop()
+            self.cur_state.exit(self,event)
+            try: #예외처리
+                self.cur_state = next_state[self.cur_state][event]
+            except KeyError:
+                print("ERROR: " ,self.cur_state.__name__,'   ',event_name[event])
+            self.cur_state.enter(self, event)
+
+    def draw(self):
+        self.cur_state.draw(self)
+
+    def add_event(self, event):
+        self.event_que.insert(0, event)
+
+    def handle_event(self, event):
+        if (event.type, event.key) in key_event_table:
+            key_event = key_event_table[(event.type, event.key)]
+            self.add_event(key_event)
+
+
     def getScreenX(self):
         stage = Map.stageData[Map.number]
 
@@ -94,28 +217,30 @@ class Player(Sprite):
 
         SPEED = game_framework.getSpeed(self.speed)
 
-        if self.PushR and not self.collision(SPEED,0):
+        if self.dir == 1 and not self.collision(SPEED,0):
             self.posX += SPEED
-            self.action = 1
-        elif self.PushL and not self.collision(-1*SPEED,0):
+            #self.action = 1
+        elif self.dir == -1 and not self.collision(-1*SPEED,0):
             self.posX -= SPEED
-            self.action = 0
+            #self.action = 0
 
-        self.cameraX = player.posX - (width / 2)
+        self.SetCamera(stage)
+
+    def SetCamera(self, stage):
+        self.cameraX = self.posX - (width / 2)
         if self.cameraX <= 0:
             self.cameraX = 0
-        elif size * len(stage[6]) - player.posX <= width/2:
+        elif size * len(stage[6]) - self.posX <= width / 2:
             self.cameraX = size * len(stage[6]) - width
-
-        if self.shooting: #카메라 진동효과
-            if player.PushL:
+        if self.shooting:  # 카메라 진동효과
+            if self.PushL:
                 self.cameraX -= 10
-            elif player.PushR:
+            elif self.PushR:
                 self.cameraX += 10
-            else: self.cameraX += 8
-            if time.time() - self.shooting > 0.05:self.shooting = 0
-
-        self.cameraY = max(0,self.posY-height+250)
+            else:
+                self.cameraX += 8
+            if time.time() - self.shooting > 0.05: self.shooting = 0
+        self.cameraY = max(0, self.posY - height + 250)
 
     def down(self):
 
@@ -172,7 +297,7 @@ class Player(Sprite):
     def Dash(self,x,y):
         if not self.live : return
 
-        if time.time() - self.DashCD > 5:
+        if time.time() - self.DashCD > 0:
             self.DashCD = 0
 
 
@@ -304,19 +429,5 @@ def playerInit():
     player.__init__()
     player.imageLoad('./res/idle.png')
 
-
-def playerUpdate():
-    player.getScreenX()
-    player.invincibility()
-    player.move()
-    player.jump()
-    player.down()
-    player.SlowMotion()
-    player.Dash(player.DashDirX,player.DashDirY)
-    player.OutOfMap()
-    player.Dead()
-    player.Gravity()
-    if player.live:
-        player.frame = (player.frame + 4 * 2 * game_framework.frame_time*game_framework.MS) % 4
 
 

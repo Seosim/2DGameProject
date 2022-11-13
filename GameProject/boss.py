@@ -71,6 +71,8 @@ class Boss(Sprite):
         del e
 
     def Dead(self):
+        if self.dead : return
+
         if self.action == 0:
             self.frame = 1
         elif self.action == 1 :
