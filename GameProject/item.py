@@ -6,9 +6,9 @@ import pico2d
 from object import Object,o_list
 from weapon import gun
 
-WeaponList = {0 : (10,8,35,0.5,48,48,50,50,'./res/pistol.png',500,'./sound/pistol.wav'),
-              1 : (5,30,44,0.15,130,60,120,50,'./res/M4.png',750,'./sound/m4.wav'),
-              2 : (35,5,70,2,144,50,150,50,'./res/Sniper.png',1500,'./sound/Sniper.wav')}
+WeaponList = {0 : (17,8,35,0.5,48,48,50,50,'./res/pistol.png',500,'./sound/pistol.wav'),
+              1 : (10,30,44,0.15,130,60,120,50,'./res/M4.png',750,'./sound/m4.wav'),
+              2 : (70,5,70,2,144,50,150,50,'./res/Sniper.png',1500,'./sound/Sniper.wav')}
 #데미지,장탄수,총알속도,연사력,이미지크기,실제크기,이미지이름,사거리
 
 class Item_W(Object):

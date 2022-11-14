@@ -12,7 +12,7 @@ from cursor import aim
 class Weapon(Sprite):
 
     def __init__(self):
-        self.damage = 10
+        self.damage = 17
         self.speed = 35
         self.attack_speed = 0.5 #공격속도
         self.attack_delay = 0 #공격딜레이

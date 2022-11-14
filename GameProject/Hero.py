@@ -254,7 +254,7 @@ class Player(Sprite):
         elif size * len(stage[6]) - self.posX <= width / 2:
             self.cameraX = size * len(stage[6]) - width
         if self.shooting:  # 카메라 진동효과
-            self.cameraX += self.vibration
+            self.cameraX += self.vibration//2
             if time.time() - self.shooting > 0.05: self.shooting = 0
 
         self.cameraY = max(0, self.posY - height + 250)
@@ -319,8 +319,8 @@ class Player(Sprite):
             self.DashCD = 0
 
         if self.DashCnt:
-            SPEEDX = game_framework.getSpeed(self.speed * 5 )
-            SPEEDY = game_framework.getSpeed(self.speed * 5 )
+            SPEEDX = game_framework.getSpeed(self.speed * 7 )
+            SPEEDY = game_framework.getSpeed(self.speed * 7 )
             rad = math.atan2((height - y) - self.posY + player.cameraY, x - player.screenX) * 180 / math.pi
             if not self.collision(SPEEDX * math.cos(rad * math.pi / 180),0):
                 self.posX += SPEEDX * math.cos(rad / 360 * 2 * math.pi)

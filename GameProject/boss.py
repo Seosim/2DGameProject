@@ -15,7 +15,7 @@ import time
 class Boss(Sprite):
     def __init__(self):
         self.image = pico2d.load_image('./res/belial.png')
-        self.hp = 30
+        self.hp = 3000
         self.i_w = 100
         self.i_h = 130
         self.posX = width/2
@@ -342,9 +342,6 @@ class Beam(Sprite):
             if abs(self.posX - player.posX) < (self.w+player.w)/2:
                 if abs(self.posY - player.posY) < (self.h+player.h)/2:
                     player.hit(15)
-
-
-
 
 
 Belial = Boss()
