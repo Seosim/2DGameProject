@@ -225,9 +225,10 @@ class Ghost(Sprite):
 
         if abs(self.posX - player.posX) < player.w/2:
             if abs(self.posY - player.posY) < player.h/2:
-                if player.inv == 0:
-                    if not Belial.ignore:
-                        player.hp -= self.damage
+                # if player.inv == 0:
+                #     if not Belial.ignore:
+                #         player.hp -= self.damage
+                player.hit(self.damage)
                 self.col = True
 
     def setRad(self):
@@ -280,9 +281,7 @@ class EBall(Sprite):
 
         if abs(self.posX - player.posX) < player.w/2:
             if abs(self.posY - player.posY) < player.h/2:
-                if player.inv == 0:
-                    player.hp -= self.damage
-                    player.inv = time.time()
+                player.hit(self.damage)
 
     def update(self):
         self.move()
@@ -342,7 +341,7 @@ class Beam(Sprite):
         if self.on :
             if abs(self.posX - player.posX) < (self.w+player.w)/2:
                 if abs(self.posY - player.posY) < (self.h+player.h)/2:
-                    player.hit(15,1)
+                    player.hit(15)
 
 
 
