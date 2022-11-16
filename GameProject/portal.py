@@ -7,9 +7,10 @@ class Portal(Object):
     def Interaction(self):
         Map.NextMap()
         player.posX = 300
-        self.posX = 9700
+        #self.posX = 9700
         game_framework.push_state(loading_state)
-        InitBoss()
+        if Map.number == 2:
+            InitBoss()
 
     def addList(self):
         o_list.append(self)

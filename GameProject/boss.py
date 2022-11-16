@@ -67,7 +67,8 @@ class Boss(Sprite):
         del s
 
     def Breath(self):
-        e = [EBall(self.posX,self.posY,(20*i)) for i in range(18)]
+        r = random.randint(0,15)
+        e = [EBall(self.posX,self.posY,(20*i) + r) for i in range(18)]
         self.e_list += e
         del e
 
@@ -112,7 +113,7 @@ class Boss(Sprite):
             self.handTimer =0
 
     def update(self):
-        if Map.number != 1: return
+        if Map.number != 2: return
 
         if self.skillDelay == 0: self.skillDelay = time.time()
 
@@ -152,8 +153,8 @@ class Boss(Sprite):
         if time.time() - self.skillDelay > 5/game_framework.MS:
             rSkill = random.randint(0, 2)
 
-            rSkill = self.debugSkill
-            self.debugSkill = (self.debugSkill +1) % 3
+            # rSkill = self.debugSkill
+            # self.debugSkill = (self.debugSkill +1) % 3
 
             if rSkill == 0:
                 self.Breath()
@@ -165,7 +166,7 @@ class Boss(Sprite):
         self.MoveHand()
 
     def Draw(self):
-        if Map.number != 1: return
+        if Map.number != 2: return
 
         if len(Belial.s_list): shield.Show(player.cameraX, player.cameraY)
 
@@ -225,10 +226,8 @@ class Ghost(Sprite):
 
         if abs(self.posX - player.posX) < player.w/2:
             if abs(self.posY - player.posY) < player.h/2:
-                # if player.inv == 0:
-                #     if not Belial.ignore:
-                #         player.hp -= self.damage
-                player.hit(self.damage)
+                if not Belial.ignore:
+                    player.hit(self.damage,2)
                 self.col = True
 
     def setRad(self):
@@ -258,6 +257,7 @@ class EBall(Sprite):
         self.posX = x + 50* math.cos(r* math.pi /180)
         self.posY = y + 50* math.sin(r* math.pi /180) - 125
         self.toX = random.randint(-5,5)
+        self.speed = 30
         self.damage = 25
         self.i_w =45
         self.i_h =45
@@ -270,7 +270,7 @@ class EBall(Sprite):
     def move(self):
         if time.time() - self.timer < 1: return
 
-        SPEED = game_framework.getSpeed(20)
+        SPEED = game_framework.getSpeed(self.speed)
 
         self.posX += SPEED * math.cos(self.rad * math.pi /180)
         self.posY += SPEED * math.sin(self.rad * math.pi /180)
@@ -348,8 +348,7 @@ Belial = Boss()
 shield = Shield()
 
 def InitBoss():
-
-    if Map.number != 1: return
+    if Map.number != 2: return
 
     Belial.__init__()
     Belial.l_hand.imageLoad('./res/belial_hand.png')

@@ -18,8 +18,6 @@ class Object(Sprite):
         self.imageLoad(name)
         self.timer = 0
 
-
-
     def Gravity(self):
         if self.freeze : return
 
@@ -35,9 +33,9 @@ class Object(Sprite):
 
 o_list = []
 
-def ObjectInit():
-    global o_list
-    o_list.clear()
+def ObjectInit():pass
+    # global o_list
+    # o_list.clear()
 
 def ShowObject():
     for o in o_list:

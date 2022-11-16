@@ -37,7 +37,7 @@ def showUI():
     if gun.reloadDelay:
         Reloading.clip_draw(0,0,150,25,player.screenX,(player.posY- player.cameraY)+player.h/2,100,15)
 
-    if Map.number == 1: #보스 체력 UI
+    if Map.number == 2: #보스 체력 UI
         hpBar.draw(width / 2 - (1000 - Belial.hp // 3) // 2, 50, Belial.hp // 3, 50)
         UI_BossHP.clip_draw(0,0,144,28,width/2,50,1050,50)
         name = load_font('./res/BMJUA_ttf.ttf',30)

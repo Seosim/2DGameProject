@@ -20,14 +20,15 @@ portal = None
 def enter():
     global tile,bgm,portal
     tile = [Tile((x*100) + 50,(y*100) + 50,100,100,val) for x,y,val in Mapgenerator() if val]
-    portal = Portal(24, 33, 100, 170, 300, 200, './res/Portal.png')
+    portal = Portal(24, 33, 100, 170, 9700, 200, './res/Portal.png')
     #playerInit()
     aim.imageLoad('./res/cursor.png')
     obj_1.imageLoad('./res/largeobject.png')
     weaponInit()
     monsterInit()
     ObjectInit()
-    portal.addList()
+    for i in range(2):
+        portal.addList()
     LoadUI()
 
     bgm = load_music('./sound/bgm.mp3')
@@ -61,11 +62,12 @@ def draw():
 
 def update():
     player.update()
-    UpdateObject()
-    UpdateMonster()
-    UpdateArrow()
     UpdateBullet()
-    player.ColtoMonster(m_list)
+    if Map.number != 2:
+        UpdateObject()
+        UpdateMonster()
+        UpdateArrow()
+        player.ColtoMonster(m_list)
     gun.Update()
     Belial.update()
     # if Hero.player.hp <= 0:
