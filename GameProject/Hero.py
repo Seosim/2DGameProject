@@ -114,7 +114,7 @@ class Player(Sprite):
         self.speed = 12
         self.jumpMax = 180
         self.jumpPower = 40
-        self.hp = 100
+        self.hp = 9999
         self.live = True
         self.god = False
 
@@ -310,6 +310,7 @@ class Player(Sprite):
             self.jumpPower = 40
             self.jumpY = -1
             self.speed = 12
+            self.gravitySpeed = 10
             self.dashSound.play()
 
     def Dash(self,x,y):
