@@ -15,7 +15,7 @@ import time
 class Boss(Sprite):
     def __init__(self):
         self.image = pico2d.load_image('./res/belial.png')
-        self.hp = 3000
+        self.hp = 33
         self.i_w = 100
         self.i_h = 130
         self.posX = width/2
@@ -75,10 +75,6 @@ class Boss(Sprite):
     def Dead(self):
         if self.dead : return
 
-        if self.action == 0:
-            self.frame = 1
-        elif self.action == 1 :
-            self.frame = 0
         self.action = 2
         self.frame = 1
         self.dead = True
@@ -136,6 +132,7 @@ class Boss(Sprite):
         else : self.action = 0
 
         if self.hp <= 0:
+            self.action = 2
             self.Dead()
             if self.posY > self.h/2 + 50: self.posY -= 1
             return

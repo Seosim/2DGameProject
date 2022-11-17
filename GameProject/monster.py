@@ -8,7 +8,7 @@ import random
 import math
 from MapData import Map
 from weapon import bullet_list
-from item import Item_W
+from item_hp import *
 
 class Monster(Sprite):
 
@@ -59,6 +59,15 @@ class Monster(Sprite):
                     bullet_list.remove(b)
                     return True
         return False
+
+    def DropItem(self):
+        Rnum = random.randint(0, 10)
+        item = None
+        if Rnum > 8:
+            item = Item_W(self.posX, self.posY)
+        else:
+            item = Item_HP(self.posX, self.posY)
+        item.addList()
 
     def Update(self):
         self.Gravity()
@@ -194,18 +203,8 @@ def UpdateMonster():
         elif monster.value == 2 : monster.frame = (monster.frame + 4*1*game_framework.frame_time*game_framework.MS) % 4
 
         if monster.hp <= 0:
-            item = Item_W(monster.posX,monster.posY)
-            item.addList()
+            monster.DropItem()
             m_list.remove(monster)
-
-# boss = Melee()
-# boss.imageLoad('./res/Skull.png')
-# boss.i_w = 510
-# boss.i_h = 0
-# boss.w= 510
-# boss.h = 558
-# boss.posX = 600
-# boss.posY = 300
 
 def ShowMonster():
     for monster in m_list:
