@@ -8,6 +8,7 @@ from Hero import player
 import math
 from MapData import Map , width,height
 from cursor import aim
+from particle import Particle
 
 class Weapon(Sprite):
 
@@ -59,7 +60,7 @@ class Weapon(Sprite):
             gun.radian(aim.posX,aim.posY)
             b = Bullet()
             #b.imageLoad('./res/Bullet.png')
-            if self.dir < 0: b.dir = 0
+            if self.dir < 0: b.dir = -1
             bullet_list.append(b)
             self.sound.play()
             self.ammo -= 1
@@ -84,6 +85,7 @@ class Weapon(Sprite):
             self.action = 0
 
 
+
     def Update(self):
         self.Reload()
         self.dir = (-1 + (self.action * 2))
@@ -98,13 +100,14 @@ class Bullet(Sprite):
     def __init__(self):
         self.speed = gun.speed
         self.rad = gun.rad
-        self.dir = 1
         self.posX = gun.posX
         self.posY = gun.posY
         self.spawnX = self.posX
         self.w = 15
         self.h = 5
         self.damage = gun.damage
+        self.dir = 1
+
 
 
     def Show(self):
@@ -120,7 +123,9 @@ class Bullet(Sprite):
             self.posX -= SPEED * math.cos(self.rad / 360 * 2 * math.pi)
             self.posY -= SPEED * math.sin(self.rad / 360 * 2 * math.pi)
 
-
+    def MakeParticle(self):
+        p = Particle(self.posX,self.posY,"HitEffect",self.dir)
+        p.addList()
 
 def ShowBullet():
     for bullet in bullet_list:

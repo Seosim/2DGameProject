@@ -1,10 +1,12 @@
 import time
-
+import math
 import pico2d
 
 from sprite import Sprite
 
-ParticleList ={"Clone":(0,0,64,100,0.1)} # 프레임번호, 액션번호 , 가로크기,세로크기,지속시간
+ParticleList ={"Clone":(0,0,64,100,0.1),
+               "HitEffect":(1,0,70,70,0.05)
+               } # 프레임번호, 액션번호 , 가로크기,세로크기,지속시간
 
 p_list = []
 
@@ -13,7 +15,7 @@ class Particle(Sprite):
 
     def __init__(self,pX,pY,name,dir):
         if Particle.image == None:
-            Particle.image = pico2d.load_image('./res/clone.png')
+            Particle.image = pico2d.load_image('./res/effect.png')
 
         self.data = ParticleList[name]
         self.posX = pX

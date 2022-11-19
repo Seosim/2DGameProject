@@ -10,6 +10,7 @@ from MapData import Map
 from weapon import bullet_list
 from item import *
 
+
 class Monster(Sprite):
 
     def __init__(self):
@@ -56,6 +57,7 @@ class Monster(Sprite):
             if abs(self.posX - b.posX) < (b.w/2) + (self.w / 2):  # 가로줄 충돌
                 if abs(self.posY - b.posY) < (b.h / 2) + (self.h / 2)-15:  # 세로줄 충돌
                     self.hp -= b.damage
+                    b.MakeParticle()
                     bullet_list.remove(b)
                     return True
         return False
