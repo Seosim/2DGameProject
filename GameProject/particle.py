@@ -11,15 +11,18 @@ p_list = []
 class Particle(Sprite):
     image = None
 
-    def __init__(self,pX,pY,name):
+    def __init__(self,pX,pY,name,dir):
         if Particle.image == None:
-            Particle.image = pico2d.load_image('./res/Clone.png')
+            Particle.image = pico2d.load_image('./res/clone.png')
 
         self.data = ParticleList[name]
         self.posX = pX
         self.posY = pY
-        self.i_w = 25
+        self.dir = dir
+        self.i_w = 16
         self.i_h = 25
+        self.frame = self.data[0]
+        self.action = self.data[1]
         self.w = self.data[2]
         self.h = self.data[3]
         self.t = self.data[4]
@@ -30,6 +33,14 @@ class Particle(Sprite):
 
 def ShowParticle(x,y):
     for p in p_list:
-        p.Show(x,y)
+        if p.dir == 1:
+            p.Show(x,y)
+        elif p.dir == -1:
+            p.flipShow(x,y)
+
+def UpdateParticle():
+    for p in p_list:
+        if time.time() - p.timer > p.t:
+            p_list.remove(p)
 
 

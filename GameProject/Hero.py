@@ -6,6 +6,7 @@ import gameover_state
 
 from sprite import Sprite
 from MapData import width,height,Map,size
+from particle import Particle
 
 RD, LD, RU, LU, LMD,RMD,LMU,RMU,SPACE,DEAD= range(10)
 event_name = ['RD', 'LD', 'RU', 'LU', 'LMD','RMD','LMU','RMU','SPACE','DEAD']
@@ -327,6 +328,12 @@ class Player(Sprite):
                 self.posX += SPEEDX * math.cos(rad / 360 * 2 * math.pi)
             if not self.collision(0, SPEEDY * math.sin(rad * math.pi / 180)):
                 self.posY += SPEEDY * math.sin(rad / 360 * 2 * math.pi)
+
+            if self.DashCnt % 5 == 0:
+                print ('r')
+                p = Particle(self.posX,self.posY,"Clone",self.dir)
+                p.addList()
+
             self.DashCnt -= 1
         else:
             self.DashDirX = 0

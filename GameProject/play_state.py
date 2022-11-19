@@ -10,6 +10,7 @@ from UI import *
 from object import *
 from boss import *
 from portal import Portal
+from particle import *
 
 import title_state
 
@@ -48,9 +49,10 @@ def drawWorld():
     ShowBullet()
     ShowObject()
     ShowMonster()
-    #player.Show()
+    ShowParticle(player.cameraX,player.cameraY)
     player.draw()
     gun.Show()
+
     aim.Show()
 
 
@@ -63,6 +65,7 @@ def draw():
 def update():
     player.update()
     UpdateBullet()
+    UpdateParticle()
     if Map.number != 2:
         UpdateObject()
         UpdateMonster()
@@ -70,9 +73,6 @@ def update():
         player.ColtoMonster(m_list)
     gun.Update()
     Belial.update()
-    # if Hero.player.hp <= 0:
-    #     Map.number = 0
-    #     game_framework.change_state(title_state) #게임종료
 
 def handle_events():
     Handle_events()
