@@ -114,7 +114,7 @@ class Player(Sprite):
         self.speed = 12
         self.jumpMax = 180
         self.jumpPower = 40
-        self.hp = 9999
+        self.hp = 100
         self.live = True
         self.god = False
 
@@ -316,7 +316,7 @@ class Player(Sprite):
     def Dash(self,x,y):
         if not self.live : return
 
-        if time.time() - self.DashCD > 0:
+        if time.time() - self.DashCD > 5:
             self.DashCD = 0
 
         if self.DashCnt:

@@ -8,7 +8,7 @@ import random
 import math
 from MapData import Map
 from weapon import bullet_list
-from item_hp import *
+from item import *
 
 class Monster(Sprite):
 
