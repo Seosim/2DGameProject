@@ -15,9 +15,9 @@ sound = None
 def enter():
     global title_button , quit_button,gameover,sound
     title_button = Button()
-    title_button.setButton(width/2,height/2,2)
+    title_button.setButton(width/2 - 200,height/2,2)
     quit_button = Button()
-    quit_button.setButton(width/2,height/2 - 150,0)
+    quit_button.setButton(width/2 + 200,height/2,0)
     if play_state.Hero.player.hp <= 0:
         gameover = load_image('./res/GameOver.png')
         sound = load_music('./sound/Dead.mp3')

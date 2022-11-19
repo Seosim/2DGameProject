@@ -87,7 +87,7 @@ class Boss(Sprite):
         for b in bullet_list:
             if abs(self.posX - b.posX) + 150 < (b.w / 2) + (self.w / 2):  # 가로줄 충돌
                 if self.action == 0:
-                    if self.posY == pico2d.clamp(130, self.posY, 650):  # 세로줄 충돌
+                    if b.posY == pico2d.clamp(130, b.posY, 650):  # 세로줄 충돌
                         self.hp -= b.damage
                         b.MakeParticle()
                         bullet_list.remove(b)
