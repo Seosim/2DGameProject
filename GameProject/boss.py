@@ -152,8 +152,8 @@ class Boss(Sprite):
         if time.time() - self.skillDelay > 5/game_framework.MS:
             rSkill = random.randint(0, 2)
 
-            # rSkill = self.debugSkill
-            # self.debugSkill = (self.debugSkill +1) % 3
+            rSkill = self.debugSkill
+            self.debugSkill = (self.debugSkill +1) % 3
 
             if rSkill == 0:
                 self.Breath()

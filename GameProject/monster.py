@@ -65,7 +65,7 @@ class Monster(Sprite):
     def DropItem(self):
         Rnum = random.randint(0, 10)
         item = None
-        if Rnum > 8:
+        if Rnum > 3:
             item = Item_W(self.posX, self.posY)
         else:
             item = Item_HP(self.posX, self.posY)

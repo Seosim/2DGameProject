@@ -35,6 +35,7 @@ class Weapon(Sprite):
         self.image = pico2d.load_image('./res/pistol.png')
 
         self.sound = pico2d.load_wav('./sound/pistol.wav')
+        self.reloadSound = pico2d.load_wav('./sound/reload_p.wav')
 
 
     def radian(self,x,y):
@@ -50,7 +51,7 @@ class Weapon(Sprite):
             self.image.clip_composite_draw(self.i_w * int(self.frame), self.i_h * self.action, self.i_w, self.i_h, self.rad / 360 * 2 * math.pi,
                                            'h', self.posX-player.cameraX, self.posY-player.cameraY, self.w, self.h)
     def Shot(self):
-        if (time.time() - self.attack_delay) < self.attack_speed / game_framework.MS: return
+        if (time.time() - self.attack_delay) < self.attack_speed: return
 
         if self.reloadDelay == 0:
             if self.ammo == 0:
@@ -70,6 +71,7 @@ class Weapon(Sprite):
     def Reload(self):
         if self.R:
             if self.reloadDelay == 0:
+                self.reloadSound.play()
                 self.reloadDelay = time.time()
         else: return
 
