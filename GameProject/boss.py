@@ -15,7 +15,7 @@ import time
 class Boss(Sprite):
     def __init__(self):
         self.image = pico2d.load_image('./res/belial.png')
-        self.hp = 33
+        self.hp = 333
         self.i_w = 100
         self.i_h = 130
         self.posX = width/2
@@ -89,11 +89,13 @@ class Boss(Sprite):
                 if self.action == 0:
                     if self.posY == pico2d.clamp(130, self.posY, 650):  # 세로줄 충돌
                         self.hp -= b.damage
+                        b.MakeParticle()
                         bullet_list.remove(b)
                         return True
                 elif self.action == 1:
                     if b.posY == pico2d.clamp(130, b.posY, 750):  # 세로줄 충돌
                         self.hp -= b.damage
+                        b.MakeParticle()
                         bullet_list.remove(b)
                         return True
 
