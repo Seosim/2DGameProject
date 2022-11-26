@@ -15,9 +15,13 @@ WeaponList = {0 : (17,8,35,0.5,48,48,50,50,'./res/pistol.png',500,'./sound/pisto
 
 class Item_HP(Object):
     image = None
+    sound = None
     def __init__(self, pX, pY):
         if Item_HP.image == None:
             Item_HP.image = pico2d.load_image('./res/medikit.png')
+        if  Item_HP.sound == None:
+            Item_HP.sound = pico2d.load_wav('./sound/health.wav')
+            Item_HP.sound.set_volume(30)
         self.i_w = 18
         self.i_h = 11
         self.action = 0
@@ -28,7 +32,9 @@ class Item_HP(Object):
         self.posY = pY
         self.timer = time.time()
 
+
     def Interaction(self):
+        self.sound.play()
         player.hp += 10
         if player.hp > 100 : player.hp = 100
 
