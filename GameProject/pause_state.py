@@ -8,6 +8,7 @@ import cursor
 from mapData import width,height
 from Hero import player
 from boss import Belial
+from weapon import gun
 
 start_button = None
 quit_button = None
@@ -52,6 +53,7 @@ def exit():
     quit_time = time.time() - timer
     player.CoolTimeSet(quit_time)
     Belial.CoolTimeSet(quit_time)
+    gun.CoolTimeSet(quit_time)
 
 
 

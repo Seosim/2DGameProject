@@ -11,7 +11,6 @@ from cursor import aim
 from particle import Particle
 
 class Weapon(Sprite):
-
     def __init__(self):
         self.damage = 17
         self.speed = 35
@@ -86,14 +85,16 @@ class Weapon(Sprite):
         else :
             self.action = 0
 
-
-
     def Update(self):
         self.Reload()
         self.dir = (-1 + (self.action * 2))
         self.posX = player.posX + self.dir*15
         self.posY = player.posY - 15
         if player.clickButton: self.Shot()
+
+    def CoolTimeSet(self, t):
+        self.attack_delay += t
+        if self.reloadDelay: self.reloadDelay += t
 
 bullet_list = []
 
