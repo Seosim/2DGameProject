@@ -1,5 +1,5 @@
 from pico2d import *
-from MapData import width,height
+from mapData import width,height
 
 class Button():
     image = None

@@ -6,7 +6,7 @@ from sprite import Sprite
 from Hero import player
 import random
 import math
-from MapData import Map
+from mapData import Map
 from weapon import bullet_list
 from item import *
 

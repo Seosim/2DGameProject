@@ -1,5 +1,5 @@
 from sprite import Sprite
-from MapData import width,height
+from mapData import width,height
 
 background = Sprite()
 

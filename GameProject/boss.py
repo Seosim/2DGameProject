@@ -5,7 +5,7 @@ import gameover_state
 from sprite import Sprite
 from Hero import player
 from weapon import bullet_list
-from MapData import Map,width,height
+from mapData import Map,width,height
 
 
 import random
@@ -333,7 +333,7 @@ class Beam(Sprite):
         self.posY = y
         self.action = (self.action + 4 * 2 * game_framework.frame_time) % 4
         if self.timer == 0 :self.timer = time.time()
-        if time.time() - self.timer > 0.7:
+        if time.time() - self.timer > 0.35: # 에너지파 시전 딜레이
             self.on = True
 
     def hit(self):

@@ -3,7 +3,7 @@ import game_framework
 import play_state
 from button import Button
 import cursor
-from MapData import width,height
+from mapData import width,height
 
 background = None
 start_button = None

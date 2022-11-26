@@ -1,6 +1,6 @@
 from object import Object,o_list
 import loading_state
-from MapData import *
+from mapData import *
 from boss import *
 
 class Portal(Object):

@@ -1,5 +1,5 @@
-from HandleEvent import *
-from Background import *
+from handleEvent import *
+from background import *
 from Hero import *
 from map import *
 from cursor import *
@@ -30,7 +30,7 @@ def enter():
     ObjectInit()
     for i in range(2):
         portal.addList()
-    LoadUI()
+    initUI()
 
     bgm = load_music('./sound/bgm.mp3')
     bgm.repeat_play()
@@ -43,7 +43,7 @@ def drawWorld():
     for t in tile:
         t.draw()
     #LoadMap()
-    LoadObj(Map.objData[Map.number])
+    ShowObj(Map.objData[Map.number])
     Belial.Draw()
     ShowArrow()
     ShowBullet()

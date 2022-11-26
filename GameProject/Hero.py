@@ -5,7 +5,7 @@ import math
 import gameover_state
 
 from sprite import Sprite
-from MapData import width,height,Map,size
+from mapData import width,height,Map,size
 from particle import Particle
 
 RD, LD, RU, LU, LMD,RMD,LMU,RMU,SPACE,DEAD= range(10)

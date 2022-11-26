@@ -1,6 +1,6 @@
 from sprite import Sprite
 from Hero import player
-from MapData import width,height
+from mapData import width,height
 
 size = 100
 
@@ -53,13 +53,8 @@ obj_list.append(obj_10)
 
 
 
-def LoadObj(stage):
+def ShowObj(stage):
     global x,y
-    # cameraX = Hero.player.posX - (1200 / 2)
-    # #카메라가 맵밖을 촬영하지 않게 설정
-    # if cameraX <= 0: cameraX = 0
-    # elif size * len(stage[6]) - Hero.player.posX <= 600: cameraX = size * len(stage[6]) - 1200
-
     x = 0
     y = len(stage)-1
 

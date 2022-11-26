@@ -6,7 +6,7 @@ import game_framework
 from sprite import Sprite
 from Hero import player
 import math
-from MapData import Map , width,height
+from mapData import Map , width,height
 from cursor import aim
 from particle import Particle
 

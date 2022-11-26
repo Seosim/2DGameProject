@@ -5,7 +5,7 @@ import cursor
 
 from pico2d import *
 from button import Button
-from MapData import width,height,Map
+from mapData import width,height,Map
 
 title_button = None
 quit_button = None

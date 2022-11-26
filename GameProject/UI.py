@@ -2,7 +2,7 @@ from pico2d import *
 from Hero import player
 from weapon import gun
 from boss import Belial
-from MapData import Map,width,height
+from mapData import Map,width,height
 
 UI_hp = None
 hpBar = None
@@ -13,7 +13,7 @@ Reloading = None
 
 
 
-def LoadUI():
+def initUI():
     global UI_hp,hpBar,UI_ammo,UI_BossHP,DashGage,Reloading
     UI_hp = load_image('./res/HP_UI.png')
     hpBar = load_image('./res/hp.png')

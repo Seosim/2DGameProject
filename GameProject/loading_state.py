@@ -1,6 +1,6 @@
 import game_framework
 import pico2d
-from MapData import width,height,Map
+from mapData import width,height,Map
 from monster import m_list,a_list,monsterInit
 
 image = None

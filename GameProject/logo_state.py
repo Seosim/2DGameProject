@@ -1,7 +1,7 @@
 import game_framework
 import title_state
 from pico2d import *
-from MapData import width,height
+from mapData import width,height
 
 logoImage = None
 timer = 0

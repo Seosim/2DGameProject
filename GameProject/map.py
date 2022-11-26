@@ -2,7 +2,7 @@ import pico2d
 
 from sprite import Sprite
 import Hero
-from MapData import width,height,Map,size
+from mapData import width,height,Map,size
 
 from Hero import player
 

@@ -5,7 +5,7 @@ from pico2d import *
 from button import Button
 import play_state
 import cursor
-from MapData import width,height
+from mapData import width,height
 from Hero import player
 from boss import Belial
 

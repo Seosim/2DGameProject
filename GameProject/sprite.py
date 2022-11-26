@@ -1,5 +1,5 @@
 from pico2d import *
-from MapData import Map,size,width,height
+from mapData import Map,size,width,height
 
 class Sprite:
     image = None
