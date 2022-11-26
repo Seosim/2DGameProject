@@ -9,6 +9,7 @@ from mapData import width,height
 from Hero import player
 from boss import Belial
 from weapon import gun
+from object import o_list
 
 start_button = None
 quit_button = None
@@ -54,6 +55,8 @@ def exit():
     player.CoolTimeSet(quit_time)
     Belial.CoolTimeSet(quit_time)
     gun.CoolTimeSet(quit_time)
+    for o in o_list:
+        o.CoolTimeSet(quit_time)
 
 
 

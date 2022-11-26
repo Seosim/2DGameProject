@@ -31,6 +31,9 @@ class Object(Sprite):
             return True
         else : return False
 
+    def CoolTimeSet(self,t):
+        if self.timer: self.timer += t
+
 o_list = []
 
 def ObjectInit():pass
@@ -48,7 +51,7 @@ def UpdateObject():
         if o.posY < - 100:
             o_list.remove(o)
             del o
-        if o.timer and time.time()-o.timer > 10: o_list.remove(o)
+        if o.timer and time.time() - o.timer > 10: o_list.remove(o)
 
 def Interact():
     for o in o_list:
