@@ -1,3 +1,4 @@
+import pico2d
 from pico2d import *
 import game_framework
 import time
@@ -72,6 +73,7 @@ class RUN:
     @staticmethod
     def do(self):
         self.move()
+
 
 
     @staticmethod

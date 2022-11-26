@@ -61,7 +61,6 @@ class Boss(Sprite):
         self.beam.on = False
 
     def CreateGhost(self):
-
         s = [Ghost() for i in range(20)]
         self.s_list += s
         del s
@@ -248,10 +247,14 @@ class Ghost(Sprite):
 
 class EBall(Sprite):
     image = None
-
+    sound = None
     def __init__(self,x,y,r,Size = 50):
         if EBall.image == None:
             EBall.image = pico2d.load_image('./res/DarkBall.png')
+        if EBall.sound == None:
+            EBall.sound = pico2d.load_wav('./sound/breath.wav')
+            EBall.sound.set_volume(20)
+
 
         self.posX = x + 50* math.cos(r* math.pi /180)
         self.posY = y + 50* math.sin(r* math.pi /180) - 125
@@ -265,9 +268,15 @@ class EBall(Sprite):
         self.action = 0
         self.rad = r
         self.timer = time.time()
+        self.soundOn = False
+
 
     def move(self):
         if time.time() - self.timer < 1: return
+        else:
+            if not self.soundOn:
+                self.sound.play()
+                self.soundOn = True
 
         SPEED = game_framework.getSpeed(self.speed)
 
