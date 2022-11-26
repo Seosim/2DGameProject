@@ -194,9 +194,13 @@ class Boss(Sprite):
 
 class Ghost(Sprite):
     image = None
+    sound = None
     def __init__(self):
         if Ghost.image == None:
             Ghost.image = pico2d.load_image('./res/Ghost.png')
+        if Ghost.sound == None:
+            Ghost.sound = pico2d.load_wav('./sound/ghost.wav')
+            Ghost.sound.set_volume(20)
         self.w = 50
         self.h = 50
         self.i_w = 25
@@ -211,6 +215,7 @@ class Ghost(Sprite):
         self.frame = random.randint(0,3)
         self.action = 0
         self.col = False
+        self.sound.play()
 
     def update(self):
         self.frame = (self.frame+ 4*2*game_framework.frame_time) % 4
@@ -323,9 +328,13 @@ class Shield(Sprite):
 
 class Beam(Sprite):
     image = None
+    sound = None
     def __init__(self):
         if Beam.image == None:
             Beam.image = pico2d.load_image('./res/EnergyBeam.png')
+        if Beam.sound == None:
+            Beam.sound = pico2d.load_wav('./sound/beam.wav')
+            Beam.sound.set_volume(128)
         self.i_w = 175
         self.i_h = 43
         self.w = 800
@@ -343,7 +352,9 @@ class Beam(Sprite):
         self.action = (self.action + 4 * 2 * game_framework.frame_time) % 4
         if self.timer == 0 :self.timer = time.time()
         if time.time() - self.timer > 0.35: # 에너지파 시전 딜레이
+            if not self.on: self.sound.play()
             self.on = True
+
 
     def hit(self):
         if self.on :
