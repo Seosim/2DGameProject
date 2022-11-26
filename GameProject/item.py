@@ -43,7 +43,10 @@ class Item_HP(Object):
 
 
 class Item_W(Object):
+    sound = None
     def __init__(self, pX, pY):
+        if Item_W.sound == None:
+            Item_W.sound = pico2d.load_wav('./sound/swap.wav')
         self.data = WeaponList[random.randint(1,3)]
         self.i_w = self.data[4]
         self.i_h = self.data[5]
@@ -55,9 +58,8 @@ class Item_W(Object):
         self.action = 0
         self.timer = time.time()
 
-
-
     def Interaction(self):
+        self.sound.play()
         gun.damage = self.data[0]
         gun.maxAmmo = self.data[1]
         gun.ammo = self.data[1]
