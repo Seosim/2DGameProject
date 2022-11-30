@@ -2,7 +2,7 @@ import game_framework
 import pico2d
 from mapData import width,height,Map
 from monster import m_list,a_list,monsterInit
-
+from object import o_list
 image = None
 timer = 0
 
@@ -12,6 +12,8 @@ def enter():
     timer = 0
     m_list.clear()
     a_list.clear()
+    for o in o_list:
+        if o.timer: o.timer -= 10
     if Map.number != 2:
         monsterInit()
 
