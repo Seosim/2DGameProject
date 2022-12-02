@@ -1,6 +1,7 @@
 import pico2d
 import game_framework
 import time
+import json
 
 from sprite import Sprite
 from Hero import player
@@ -13,15 +14,15 @@ from item import *
 
 class Monster(Sprite):
 
-    def __init__(self):
+    def __init__(self,x,y):
         self.hp = 50
         self.maxhp = self.hp
         self.speed = 6
         self.maxSpeed = 3
         self.power = 15
         self.gravity = True
-        self.posX = random.randint(10,65)*150
-        self.posY = 1500
+        self.posX = x
+        self.posY = y
         self.jumpY = -1
         self.jump = False
         self.falling = True
@@ -247,14 +248,14 @@ def monsterInit():
     m_list.clear()
     a_list.clear()
 
-    hood = [Melee() for i in range(20)]
-    m_list += hood
-    del hood
-
-    archer = [Archer() for i in range(10)]
-    m_list += archer
-    del archer
-
+    with open('monsterPos.json','r') as f:
+        monsterData = json.load(f)
+        for data in monsterData:
+            if data['type'] == 'melee':
+                m = Melee(data['x'],data['y'])
+            elif data['type'] == 'archer':
+                m = Archer(data['x'],data['y'])
+            m_list.append(m)
 
 
 
