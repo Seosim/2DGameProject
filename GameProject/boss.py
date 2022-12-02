@@ -15,7 +15,7 @@ import time
 class Boss(Sprite):
     def __init__(self):
         self.image = pico2d.load_image('./res/belial.png')
-        self.hp = 333
+        self.hp = 3000
         self.i_w = 100
         self.i_h = 130
         self.posX = width/2
@@ -151,8 +151,8 @@ class Boss(Sprite):
         if time.time() - self.skillDelay > 5/game_framework.MS:
             rSkill = random.randint(0, 2)
 
-            rSkill = self.debugSkill
-            self.debugSkill = (self.debugSkill +1) % 3
+            # rSkill = self.debugSkill
+            # self.debugSkill = (self.debugSkill +1) % 3
 
             if rSkill == 0:
                 self.Breath()

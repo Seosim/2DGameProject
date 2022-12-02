@@ -139,7 +139,7 @@ class Archer(Monster):
     shoot = False
     image = pico2d.load_image('./res/Archer.png')
     def Hunting(self):
-        if abs(self.posX - player.posX) < 800 and abs(self.posY - player.posY) < 800  or self.maxhp != self.hp :
+        if abs(self.posX - player.posX) < 650 and abs(self.posY - player.posY) < 650  or self.maxhp != self.hp :
             if self.posX - player.posX > 5 and 4.0> self.frame > 3.0 and not self.shoot :
                 self.action = 2
                 self.Shooting()

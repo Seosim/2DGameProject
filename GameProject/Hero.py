@@ -117,7 +117,7 @@ class Player(Sprite):
         self.speed = 12
         self.jumpMax = 180
         self.jumpPower = 40
-        self.hp = 1000000
+        self.hp = 100
         self.live = True
         self.god = False
 
@@ -196,7 +196,6 @@ class Player(Sprite):
             except KeyError:
                 print("ERROR: " ,self.cur_state.__name__,'   ',event_name[event])
             self.cur_state.enter(self, event)
-        print(self.posX , self.posY)
 
     def draw(self):
         self.cur_state.draw(self)
@@ -295,14 +294,15 @@ class Player(Sprite):
                 self.jumpPower = 40
 
     def Flash(self):
-        for i in range(5):
-            if self.dir == 1 and not self.collision(35, 0):
-                self.posX += 35
-                self.action = 1
-            elif self.dir ==-1 and not self.collision(-35, 0):
-                self.posX -= 35
-                self.action = 0
-        self.OutOfMap()
+        # for i in range(5):
+        #     if self.dir == 1 and not self.collision(35, 0):
+        #         self.posX += 35
+        #         self.action = 1
+        #     elif self.dir ==-1 and not self.collision(-35, 0):
+        #         self.posX -= 35
+        #         self.action = 0
+        # self.OutOfMap()
+        return
 
     def DashGet(self,x,y):
         if self.DashCD == 0:
