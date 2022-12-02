@@ -15,7 +15,8 @@ def Handle_events():
         #     game_framework.quit()
         if e.type == SDL_KEYDOWN: #키다운
             if e.key == SDLK_ESCAPE:
-                game_framework.push_state(pause_state)
+                if not Hero.player.DashCnt:
+                    game_framework.push_state(pause_state)
             # if e.key == SDLK_d:
             #     Hero.player.PushR = True
             #     Hero.player.imageLoad('./res/running.png')

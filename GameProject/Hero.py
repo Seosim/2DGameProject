@@ -117,7 +117,7 @@ class Player(Sprite):
         self.speed = 12
         self.jumpMax = 180
         self.jumpPower = 40
-        self.hp = 100
+        self.hp = 1000000
         self.live = True
         self.god = False
 
@@ -168,6 +168,7 @@ class Player(Sprite):
         self.hitSound.set_volume(50)
         self.jumpSound = pico2d.load_wav('./sound/Jumping.wav')
         self.dashSound = pico2d.load_wav('./sound/dash.wav')
+        self.runSound = pico2d.load_wav('./sound/step.wav')
 
         self.event_que = []
         self.cur_state = IDLE
@@ -195,6 +196,7 @@ class Player(Sprite):
             except KeyError:
                 print("ERROR: " ,self.cur_state.__name__,'   ',event_name[event])
             self.cur_state.enter(self, event)
+        print(self.posX , self.posY)
 
     def draw(self):
         self.cur_state.draw(self)
