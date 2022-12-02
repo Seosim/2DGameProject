@@ -251,11 +251,12 @@ def monsterInit():
     with open('monsterPos.json','r') as f:
         monsterData = json.load(f)
         for data in monsterData:
-            if data['type'] == 'melee':
-                m = Melee(data['x'],data['y'])
-            elif data['type'] == 'archer':
-                m = Archer(data['x'],data['y'])
-            m_list.append(m)
+            if data['stage'] == Map.number:
+                if data['type'] == 'melee':
+                    m = Melee(data['x'],data['y'])
+                elif data['type'] == 'archer':
+                    m = Archer(data['x'],data['y'])
+                m_list.append(m)
 
 
 
