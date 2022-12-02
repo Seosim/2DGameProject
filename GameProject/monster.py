@@ -66,11 +66,12 @@ class Monster(Sprite):
     def DropItem(self):
         Rnum = random.randint(0, 10)
         item = None
-        if Rnum > 3:
+        if Rnum > 9:
             item = Item_W(self.posX, self.posY)
-        else:
+            item.addList()
+        elif Rnum < 2:
             item = Item_HP(self.posX, self.posY)
-        item.addList()
+            item.addList()
 
     def Update(self):
         self.Gravity()
