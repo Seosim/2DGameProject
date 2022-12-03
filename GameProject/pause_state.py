@@ -16,11 +16,12 @@ quit_button = None
 timer = 0
 
 def enter():
-    global start_button , quit_button,timer
+    global start_button, quit_button, timer, info
     start_button = Button()
     start_button.setButton(width/2,height/2 + 100,1)
     quit_button = Button()
     quit_button.setButton(width/2,height/2 - 100,0)
+    info = load_image('./res/Info.png')
     timer = time.time()
 
 def handle_events():
@@ -46,6 +47,7 @@ def draw():
     play_state.drawWorld()
     start_button.draw()
     quit_button.draw()
+    info.clip_draw(0,0,94*3,141*3,width//5 ,height//2)
     cursor.aim.Show()
     update_canvas()
 
