@@ -64,12 +64,18 @@ class Monster(Sprite):
         return False
 
     def DropItem(self):
-        Rnum = random.randint(0, 10)
+        Rnum = random.randint(1, 100)
         item = None
-        if Rnum > 9:
-            item = Item_W(self.posX, self.posY)
+        if Rnum is 100:
+            item = Item_W(self.posX, self.posY,2)
             item.addList()
-        elif Rnum < 2:
+        elif 96 <= Rnum <= 99:
+            item = Item_W(self.posX, self.posY, 1)
+            item.addList()
+        elif 90 <= Rnum <= 95:
+            item = Item_W(self.posX, self.posY, 3)
+            item.addList()
+        elif Rnum < 7:
             item = Item_HP(self.posX, self.posY)
             item.addList()
 

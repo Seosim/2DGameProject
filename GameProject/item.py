@@ -44,10 +44,10 @@ class Item_HP(Object):
 
 class Item_W(Object):
     sound = None
-    def __init__(self, pX, pY):
-        if Item_W.sound == None:
+    def __init__(self, pX, pY,num):
+        if Item_W.sound is None:
             Item_W.sound = pico2d.load_wav('./sound/swap.wav')
-        self.data = WeaponList[random.randint(1,3)]
+        self.data = WeaponList[num]
         self.i_w = self.data[4]
         self.i_h = self.data[5]
         self.w = self.data[6]
