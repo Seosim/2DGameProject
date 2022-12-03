@@ -12,8 +12,8 @@ def enter():
     timer = 200
 
 def exit():
-    global logoImage,timer
-    del logoImage,timer
+    global logoImage, timer
+    del logoImage, timer
 
 def update():
     global timer

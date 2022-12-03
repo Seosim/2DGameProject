@@ -17,9 +17,11 @@ import title_state
 tile = []
 bgm = None
 portal = None
+info = None
+
 
 def enter():
-    global tile,bgm,portal
+    global tile, bgm, portal, info
     tile = [Tile((x*100) + 50,(y*100) + 50,100,100,val) for x,y,val in Mapgenerator() if val]
     portal = Portal(24, 33, 100, 170, 9700, 200, './res/Portal.png')
     #playerInit()
@@ -31,6 +33,7 @@ def enter():
     for i in range(2):
         portal.addList()
     initUI()
+    info = load_image('./res/Info.png')
 
     bgm = load_music('./sound/bgm.mp3')
     bgm.repeat_play()
@@ -39,7 +42,7 @@ def enter():
 def drawWorld():
     hide_cursor()
     background.image.draw(width / 2, height / 2, width, height)
-
+    info.clip_draw(0,0,94*3,141*3,width//5 - player.cameraX ,height//2 - player.cameraY)
     for t in tile:
         t.draw()
     #LoadMap()

@@ -13,6 +13,7 @@ from object import o_list
 
 start_button = None
 quit_button = None
+info = None
 timer = 0
 
 def enter():
