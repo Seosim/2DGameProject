@@ -383,10 +383,10 @@ class Player(Sprite):
         sy = self.posY//size
         if sx > len(Map.stageData[Map.number][0]) : return False
 
-        for __y in range(-1,2):
+        for __y in range(-3,3):
             _y = len(stage)-1 - max(0,int(sy+__y))
             if _y != pico2d.clamp(0,_y,len(stage)-1): continue
-            for _x in range(-2,2,1):
+            for _x in range(-5,5,1):
                 x = int(sx + _x)
                 if x != pico2d.clamp(0, x, len(stage[0]) - 1): continue
                 if stage[_y][x] and stage[_y][x] != 3:
