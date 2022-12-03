@@ -15,7 +15,7 @@ import time
 class Boss(Sprite):
     def __init__(self):
         self.image = pico2d.load_image('./res/belial.png')
-        self.hp = 3000
+        self.hp = 1000
         self.i_w = 100
         self.i_h = 130
         self.posX = width/2
