@@ -294,14 +294,14 @@ class Player(Sprite):
                 self.jumpPower = 40
 
     def Flash(self):
-        for i in range(5):
-            if self.dir == 1 and not self.collision(35, 0):
-                self.posX += 35
-                self.action = 1
-            elif self.dir ==-1 and not self.collision(-35, 0):
-                self.posX -= 35
-                self.action = 0
-        self.OutOfMap()
+        # for i in range(5):
+        #     if self.dir == 1 and not self.collision(35, 0):
+        #         self.posX += 35
+        #         self.action = 1
+        #     elif self.dir ==-1 and not self.collision(-35, 0):
+        #         self.posX -= 35
+        #         self.action = 0
+        # self.OutOfMap()
         return
 
     def DashGet(self,x,y):

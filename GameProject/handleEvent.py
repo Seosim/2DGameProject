@@ -11,21 +11,10 @@ import object
 def Handle_events():
     events = get_events()
     for e in events:
-        # if e.type == SDL_QUIT:  #종료버튼
-        #     game_framework.quit()
         if e.type == SDL_KEYDOWN: #키다운
             if e.key == SDLK_ESCAPE:
                 if not Hero.player.DashCnt:
                     game_framework.push_state(pause_state)
-            # if e.key == SDLK_d:
-            #     Hero.player.PushR = True
-            #     Hero.player.imageLoad('./res/running.png')
-            # elif e.key == SDLK_a:
-            #     Hero.player.PushL = True
-            #     Hero.player.imageLoad('./res/running.png')
-            # elif e.key == SDLK_SPACE and  Hero.player.stand:
-            #     Hero.player.jumpSound.play()
-            #     Hero.player.PushSpace = True
             elif e.key == SDLK_f:
                 Hero.player.Flash()
             elif e.key == SDLK_r: #장전
@@ -38,13 +27,7 @@ def Handle_events():
             elif e.key == SDLK_t:
                 if time.time() - Hero.player.slowMotionCD >10:
                     Hero.player.PushT = True
-            elif e.key == SDLK_y:
-                Hero.player.hp = 100
         elif e.type == SDL_KEYUP:   # 키업
-            # if e.key == SDLK_d:
-            #     Hero.player.PushR = False
-            # elif e.key == SDLK_a:
-            #     Hero.player.PushL = False
             if e.key == SDLK_s:
                 Hero.player.pushS = False
         elif e.type == SDL_MOUSEMOTION: #마우스 움직임
@@ -60,7 +43,4 @@ def Handle_events():
             if e.button == SDL_BUTTON_LEFT:
                 Hero.player.clickButton = False
         Hero.player.handle_event(e)
-    #
-    #
-    # if Hero.player.PushR == False and Hero.player.PushL == False:
-    #     Hero.player.imageLoad('./res/idle.png')
+

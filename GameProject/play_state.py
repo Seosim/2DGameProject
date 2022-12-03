@@ -24,7 +24,6 @@ def enter():
     global tile, bgm, portal, info
     tile = [Tile((x*100) + 50,(y*100) + 50,100,100,val) for x,y,val in Mapgenerator() if val]
     portal = Portal(24, 33, 100, 170, 9700, 200, './res/Portal.png')
-    #playerInit()
     aim.imageLoad('./res/cursor.png')
     obj_1.imageLoad('./res/largeobject.png')
     weaponInit()
@@ -42,7 +41,8 @@ def enter():
 def drawWorld():
     hide_cursor()
     background.image.draw(width / 2, height / 2, width, height)
-    info.clip_draw(0,0,94*3,141*3,width//5 - player.cameraX ,height//2 - player.cameraY)
+    if Map.number != 2:
+        info.clip_draw(0,0,94*3,141*3,width//5 - player.cameraX ,height//2 - player.cameraY)
     for t in tile:
         t.draw()
     #LoadMap()
@@ -55,7 +55,6 @@ def drawWorld():
     ShowParticle(player.cameraX,player.cameraY)
     player.draw()
     gun.Show()
-
     aim.Show()
 
 
