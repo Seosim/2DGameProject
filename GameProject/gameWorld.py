@@ -1,21 +1,23 @@
-
 # layer 0: Background Objects
 # layer 1: Foreground Objects
 objects = [[], []]
 
-collision_group = dict() # 'boy:ball' : [(boy) , (ball1, ball2, ball3, ...)]
+collision_group = dict()  # 'boy:ball' : [(boy) , (ball1, ball2, ball3, ...)]
+
 
 def add_object(o, depth):
     objects[depth].append(o)
 
+
 def add_objects(ol, depth):
     objects[depth] += ol
+
 
 def remove_object(o):
     for layer in objects:
         if o in layer:
             layer.remove(o)
-            #충돌그룹에서도 삭제해야함
+            # 충돌그룹에서도 삭제해야함
             remove_collision_object(o)
             del o
             return
@@ -45,10 +47,11 @@ def clear():
     for layer in objects:
         layer.clear()
 
-def add_collision_group(a,b,group):
+
+def add_collision_group(a, b, group):
     if not group in collision_group:
-        print('New group Made',group)
-        collision_group[group] = [[],[]]
+        print('New group Made', group)
+        collision_group[group] = [[], []]
 
     if a:
         if type(a) == list:
@@ -62,14 +65,18 @@ def add_collision_group(a,b,group):
         else:
             collision_group[group][1].append(b)
 
+
 def all_collision_pairs():
     # collision group 이라는 딕셔너리에서 각 리스트로부터 페어를 만들어 전달
-    for group , pairs in collision_group.items(): # key value 넘김
+    for group, pairs in collision_group.items():  # key value 넘김
         for a in pairs[0]:
             for b in pairs[1]:
-                yield a,b,group
+                yield a, b, group
+
 
 def remove_collision_object(o):
-    for pairs in collision_group.values(): #key:value에서 value에 해당하는것만 가져옴
-        if o in pairs[0]: pairs[0].remove(o)
-        elif o in pairs[1]: pairs[1].remove(o)
+    for pairs in collision_group.values():  # key:value에서 value에 해당하는것만 가져옴
+        if o in pairs[0]:
+            pairs[0].remove(o)
+        elif o in pairs[1]:
+            pairs[1].remove(o)

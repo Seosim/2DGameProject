@@ -4,10 +4,11 @@ from sprite import Sprite
 from Hero import player
 import game_framework
 
+
 class Object(Sprite):
     freeze = False
 
-    def __init__(self,iw,ih,sizeX,sizeY,pX,pY,name):
+    def __init__(self, iw, ih, sizeX, sizeY, pX, pY, name):
         self.i_w = iw
         self.i_h = ih
         self.w = sizeX
@@ -19,30 +20,37 @@ class Object(Sprite):
         self.timer = 0
 
     def Gravity(self):
-        if self.freeze : return
+        if self.freeze: return
 
-        if not self.collision(0,-5):
-            self.posY -=5
-        else : self.freeze = True
+        if not self.collision(0, -5):
+            self.posY -= 5
+        else:
+            self.freeze = True
 
     def InPlayer(self):
-        if abs(player.posX - self.posX) < (player.w/2+self.w/2) \
-            and abs(player.posY - self.posY) < (player.h/2+self.h/2):
+        if abs(player.posX - self.posX) < (player.w / 2 + self.w / 2) \
+                and abs(player.posY - self.posY) < (player.h / 2 + self.h / 2):
             return True
-        else : return False
+        else:
+            return False
 
-    def CoolTimeSet(self,t):
+    def CoolTimeSet(self, t):
         if self.timer: self.timer += t
+
 
 o_list = []
 
-def ObjectInit():pass
-    # global o_list
-    # o_list.clear()
+
+def ObjectInit(): pass
+
+
+# global o_list
+# o_list.clear()
 
 def ShowObject():
     for o in o_list:
-        o.Show(player.cameraX,player.cameraY)
+        o.Show(player.cameraX, player.cameraY)
+
 
 def UpdateObject():
     for o in o_list:
@@ -53,11 +61,10 @@ def UpdateObject():
             del o
         if o.timer and time.time() - o.timer > 10: o_list.remove(o)
 
+
 def Interact():
     for o in o_list:
         if o.InPlayer():
             o.Interaction()
             o_list.remove(o)
             return
-
-

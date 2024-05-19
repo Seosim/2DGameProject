@@ -22,7 +22,7 @@ info = None
 
 def enter():
     global tile, bgm, portal, info
-    tile = [Tile((x*100) + 50,(y*100) + 50,100,100,val) for x,y,val in Mapgenerator() if val]
+    tile = [Tile((x * 100) + 50, (y * 100) + 50, 100, 100, val) for x, y, val in Mapgenerator() if val]
     portal = Portal(24, 33, 100, 170, 9700, 200, './res/Portal.png')
     aim.imageLoad('./res/cursor.png')
     obj_1.imageLoad('./res/largeobject.png')
@@ -42,17 +42,17 @@ def drawWorld():
     hide_cursor()
     background.image.draw(width / 2, height / 2, width, height)
     if Map.number != 2:
-        info.clip_draw(0,0,94*3,141*3,width//5 - player.cameraX ,height//2 - player.cameraY)
+        info.clip_draw(0, 0, 94 * 3, 141 * 3, width // 5 - player.cameraX, height // 2 - player.cameraY)
     for t in tile:
         t.draw()
-    #LoadMap()
+    # LoadMap()
     ShowObj(Map.objData[Map.number])
     Belial.Draw()
     ShowArrow()
     ShowBullet()
     ShowObject()
     ShowMonster()
-    ShowParticle(player.cameraX,player.cameraY)
+    ShowParticle(player.cameraX, player.cameraY)
     player.draw()
     gun.Show()
     aim.Show()
@@ -63,6 +63,7 @@ def draw():
     drawWorld()
     showUI()
     update_canvas()
+
 
 def update():
     player.update()
@@ -76,6 +77,7 @@ def update():
     gun.Update()
     Belial.update()
 
+
 def handle_events():
     Handle_events()
 
@@ -85,24 +87,24 @@ def pause():
     player.KeyReset()
     bgm.pause()
 
+
 def resume():
-    global tile,bgm
+    global tile, bgm
 
     bgm.resume()
     tile.clear()
-    tile = [Tile((x*100) + 50,(y*100) + 50,100,100,val) for x,y,val in Mapgenerator() if val]
+    tile = [Tile((x * 100) + 50, (y * 100) + 50, 100, 100, val) for x, y, val in Mapgenerator() if val]
+
 
 def exit(): pass
-    # global player,background,darkdirt,darkgrass,aim,obj_1,gun,m_list,a_list,bullet_list
-    # del player
-    # del background
-    # del darkdirt
-    # del darkgrass
-    # del aim
-    # del obj_1
-    # del gun
-    # del m_list
-    # del a_list
-    # del bullet_list
-
-
+# global player,background,darkdirt,darkgrass,aim,obj_1,gun,m_list,a_list,bullet_list
+# del player
+# del background
+# del darkdirt
+# del darkgrass
+# del aim
+# del obj_1
+# del gun
+# del m_list
+# del a_list
+# del bullet_list

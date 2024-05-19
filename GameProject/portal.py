@@ -1,7 +1,8 @@
-from object import Object,o_list
+from object import Object, o_list
 import loading_state
 from mapData import *
 from boss import *
+
 
 class Portal(Object):
     def Interaction(self):
@@ -14,4 +15,3 @@ class Portal(Object):
 
     def addList(self):
         o_list.append(self)
-

@@ -4,16 +4,17 @@ import pico2d
 
 from sprite import Sprite
 
-ParticleList ={"Clone":(0,0,64,100,0.1),
-               "HitEffect":(1,0,70,70,0.05)
-               } # 프레임번호, 액션번호 , 가로크기,세로크기,지속시간
+ParticleList = {"Clone": (0, 0, 64, 100, 0.1),
+                "HitEffect": (1, 0, 70, 70, 0.05)
+                }  # 프레임번호, 액션번호 , 가로크기,세로크기,지속시간
 
 p_list = []
+
 
 class Particle(Sprite):
     image = None
 
-    def __init__(self,pX,pY,name,dir):
+    def __init__(self, pX, pY, name, dir):
         if Particle.image == None:
             Particle.image = pico2d.load_image('./res/effect.png')
 
@@ -33,16 +34,16 @@ class Particle(Sprite):
     def addList(self):
         p_list.append(self)
 
-def ShowParticle(x,y):
+
+def ShowParticle(x, y):
     for p in p_list:
         if p.dir == 1:
-            p.Show(x,y)
+            p.Show(x, y)
         elif p.dir == -1:
-            p.flipShow(x,y)
+            p.flipShow(x, y)
+
 
 def UpdateParticle():
     for p in p_list:
         if time.time() - p.timer > p.t:
             p_list.remove(p)
-
-

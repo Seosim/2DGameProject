@@ -9,7 +9,6 @@ class GameState:
         self.draw = state.draw
 
 
-
 class TestGameState:
 
     def __init__(self, name):
@@ -37,7 +36,6 @@ class TestGameState:
         print("State [%s] draw" % self.name)
 
 
-
 running = None
 stack = None
 
@@ -53,14 +51,12 @@ def change_state(state):
     state.enter()
 
 
-
 def push_state(state):
     global stack
     if (len(stack) > 0):
         stack[-1].pause()
     stack.append(state)
     state.enter()
-
 
 
 def pop_state():
@@ -76,13 +72,15 @@ def pop_state():
         stack[-1].resume()
 
 
-
 def quit():
     global running
     running = False
 
+
 import time
+
 frame_time = 0
+
 
 def run(start_state):
     global running, stack
@@ -91,7 +89,6 @@ def run(start_state):
     start_state.enter()
 
     current_time = time.time()
-
 
     while (running):
         stack[-1].handle_events()
@@ -114,9 +111,9 @@ def test_game_framework():
     run(start_state)
 
 
-
 if __name__ == '__main__':
     test_game_framework()
+
 
 def getSpeed(s):
     RUN_SPEED_KMPH = s  # Km / Hour
@@ -127,5 +124,5 @@ def getSpeed(s):
     return SPEED
 
 
-PIXEL_PER_METER = (10.0 / 0.1) # 10 pixel 10 cm
+PIXEL_PER_METER = (10.0 / 0.1)  # 10 pixel 10 cm
 MS = 1
