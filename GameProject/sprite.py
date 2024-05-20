@@ -36,7 +36,7 @@ class Sprite:
         if self.posX > (len(Map.stageData[Map.number][0]) * size) - 40:
             self.posX = (len(Map.stageData[Map.number][0]) * size) - 41
 
-    def collision(self, valX, valY):
+    def ColtoMap(self, valX, valY):
         stage = Map.stageData[Map.number]
 
         sx = self.posX // size

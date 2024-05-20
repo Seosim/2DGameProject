@@ -28,6 +28,8 @@ def Handle_events():
             elif e.key == SDLK_t:
                 if time.time() - Hero.player.slowMotionCD > 10:
                     Hero.player.PushT = True
+            elif e.key == SDLK_y:
+                Hero.player.hp = 100
         elif e.type == SDL_KEYUP:  # 키업
             if e.key == SDLK_s:
                 Hero.player.pushS = False

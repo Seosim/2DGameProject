@@ -31,7 +31,7 @@ class Monster(Sprite):
         SPEED = game_framework.getSpeed(self.gravitySpeed)
         G_SPEED = game_framework.getSpeed(5)
 
-        if not self.collision(0, -SPEED) and not self.MonsterCol(0, -SPEED) and self.falling:
+        if not self.ColtoMap(0, -SPEED) and not self.MonsterCol(0, -SPEED) and self.falling:
             self.posY -= SPEED
             self.falling = True
             if self.gravitySpeed < 75:
@@ -83,6 +83,9 @@ class Monster(Sprite):
         self.OutOfMap()
         self.ColtoBullet()
 
+        if self.hp <= 0:
+            self.DropItem()
+            m_list.remove(self)
 
 class Melee(Monster):
     value = 1
@@ -96,6 +99,7 @@ class Melee(Monster):
 
     def Hunting(self):
         SPEED = game_framework.getSpeed(self.speed)
+        self.frame = (self.frame + 4 * 2 * game_framework.frame_time * game_framework.MS) % 4
 
         dir = 0
         distanceX = abs(self.posX - player.posX)
@@ -108,7 +112,7 @@ class Melee(Monster):
                 self.action = 3
                 dir = 1
 
-            if not self.collision(dir * SPEED, 0):
+            if not self.ColtoMap(dir * SPEED, 0):
                 if not self.MonsterCol(dir * SPEED, 0):
                     self.posX += dir * SPEED
             else:  # 점프 조건
@@ -126,9 +130,7 @@ class Melee(Monster):
         if self.jumpY < 0:
             self.jumpY = self.posY
 
-        if self.collision(0, -100) and self.jumpY + 100 > self.posY and not self.collision(0,
-                                                                                           SPEED) and not self.MonsterCol(
-                0, SPEED):
+        if self.ColtoMap(0, -100) and self.jumpY + 100 > self.posY and not self.ColtoMap(0, SPEED) and not self.MonsterCol(0, SPEED):
             self.posY += SPEED
         else:
             self.jump = False
@@ -137,17 +139,20 @@ class Melee(Monster):
 
 
 class Archer(Monster):
+    value = 2
+
     i_w = 25 * 4
     i_h = 25 * 4
     w = 85
     h = 100
-    value = 2
     rad = 0
     dir = 0
     shoot = False
     image = pico2d.load_image('./res/Archer.png')
 
     def Hunting(self):
+        self.frame = (self.frame + 4 * 1 * game_framework.frame_time * game_framework.MS) % 4
+
         if abs(self.posX - player.posX) < 650 and abs(self.posY - player.posY) < 650 or self.maxhp != self.hp:
             if self.posX - player.posX > 5 and 4.0 > self.frame > 3.0 and not self.shoot:
                 self.action = 2
@@ -175,8 +180,7 @@ class Archer(Monster):
 
     def Show(self, x, y):
         self.image.clip_draw(self.i_w * int(self.frame), self.i_h * self.action, self.i_w, self.i_h, self.posX - x,
-                             self.posY - y \
-                             , self.w, self.h)
+                             self.posY - y, self.w, self.h)
 
 
 class Arrow(Sprite):
@@ -204,32 +208,16 @@ class Arrow(Sprite):
         self.posY += SPEED * math.sin(self.rad / 360 * 2 * math.pi)
 
 
-def MonsterImage():
-    for monster in m_list:
-        if monster.value == 1:
-            monster.imageLoad('./res/hoodman.png')
-        else:
-            monster.imageLoad('./res/archer.png')
-
-
 def UpdateMonster():
     for monster in m_list:
         monster.Update()
-        if monster.value == 1:
-            monster.frame = (monster.frame + 4 * 2 * game_framework.frame_time * game_framework.MS) % 4
-        elif monster.value == 2:
-            monster.frame = (monster.frame + 4 * 1 * game_framework.frame_time * game_framework.MS) % 4
 
-        if monster.hp <= 0:
-            monster.DropItem()
-            m_list.remove(monster)
+
 
 
 def ShowMonster():
     for monster in m_list:
-        # monster.Update()
         monster.Show(player.cameraX, player.cameraY)
-        # if monster.hp <= 0: m_list.remove(monster)
 
 
 def ShowArrow():
@@ -247,7 +235,7 @@ def UpdateArrow():
         if a.posX > len(Map.stageData[Map.number][0]) * 100:
             a_list.remove(a)
             continue
-        if a.collision(0, 0):
+        if a.ColtoMap(0, 0):
             a_list.remove(a)
             continue
         if abs(a.posX - player.posX) < player.w / 2:

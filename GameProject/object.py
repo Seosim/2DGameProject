@@ -22,7 +22,7 @@ class Object(Sprite):
     def Gravity(self):
         if self.freeze: return
 
-        if not self.collision(0, -5):
+        if not self.ColtoMap(0, -5):
             self.posY -= 5
         else:
             self.freeze = True

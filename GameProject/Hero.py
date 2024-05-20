@@ -28,10 +28,6 @@ class IDLE:
         print('ENTER IDLE')
         self.imageLoad('./res/idle.png')
         self.dir = 0
-        if self.dir == 1:
-            self.action = 1
-        elif self.dir == -1:
-            self.action = 0
         self.SetCamera(Map.stageData[Map.number])
 
     @staticmethod
@@ -178,7 +174,6 @@ class Player(Sprite):
 
     def update(self):
         self.cur_state.do(self)
-        self.getScreenX()
         self.invincibility()
         self.jump()
         self.down()
@@ -242,15 +237,14 @@ class Player(Sprite):
             self.add_event(DEAD)
 
     def move(self):
-        stage = Map.stageData[Map.number]
-
         SPEED = game_framework.getSpeed(self.speed)
 
-        if self.dir == 1 and not self.collision(SPEED, 0):
+        if self.dir == 1 and not self.ColtoMap(SPEED, 0):
             self.posX += SPEED
-        elif self.dir == -1 and not self.collision(-1 * SPEED, 0):
+        elif self.dir == -1 and not self.ColtoMap(-1 * SPEED, 0):
             self.posX -= SPEED
 
+        stage = Map.stageData[Map.number]
         self.SetCamera(stage)
 
     def SetCamera(self, stage):
@@ -267,10 +261,9 @@ class Player(Sprite):
         self.getScreenX()
 
     def down(self):
-
         if self.pushS and self.PushSpace:
             self.PushSpace = False
-            if not self.collision(0, -20):
+            if not self.ColtoMap(0, -20):
                 self.posY -= 20
 
         # if self.fall > 0: self.fall = (self.fall +1) % 25
@@ -285,7 +278,7 @@ class Player(Sprite):
             if self.jumpY == -1:
                 self.jumpY = self.posY
 
-            if self.posY < self.jumpY + self.jumpMax and not self.collision(0, SPEED):
+            if self.posY < self.jumpY + self.jumpMax and not self.ColtoMap(0, SPEED):
                 self.posY += SPEED
                 self.speed = 16
                 if self.jumpPower > 20: self.jumpPower -= J_SPEED
@@ -332,9 +325,9 @@ class Player(Sprite):
 
             rad = math.atan2((height - y) - self.posY + player.cameraY, x - player.screenX) * 180 / math.pi
 
-            if not self.collision(SPEEDX * math.cos(rad * math.pi / 180), 0):
+            if not self.ColtoMap(SPEEDX * math.cos(rad * math.pi / 180), 0):
                 self.posX += SPEEDX * math.cos(rad / 360 * 2 * math.pi)
-            if not self.collision(0, SPEEDY * math.sin(rad * math.pi / 180)):
+            if not self.ColtoMap(0, SPEEDY * math.sin(rad * math.pi / 180)):
                 self.posY += SPEEDY * math.sin(rad / 360 * 2 * math.pi)
 
             if self.DashCnt % 5 == 0:
@@ -372,14 +365,14 @@ class Player(Sprite):
             SPEED = game_framework.getSpeed(self.gravitySpeed)
             G_SPEED = game_framework.getSpeed(5)
 
-            if not self.collision(0, -SPEED):
+            if not self.ColtoMap(0, -SPEED):
                 self.posY -= SPEED
                 if self.gravitySpeed < 75:
                     self.gravitySpeed += G_SPEED
             else:
                 self.PushSpace = False
 
-    def collision(self, valX, valY):
+    def ColtoMap(self, valX, valY):
 
         stage = Map.stageData[Map.number]
 

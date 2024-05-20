@@ -148,7 +148,7 @@ def UpdateBullet():
         bullet.move()
 
         if abs(bullet.posX - bullet.spawnX) > gun.distance or bullet.posY > 3000 or \
-                bullet.posX > len(Map.stageData[Map.number][0]) * 100 or bullet.collision(0, 0):
+                bullet.posX > len(Map.stageData[Map.number][0]) * 100 or bullet.ColtoMap(0, 0):
             bullet_list.remove(bullet)
             del bullet
             continue

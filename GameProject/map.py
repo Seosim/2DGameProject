@@ -13,18 +13,19 @@ def LoadMap():
     x = 0
     y = len(stage) - 1
 
+    #_y : 배열 _x: 배열안의 값(타일 ID)
     for _y in stage:
         for _x in _y:
             if _x == 1:
-                if -100 < (x * size) + size / 2 - Hero.player.cameraX < width + 200:
+                if -100 < (x * size) + size / 2 - Hero.player.cameraX < width + 100:
                     darkgrass.image.clip_draw(0, 0, size, size, (x * size) + size / 2 - Hero.player.cameraX,
                                               (y * size) + size / 2 - Hero.player.cameraY)
             elif _x == 2:
-                if -100 < (x * size) + size / 2 - Hero.player.cameraX < width + 200:
+                if -100 < (x * size) + size / 2 - Hero.player.cameraX < width + 100:
                     darkdirt.image.clip_draw(0, 0, size, size, (x * size) + size / 2 - Hero.player.cameraX,
                                              (y * size) + size / 2 - Hero.player.cameraY)
             elif _x == 3:
-                if -100 < (x * size) + size / 2 - Hero.player.cameraX < width + 200:
+                if -100 < (x * size) + size / 2 - Hero.player.cameraX < width + 100:
                     halfgrass.image.clip_draw(0, 0, size, 30, (x * size) + size / 2 - Hero.player.cameraX,
                                               (y * size) + size / 2 - Hero.player.cameraY)
             x += 1
